@@ -1,0 +1,84 @@
+* {
+  box-sizing: border-box;
+}
+body {
+	background-color:#ADD8E6;
+}
+.picker {
+	display: inline-block;
+}
+span {
+	font-size: 1.1em;
+	position:center;
+	top: 0px;
+	margin-right: 7px;
+	display: inline-block;
+	color: #707070;
+}
+.bWrap {
+	display: inline-block;
+}
+.variable {
+	display: inline-block;
+	border-right: solid 1px #e6e6e6;
+	padding-left: 500px;
+	padding-right: 500px;
+}
+.variable2 {
+	float: right;
+	display: inline-block;
+	border-left: solid 1px #e6e6e6;
+	padding-right: 500px;
+	padding-left: 500px;
+}
+input[type=number]{
+	position: relative;
+	left: 0px;
+	display: block;
+	width: 8em;
+	color: #707070
+}
+#redraw {
+}
+.profit {
+	display: inline;
+	position: absolute;
+	left: 46%;
+	top: 30px;
+	background-color: white;
+	border: solid 2px #e6e6e6;
+	color: #707070;
+	padding: 2px;
+}
+.simulation {
+	width: 51%;
+	padding: 15px;
+	background-color:#ffffff;
+	border: solid #e6e6e6 1px;
+	border-right: none 0px;
+	margin-top:30px;
+}
+
+.simulation2 {
+	width: 51%;
+	padding: 15px;
+	background-color:#ffffff;
+	border: solid #e6e6e6 1px;
+	border-left: none 0px;
+	margin-top:30px;
+}
+
+.simulation3 {
+	width: 51%;
+	padding: 15px;
+	background-color:#ffffff;
+	border: solid #e6e6e6 1px;
+	border-left: none 0px;
+	margin-top:30px;
+}
+
+.simcontainer {
+	display: flex;
+	margin-left: 32%;
+	width: 82%;
+}
