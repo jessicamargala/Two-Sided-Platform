@@ -1,596 +1,743 @@
- <!-- Recreation of Simulation from "http://questromworld.bu.edu/platformstrategy/simulation/" -->
+<!-- Recreation of Simulation from "http://questromworld.bu.edu/platformstrategy/simulation/" -->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width", initial-scale="1">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="style(2).css" integrity="undefined" crossorigin="anonymous">
-    <title>Interdependent Demand Curve</title>
-  </head>
-	<body>
-		<div class="profit" id="profit">Total Profit:0.53895</div>
-			<div class="simcontainer">
-				<div class="row">
-					<div class="simulation">
-						<!-- Chart canvas container for the Consumer Price Chart -->
-						<div>
-							<canvas id="consumerChart" style="display: inline-block; height: 86px; width: 45%;" class="chartjs-render-monitor"></canvas>
-						</div>
-						<!-- Slider for Consumer Price Input -->
-						<div id="slidecontainer">
-							<div class="variable">
-								<div class="bWrap">
-									<span> Consumer Price </span>
-								</div>
-								<div class="picker">
-									<div class="bWrap">
-										<!-- Input via slider (0 - 2)-->
-										<input type="range" min="0" max="200" value="100" class="slider" id="myp">
-										<!-- Input via decimal text box (0 - 2)-->
-										<input type="number" min="0" max="2" value="1" step="any" id="np">
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="simulation2">
-						<!-- Chart canvas container for the Developer Price Chart-->
-						<div>
-							<canvas id="developerChart" style="display: inline-block; height: 86px; width: 45%; margin-left:5%" class="chartjs-render-monitor"></canvas>
-						</div>
-						<div>
-							<div class="variable">
-								<div class="bWrap">
-									<span> Developer Price </span>
-								</div>
-								<div class="picker">
-									<div class="bWrap">
-										<!-- Input via slider (0 - 2)-->
-										<input type="range" min="0" max="200" value="50" class="slider" id="mypd">
-										<!-- Input via decimal text box (0 - 2)-->
-										<input type="number" min="0" max="2" value="0.5" step="any" id="npd">
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-          <!-- !!!!!!!!!This is the chart I'm having trouble with!!!!!!!!! -->
-          <div class="simulation3">
-						<!-- Chart canvas container for the Developer Price Chart-->
-						<div>
-							<canvas id="historicalChart" style="display: inline-block; height: 86px; width: 45%; margin-left:5%" class="chartjs-render-monitor"></canvas>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<script>
-				// Function to determine quantity
-	      // X -> x-coordinate (Max Market Size - myQ or nQ)
-	      // Y -> y-coordinate (Max Value - myV or nV)
-	      // P -> Selected Price (myp or np)
-			  function plength(x, y, p) {
-					m = -y/x;
-					x = (p - y)/m;
-					return x;
-				}
-
-        // Vc -> Maximum Value of the product for consumers (Customers willingingness to pay)
-			  var Vc = 1;
-          // Vd -> Maximum Value of the product for developers (Developers willingingness to pay)
-			  var Vd = 1;
-        // Qc -> Consumer Maximum Market Size (How many consumers are in the market)
-			  var Qc = 1;
-        // Qd -> Developer Maximum Market Size (How many developers are in the market)
-			  var Qd = 1;
-        // pc-> Consumer Price
-			  var pc = 1;
-        // pd-> Developer Price
-			  var pd = 0.5;
-        // ecd -> constant value
-			  var ecd = 0.125;
-        // edc -> constant value
-			  var edc = 0.875;
-
-
-			  var opc = (Vc * Vd * (Qd * ((ecd * edc - 2) * Qc - edc * Qd) * Vc + ecd * Qc * (ecd * Qc + Qd) * Vd))/(edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
-        console.log("OPC is:");
-        console.log(opc);
-        var opd = (Vc * Vd * (edc * Qd * (Qc + edc * Qd) * Vc + Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd))/(edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
-        console.log("OPD is:");
-        console.log(opd);
-
-				// Consumer Price from slider input
-			  var spc = document.getElementById('myp');
-				// Developer Price from slider input
-			  var spd = document.getElementById('mypd');
-				// Consumer Price from text box input
-			  var npc = document.getElementById('np');
-				// Developer Price from text box input
-			  var npd = document.getElementById('npd');
-				// Total profit made from our system
-			  var totalProfit = document.getElementById('profit');
-				// Chart from canvas node consumerChart
-			  var ctx1 = document.getElementById('consumerChart').getContext('2d');
-				// Chart from canvas node developerChart
-			  var ctx2 = document.getElementById('developerChart').getContext('2d');
-        // Chart from canvas node historicalChart
-        var ctx3 = document.getElementById('historicalChart').getContext('2d');
-
-				var chart1 = new Chart(ctx1, {
-
-			  	// The type of chart we want to create
-			  	type: 'scatter',
-
-			  	// The data for our dataset
-			  	data: {
-			      	datasets: [{
-								// Consumer Surplus
-								// From the Max Value to Max Market Size
-			          	label: "Consumer Surplus",
-									fill: 1,
-									// orange
-			          	backgroundColor: 'rgba(255, 192, 99, 0.5)',
-									lineTension: 0,
-									pointHoverRadius: 3,
-			          	data: [{
-			              	x: 0,
-			              	y: 1
-			          	}, {
-										x: 1,
-										y: 0
-									}],
-			      	}, {
-								// Profit
-								// Selected Price * Calculated Quantity from plength(x, y, p)
-								label: 'Profit(' + ')',
-								fill: true,
-								// purple
-								backgroundColor: 'rgba(132, 99, 255, 0.5)',
-								pointHoverRadius: 3,
-								data: [{
-										x: 0,
-										y: 1
-									}, {
-										x: 0,
-										y: 1
-									}]
-								},{
-									// Dead Weight Loss
-									// Starts at the end of the quantity and goes to the Max Market Size (Q)
-			          	label: "DWL",
-									pointHoverRadius: 3,
-									fill: true,
-									// red
-				      	backgroundColor: 'rgba(255, 99, 132, 0.5)',
-								lineTension: 0,
-			          	data: [{
-			              	x: 0,
-			              	y: 1
-			          	}, {
-										x: 1,
-										y: 0
-									}],
-			      	}]
-			  	},
-
-			  	// Configuration options go here
-			  	options: {
-						responsive: true,
-						scales: {
-							xAxes: [{
-								type: 'scatter',
-								ticks: {
-									fontSize: 11,
-									suggestedMax: 2.3,
-									min: 0
-								}
-							}],
-							yAxes: [{
-								type: 'scatter',
-								ticks: {
-									fontSize: 11,
-									suggestedMax: 2.3
-								}
-							}],
-						}
-					}
-				});
-
-			var chart2 = new Chart(ctx2, {
-
-			    // The type of chart we want to create
-			    type: 'scatter',
-
-			    // The data for our dataset
-			    data: {
-			        datasets: [{
-								// Consumer Surplus
-								// From the Max Value to Max Market Size
-			          label: "Consumer Surplus",
-								fill: 1,
-								pointHoverRadius: 3,
-								// orange
-			          backgroundColor: 'rgba(255, 192, 99, 0.5)',
-								lineTension: 0,
-			          data: [{
-			             	x: 0,
-			             	y: 1
-			          }, {
-									x: 1,
-									y: 0
-								}],
-			       	}, {
-								// Profit
-								// Selected Price * Calculated Quantity from plength(x, y, p)
-								label: 'Profit(' + ')',
-								// purple
-								backgroundColor: 'rgba(132, 99, 255, 0.5)',
-								fill: true,
-								data: [{
-										x: 0,
-										y: 1
-									}, {
-										x: 0,
-										y: 1
-									}]
-							},{
-								// Dead Weight Loss
-								// Starts at the end of the quantity and goes to the Max Market Size (Q)
-			          label: "DWL",
-								pointHoverRadius: 3,
-								fill: true,
-								// red
-			          backgroundColor: 'rgba(255, 99, 132, 0.5)',
-								lineTension: 0,
-			          data: [{
-			             	x: 0,
-			             	y: 1
-			          }, {
-									x: 1,
-									y: 0
-								}],
-			       	}]
-			    },
-
-			    // Configuration options go here
-			    options: {
-						responsive:true,
-					scales: {
-						xAxes: [{
-							type: 'linear',
-							ticks: {
-								fontSize: 11,
-								suggestedMax: 2.3,
-								min: 0
-							}
-						}],
-						yAxes: [{
-							type: 'linear',
-							ticks: {
-								fontSize: 11,
-								suggestedMax: 2.3,
-								//stepSize: 0.25
-							}
-						}],
-					}
-				}
-			});
-
-      var chart3 = new Chart(ctx3, {
-
-        // The type of chart we want to create
-        type: 'scatter',
-
-        // The data for our dataset
-        data: {
-            datasets: [{
-              //label: "Max Market Size vs. Price",
-              fill: 1,
-              pointHoverRadius: 3,
-              // orange
-              backgroundColor: 'rgba(255, 255, 0, 0.5)',
-              lineTension: 0,
-              data: [{
-                  x: 0,
-                  y: 1
-              }, {
-                x: 1,
-                y: 0
-              }],
-            }]
-        },
-        // Configuration options go here
-        options: {
-          // When lines 309 - 314 are uncommented, all three charts stop displaying
-          // plugins: {
-          //   title: {
-          //     display: true,
-          //     text: 'Max Market Size vs. Price'
-          //   }
-          // }
-          responsive: true,
-          scales: {
-            xAxes: [{
-              type: 'line',
-              ticks: {
-                fontSize: 11,
-                suggestedMax: 2.3,
-                min: 0
-              }
-            }],
-            yAxes: [{
-              type: 'line',
-              ticks: {
-                fontSize: 11,
-                suggestedMax: 2.3
-              }
-            }],
-          }
-        }
-      });
-
-      // Update the values of the chart
-      // Initial consumer price is set to 0.2 (pc = 0.2)
-      // Initial developer price is set to 0.2 (pd = 0.2)
-			calcUpdate(Qc, Qd, Vc, Vd, 0.2, 0.2, ecd, edc)
-
-      // Function to update  the values of the chart
-      // Qc -> Consumer Maximum Market Size (How many consumers are in the market)
-      // Qd -> Developer Maximum Market Size (How many developers are in the market)
-      // Vc -> Maximum Value of the product for consumers (Customers willingingness to pay)
-      // Vd -> Maximum Value of the product for developers (Developers willingingness to pay)
-      // pc-> Consumer Price
-      // pd-> Developer Price
-      // ecd -> 0.125 constant value (Effect of purchases in the Consumer market on the Developer market)
-      // edc -> 0.875 constant value (Effect of purchases in the Developer market on the Consumer market)
-      // left -> boolean value reprsents which price has been adjusted (true -> consumer price was adjusted/false -> dev price was adjusted)
-			function calcUpdate(Qc, Qd, Vc, Vd, pc, pd, ecd, edc, left)
-      {
-        console.log('Qc is:' );
-        console.log(Qc);
-
-        console.log('Qd is:' );
-        console.log(Qd);
-
-        console.log('Vc is:' );
-        console.log(Vc);
-
-        console.log('Vd is:' );
-        console.log(Vd);
-
-        console.log('pc is:' );
-        console.log(pc);
-
-        console.log('pd is:' );
-        console.log(pd);
-
-        // console.log('ecd is:' );
-        // console.log(ecd);
-        //
-        // console.log('edc is:' );
-        // console.log(edc);
-
-        console.log('left is:' );
-        console.log(left);
-
-        // Keep within Range 0-2
-        // Consumer Price
-				if (pc > 2) pc = 2;
-				if (pc < 0) pc = 0;
-
-        // Keep within Range 0-2
-        // Developer Price
-				if (pd > 2) pd = 2;
-				if (pd < 0) pd = 0;
-
-        // Update values from the consumer price input (either sliders or text box)
-				spc.value = pc * 100;
-				npc.value = pc;
-
-        // Update values from the developer price input (either sliders or text box)
-				spd.value = pd * 100;
-				npd.value = pd;
-
-        // Profit Size Length for consumers represents Quantity
-        // Similar to the plenght() function in the single sided market simulation
-        // qc represents the x-value of the profit for consumers (the quantity)
-				let qc = (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd)/((ecd * edc - 1) * Vc * Vd);
-        console.log('qc is:');
-        console.log(qc);
-
-        // Profit Size Length for developers represents Quantity
-        // Similar to the plenght() function in the single sided market simulation
-        // qd represents the x-value of the profit for developers (the quantity)
-				let qd = (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd)/((ecd * edc - 1) * Vc * Vd);
-        console.log('qd is:');
-        console.log(qd);
-
-        // If the consumer profit is ever smaller than 0
-				if (qc < 0)
-        {
-					qc = 0;
-          // Don't let consumer price go over 1.875
-					if (pc > (1 + edc))
-          {
-						pc = (1 + edc);
-					}
-
-					//pd = (1.125 - pc)/0.125; <-- not my comment, not sure what it represents
-
-          // If left is true, then consumer price is equal to 1.875 - (developer price * 1.875)
-          // if not, then the developer price is equal to (2.875 - consumer price)/ 1.875
-          // When consumer price is adjusted, the developer price changes
-          // When developer price is adjusted, the consumer price changes
-					if (left) {
-            pc = 1 + edc - pd * edc
-            console.log('pc is:');
-            console.log(pc);
-          }
-					else {
-            pd = (edc + 1 - pc)/edc;
-            console.log('pd is:');
-            console.log(pd);
-          }
-
-          // Update the profit lengths for both consumers (qc) and developers (qd) with updated values
-					qc = (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd)/((ecd * edc - 1) * Vc * Vd);
-					qd = (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd)/((ecd * edc - 1) * Vc * Vd);
-
-					spd.value = pd * 100;
-					npd.value = pd;
-					spc.value = pc * 100;
-					npc.value = pc;
-				}
-
-        // If the developer profit is ever smaller than 0
-				if (qd < 0)
-        {
-					qd = 0;
-					if (pd > (ecd + 1))
-          {
-						pd = (ecd + 1);
-					}
-					if (left)
-          {
-            pc = (ecd + 1 - pd)/ecd
-          }
-					else
-          {
-            pd = ecd + 1 - pc*ecd;
-          }
-
-          // Profit Size Length for consumers
-          // Similar to the plenght() function in the single sided market simulation
-          // qc represents the x-value of the profit for consumers
-					qc = (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd)/((ecd * edc - 1) * Vc * Vd);
-
-          // Profit Size Length for developers
-          // Similar to the plenght() function in the single sided market simulation
-          // qc represents the x-value of the profit for developers
-					qd = (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd)/((ecd * edc - 1) * Vc * Vd);
-
-					spd.value = pd * 100;
-					npd.value = pd;
-					spc.value = pc * 100;
-					npc.value = pc;
-				}
-
-        // The y value of the consumer chart (The Maximum Value)
-				let yc = ((Qc + edc * ((pd * Qd * Vc + ( ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd))) * Vc)/Qc;
-        console.log('yc is:');
-        console.log(yc);
-
-        // The x value of the consumer chart (The Maximum Market Size)
-				let xc = Qc + edc * ((pd * Qd * Vc + ( ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd));
-        console.log('xc is:');
-        console.log(xc);
-
-        // The y value of the developer chart (The Maximum Value)
-				let yd = ((Qd + ecd * ((pc * Qc * Vd + ( edc * Qd * (pd - Vd) - Qc * Vd) * Vc) / ((edc * ecd - 1) * Vd * Vc))) * Vd)/Qd;
-        console.log('yd is:');
-        console.log(yd);
-
-        // The x value of the developer chart (The Maximum Market Size)
-				let xd = Qd + ecd * ((pc * Qc * Vd + ( edc * Qd * (pd - Vd) - Qc * Vd) * Vc) / ((edc * ecd - 1) * Vd * Vc));
-        console.log('xd is:');
-        console.log(xd);
-
-        // Consumer Price cannot exceed  Consumer Maximum Market Size
-				if (pc > yc)
-        {
-					pc = yc;
-				}
-
-        // Developer Price cannot exceed Consumer Maximum Market Size
-				if (pd > yd)
-        {
-					pd = yd;
-				}
-
-        // Total Profit is maximized (turns green) when |0.875 - consumer price| < 0.001 AND when |0.125 - developer price| < 0.001
-
-				if ((Math.abs(opc - pc) < 0.001) && (Math.abs(opd - pd) < 0.001))
-        {
-					chart1.data.datasets[1].backgroundColor = 'rgba(132, 255, 99, 0.5)';
-					chart1.data.datasets[1].label = 'Profit (' + (pc * qc).toFixed(5) + ') ~ Optimal';
-
-					chart2.data.datasets[1].backgroundColor = 'rgba(132, 255, 99, 0.5)';
-					chart2.data.datasets[1].label = 'Profit (' + (pd * qd).toFixed(5) + ') ~ Optimal';
-          console.log("OPC is:");
-          console.log(opc);
-          console.log("OPD is:");
-          console.log(opd);
-				} else {
-					chart1.data.datasets[1].backgroundColor = 'rgba(132, 99, 255, 0.5)';
-					chart1.data.datasets[1].label = 'Profit (' + (pc * qc).toFixed(5) + ')';
-
-					chart2.data.datasets[1].backgroundColor = 'rgba(132, 99, 255, 0.5)';
-					chart2.data.datasets[1].label = 'Profit (' + (pd * qd).toFixed(5) + ')';
-          console.log("OPC is:");
-          console.log(opc);
-          console.log("OPD is:");
-          console.log(opd);
-				}
-
-        // Calculates the total profit from both consumers and developers
-        // Total Profit = Price * Quantity
-
-				totalProfit.innerHTML = "Total Profit:" + ((pd * qd) + (pc * qc)).toFixed(5);
-
-
-				chart1.data.datasets[0].data[0].y = yc;
-				chart1.data.datasets[0].data[1].x = qc;
-				chart1.data.datasets[0].data[1].y = pc;
-				chart1.data.datasets[1].data[0].y = pc;
-				chart1.data.datasets[1].data[1].y = pc;
-				chart1.data.datasets[1].data[1].x = qc;
-				chart1.data.datasets[2].data[0].x = qc;
-				chart1.data.datasets[2].data[0].y = pc;
-				chart1.data.datasets[2].data[1].x = xc;
-				chart1.data.datasets[2].data[1].y = 0;
-
-
-				chart2.data.datasets[0].data[0].y = yd;
-				chart2.data.datasets[0].data[1].x = qd;
-				chart2.data.datasets[0].data[1].y = pd;
-				chart2.data.datasets[1].data[0].y = pd;
-				chart2.data.datasets[1].data[1].y = pd;
-				chart2.data.datasets[1].data[1].x = qd;
-				chart2.data.datasets[2].data[0].x = qd;
-				chart2.data.datasets[2].data[0].y = pd;
-				chart2.data.datasets[2].data[1].x = xd;
-				chart2.data.datasets[2].data[1].y = 0;
-
-        // chart3.data.datsets[0].data[0].y = yc;
-        // chart3.data.datasets[0].data[1].x = xc;
-
-				chart1.update();
-				chart2.update();
-        chart3.update();
-				}
-
-
-
-			spc.oninput = function() {
-				calcUpdate(Qc, Qd, Vc, Vd, this.value/100, npd.value, ecd, edc, true);
-			}
-
-			npc.oninput = function() {
-				calcUpdate(Qc, Qd, Vc, Vd, this.value, npd.value, ecd, edc, true);
-			}
-
-			spd.oninput = function() {
-				calcUpdate(Qc, Qd, Vc, Vd, npc.value, this.value/100, ecd, edc, false);
-			}
-
-			npd.oninput = function() {
-				calcUpdate(Qc, Qd, Vc, Vd, npc.value, this.value, ecd, edc, false);
-			}
-
-		</script>
-	</body>
+ <head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width", initial-scale="1">
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <!-- <link rel="stylesheet" href="style(2).css" integrity="undefined" crossorigin="anonymous"> -->
+   <title>Interdependent Demand Curve</title>
+ </head>
+ <style>
+   /* * {
+     box-sizing: border-box;
+   } */
+   body {
+     background-color:#ADD8E6;
+   }
+   .picker {
+     display: block;
+   }
+   span {
+     font-size: 1.1em;
+     position:center;
+     top: 0px;
+     margin-right: 7px;
+     display: inline-block;
+     color: #707070;
+   }
+   .bWrap {
+     display: inline-block;
+   }
+   .variable {
+     display: inline-block;
+     left: -100px;
+     border-right: solid 1px #e6e6e6;
+     padding-left: 10px;
+     padding-right: 10px;
+   }
+   .variable2 {
+     float: right;
+     display: inline-block;
+     border-left: solid 1px #e6e6e6;
+     padding-right: 10px;
+     padding-left: 10px;
+   }
+   input[type=number]{
+     position: relative;
+     left: 0px;
+     display: block;
+     width: 4em;
+     color: #707070
+   }
+   /* #redraw {
+   } */
+   .profit {
+     display: inline;
+     position: absolute;
+     left: 46%;
+     top: 30px;
+     background-color: white;
+     border: solid 2px #e6e6e6;
+     color: #707070;
+     padding: 2px;
+   }
+
+   .pricing {
+     font-size: 20px;
+     display: inline;
+     position: relative;
+     background-color: white;
+     border: solid 2px #e6e6e6;
+     color: #707070;
+     padding: 2px;
+   }
+
+   span[title]:hover:after {
+     content:attr(title);
+     background-color: #ADD8E6;
+     border: solid 0.5px #5C99F4;
+   }
+
+   .radioButtons {
+     width: 79.3%;
+     padding: 15px;
+     background-color:#ffffff;
+     border: solid #e6e6e6 1px;
+     border-right: none 0px;
+     margin-top:0px;
+     margin-left: 10%;
+   }
+
+   .simulation {
+     width: 51%;
+     padding: 15px;
+     background-color:#ffffff;
+     border: solid #e6e6e6 1px;
+     border-right: none 0px;
+     margin-top:30px;
+   }
+
+   .simulation2 {
+     width: 51%;
+     padding: 15px;
+     background-color:#ffffff;
+     border: solid #e6e6e6 1px;
+     border-left: none 0px;
+     margin-top:30px;
+   }
+
+   .simulation3 {
+     width: 51%;
+     padding: 15px;
+     background-color:#ffffff;
+     border: solid #e6e6e6 1px;
+     border-left: none 0px;
+     margin-top:30px;
+   }
+
+   .simcontainer {
+     display: inline-flex;
+     margin-left: 10%;
+     width: 82%;
+   }
+
+ </style>
+ <body>
+   <div class="profit" id="profit">Total Profit:0.53895</div>
+     <div class="simcontainer">
+         <div class="simulation">
+           <!-- Chart canvas container for the Consumer Price Chart -->
+           <div>
+             <canvas id="consumerChart" style="display: inline-block; height: 86px; width: 45%; margin-left:5%" class="chartjs-render-monitor"></canvas>
+           </div>
+           <!-- Slider for Consumer Price Input -->
+           <div id="slidecontainer">
+             <div class="variable">
+               <div class="bWrap">
+                 <span> Consumer Price </span>
+               </div>
+               <div class="picker">
+                 <div class="bWrap">
+                   <!-- Input via slider (0 - 2)-->
+                   <input type="range" min="0" max="200" value="100" class="slider" id="myp">
+                   <!-- Input via decimal text box (0 - 2)-->
+                   <input type="number" min="0" max="2" value="1" step="any" id="np">
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="simulation2">
+           <!-- Chart canvas container for the Developer Price Chart-->
+           <div>
+             <canvas id="developerChart" style="display: inline-block; height: 86px; width: 45%; margin-left:5%" class="chartjs-render-monitor"></canvas>
+           </div>
+           <div>
+             <div class="variable">
+               <div class="bWrap">
+                 <span> Developer Price </span>
+               </div>
+               <div class="picker">
+                 <div class="bWrap">
+                   <!-- Input via slider (0 - 2)-->
+                   <input type="range" min="0" max="200" value="50" class="slider" id="mypd">
+                   <!-- Input via decimal text box (0 - 2)-->
+                   <input type="number" min="0" max="2" value="0.5" step="any" id="npd">
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="simulation3">
+           <!-- Chart canvas container for the Developer Price Chart -->
+           <div>
+             <canvas id="historicalChart" style="display: inline-block; height: 86px; width: 45%; margin-left:5%" class="chartjs-render-monitor"></canvas>
+           </div>
+         </div>
+     </div>
+
+     <div class="radioButtons">
+       <div class="pricing" id="pricing">Pricing</div><br><br>
+       <span class="static" title="This sets a static price for all customers.">
+       <input type="radio" name="pricingType" value="static" class="required static"> Static </span><br>
+
+       <span class="dynamic" title="This changes prices depending on supply and demand.">
+       <input type="radio" name="pricingType" value="dynamic" class="required dynamic"> Dynamic </span><br>
+
+       <span class="personalize" title="This sets a different price for each customer, depending on what they are willing to pay.">
+       <input type="radio" name="pricingType" value="personalize" class="required personzalize"> Personalize </span><br>
+     </div>
+
+     <script>
+
+       // Function to determine quantity
+       // X -> x-coordinate (Max Market Size - myQ or nQ)
+       // Y -> y-coordinate (Max Value - myV or nV)
+       // P -> Selected Price (myp or np)
+       function plength(x, y, p) {
+         m = -y/x;
+         x = (p - y)/m;
+         return x;
+       }
+
+       // Vc -> Maximum Value of the product for consumers (Customers willingingness to pay)
+       var Vc = 1;
+         // Vd -> Maximum Value of the product for developers (Developers willingingness to pay)
+       var Vd = 1;
+       // Qc -> Consumer Maximum Market Size (How many consumers are in the market)
+       var Qc = 1;
+       // Qd -> Developer Maximum Market Size (How many developers are in the market)
+       var Qd = 1;
+       // pc-> Consumer Price
+       var pc = 1;
+       // pd-> Developer Price
+       var pd = 0.5;
+       // ecd -> constant value
+       var ecd = 0.125;
+       // edc -> constant value
+       var edc = 0.875;
+
+
+       var opc = (Vc * Vd * (Qd * ((ecd * edc - 2) * Qc - edc * Qd) * Vc + ecd * Qc * (ecd * Qc + Qd) * Vd))/(edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
+       console.log("OPC is:");
+       console.log(opc);
+       var opd = (Vc * Vd * (edc * Qd * (Qc + edc * Qd) * Vc + Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd))/(edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
+       console.log("OPD is:");
+       console.log(opd);
+
+       // Consumer Price from slider input
+       var spc = document.getElementById('myp');
+       // Developer Price from slider input
+       var spd = document.getElementById('mypd');
+       // Consumer Price from text box input
+       var npc = document.getElementById('np');
+       // Developer Price from text box input
+       var npd = document.getElementById('npd');
+       // Total profit made from our system
+       var totalProfit = document.getElementById('profit');
+       // Chart from canvas node consumerChart
+       var ctx1 = document.getElementById('consumerChart').getContext('2d');
+       // Chart from canvas node developerChart
+       var ctx2 = document.getElementById('developerChart').getContext('2d');
+       // Chart from canvas node historicalChart
+       var ctx3 = document.getElementById('historicalChart').getContext('2d');
+
+       var chart1 = new Chart(ctx1, {
+
+         // The type of chart we want to create
+         type: 'scatter',
+
+         // The data for our dataset
+         data: {
+             datasets: [{
+               // Consumer Surplus
+               // From the Max Value to Max Market Size
+                 label: "Consumer Surplus",
+                 fill: 1,
+                 // orange
+                 backgroundColor: 'rgba(255, 192, 99, 0.5)',
+                 lineTension: 0,
+                 pointHoverRadius: 3,
+                 data: [{
+                     x: 0,
+                     y: 1
+                 }, {
+                   x: 1,
+                   y: 0
+                 }],
+             }, {
+               // Profit
+               // Selected Price * Calculated Quantity from plength(x, y, p)
+               label: 'Profit(' + ')',
+               fill: true,
+               // purple
+               backgroundColor: 'rgba(132, 99, 255, 0.5)',
+               pointHoverRadius: 3,
+               data: [{
+                   x: 0,
+                   y: 1
+                 }, {
+                   x: 0,
+                   y: 1
+                 }]
+               },{
+                 // Dead Weight Loss
+                 // Starts at the end of the quantity and goes to the Max Market Size (Q)
+                 label: "DWL",
+                 pointHoverRadius: 3,
+                 fill: true,
+                 // red
+               backgroundColor: 'rgba(255, 99, 132, 0.5)',
+               lineTension: 0,
+                 data: [{
+                     x: 0,
+                     y: 1
+                 }, {
+                   x: 1,
+                   y: 0
+                 }],
+             }]
+         },
+
+         // Configuration options go here
+         options: {
+           responsive: true,
+           scales: {
+             xAxes: [{
+               type: 'linear',
+               ticks: {
+                 fontSize: 11,
+                 suggestedMax: 2.3,
+                 min: 0
+               }
+             }],
+             yAxes: [{
+               type: 'linear',
+               ticks: {
+                 fontSize: 11,
+                 suggestedMax: 2.3
+               }
+             }],
+           }
+         }
+       });
+
+     var chart2 = new Chart(ctx2, {
+
+         // The type of chart we want to create
+         type: 'scatter',
+
+         // The data for our dataset
+         data: {
+             datasets: [{
+               // Consumer Surplus
+               // From the Max Value to Max Market Size
+               label: "Consumer Surplus",
+               fill: 1,
+               pointHoverRadius: 3,
+               // orange
+               backgroundColor: 'rgba(255, 192, 99, 0.5)',
+               lineTension: 0,
+               data: [{
+                   x: 0,
+                   y: 1
+               }, {
+                 x: 1,
+                 y: 0
+               }],
+             }, {
+               // Profit
+               // Selected Price * Calculated Quantity from plength(x, y, p)
+               label: 'Profit(' + ')',
+               // purple
+               backgroundColor: 'rgba(132, 99, 255, 0.5)',
+               fill: true,
+               data: [{
+                   x: 0,
+                   y: 1
+                 }, {
+                   x: 0,
+                   y: 1
+                 }]
+             },{
+               // Dead Weight Loss
+               // Starts at the end of the quantity and goes to the Max Market Size (Q)
+               label: "DWL",
+               pointHoverRadius: 3,
+               fill: true,
+               // red
+               backgroundColor: 'rgba(255, 99, 132, 0.5)',
+               lineTension: 0,
+               data: [{
+                   x: 0,
+                   y: 1
+               }, {
+                 x: 1,
+                 y: 0
+               }],
+             }]
+         },
+
+         // Configuration options go here
+         options: {
+           responsive:true,
+         scales: {
+           xAxes: [{
+             type: 'linear',
+             ticks: {
+               fontSize: 11,
+               suggestedMax: 2.3,
+               min: 0
+             }
+           }],
+           yAxes: [{
+             type: 'linear',
+             ticks: {
+               fontSize: 11,
+               suggestedMax: 2.3,
+               //stepSize: 0.25
+             }
+           }],
+         }
+       }
+     });
+
+     var chart3 = new Chart(ctx3, {
+
+       // The type of chart we want to create
+       type: 'scatter',
+
+       // The data for our dataset
+       data: {
+           datasets: [{
+             label: "Consumer",
+             //fill: true,
+             borderColor: 'rgba(255, 255, 0, 0.5)',
+             pointHoverRadius: 3,
+             // orange
+             backgroundColor: 'rgba(255, 255, 0, 0.5)',
+             lineTension: 0,
+             data: [{
+               x:0,
+               y:0
+             }],
+           }]
+       },
+       // Configuration options go here
+       options: {
+         //When lines 309 - 314 are uncommented, all three charts stop displaying
+         plugins: {
+           title: {
+             display: true,
+             text: 'Consumer Price vs Max Market Size'
+           }
+         },
+         showLine: true,
+         responsive: true,
+         scales: {
+           xAxes: [{
+             type: 'line',
+             ticks: {
+               fontSize: 11,
+               suggestedMax: 2.3,
+               min: 0
+             }
+           }],
+           yAxes: [{
+             type: 'line',
+             ticks: {
+               fontSize: 11,
+               suggestedMax: 2.3
+             }
+           }],
+         }
+       }
+     });
+
+     // Update the values of the chart
+     // Initial consumer price is set to 0.2 (pc = 0.2)
+     // Initial developer price is set to 0.2 (pd = 0.2)
+     calcUpdate(Qc, Qd, Vc, Vd, 0.2, 0.2, ecd, edc)
+
+     // Function to update  the values of the chart
+     // Qc -> Consumer Maximum Market Size (How many consumers are in the market)
+     // Qd -> Developer Maximum Market Size (How many developers are in the market)
+     // Vc -> Maximum Value of the product for consumers (Customers willingingness to pay)
+     // Vd -> Maximum Value of the product for developers (Developers willingingness to pay)
+     // pc-> Consumer Price
+     // pd-> Developer Price
+     // ecd -> 0.125 constant value (Effect of purchases in the Consumer market on the Developer market)
+     // edc -> 0.875 constant value (Effect of purchases in the Developer market on the Consumer market)
+     // left -> boolean value reprsents which price has been adjusted (true -> consumer price was adjusted/false -> dev price was adjusted)
+     function calcUpdate(Qc, Qd, Vc, Vd, pc, pd, ecd, edc, left)
+     {
+       console.log('Qc is:' );
+       console.log(Qc);
+
+       console.log('Qd is:' );
+       console.log(Qd);
+
+       console.log('Vc is:' );
+       console.log(Vc);
+
+       console.log('Vd is:' );
+       console.log(Vd);
+
+       console.log('pc is:' );
+       console.log(pc);
+
+       console.log('pd is:' );
+       console.log(pd);
+
+       // console.log('ecd is:' );
+       // console.log(ecd);
+       //
+       // console.log('edc is:' );
+       // console.log(edc);
+
+       console.log('left is:' );
+       console.log(left);
+
+       // Keep within Range 0-2
+       // Consumer Price
+       if (pc > 2) pc = 2;
+       if (pc < 0) pc = 0;
+
+       // Keep within Range 0-2
+       // Developer Price
+       if (pd > 2) pd = 2;
+       if (pd < 0) pd = 0;
+
+       // Update values from the consumer price input (either sliders or text box)
+       spc.value = pc * 100;
+       npc.value = pc;
+
+       // Update values from the developer price input (either sliders or text box)
+       spd.value = pd * 100;
+       npd.value = pd;
+
+       // Profit Size Length for consumers represents Quantity
+       // Similar to the plenght() function in the single sided market simulation
+       // qc represents the x-value of the profit for consumers (the quantity)
+       let qc = (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd)/((ecd * edc - 1) * Vc * Vd);
+       console.log('qc is:');
+       console.log(qc);
+
+       // Profit Size Length for developers represents Quantity
+       // Similar to the plenght() function in the single sided market simulation
+       // qd represents the x-value of the profit for developers (the quantity)
+       let qd = (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd)/((ecd * edc - 1) * Vc * Vd);
+       console.log('qd is:');
+       console.log(qd);
+
+       // If the consumer profit is ever smaller than 0
+       if (qc < 0)
+       {
+         qc = 0;
+         // Don't let consumer price go over 1.875
+         if (pc > (1 + edc))
+         {
+           pc = (1 + edc);
+         }
+
+         //pd = (1.125 - pc)/0.125; <-- not my comment, not sure what it represents
+
+         // If left is true, then consumer price is equal to 1.875 - (developer price * 1.875)
+         // if not, then the developer price is equal to (2.875 - consumer price)/ 1.875
+         // When consumer price is adjusted, the developer price changes
+         // When developer price is adjusted, the consumer price changes
+         if (left) {
+           pc = 1 + edc - pd * edc
+           console.log('pc is:');
+           console.log(pc);
+         }
+         else {
+           pd = (edc + 1 - pc)/edc;
+           console.log('pd is:');
+           console.log(pd);
+         }
+
+         // Update the profit lengths for both consumers (qc) and developers (qd) with updated values
+         qc = (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd)/((ecd * edc - 1) * Vc * Vd);
+         qd = (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd)/((ecd * edc - 1) * Vc * Vd);
+
+         spd.value = pd * 100;
+         npd.value = pd;
+         spc.value = pc * 100;
+         npc.value = pc;
+       }
+
+       // If the developer profit is ever smaller than 0
+       if (qd < 0)
+       {
+         qd = 0;
+         if (pd > (ecd + 1))
+         {
+           pd = (ecd + 1);
+         }
+         if (left)
+         {
+           pc = (ecd + 1 - pd)/ecd
+         }
+         else
+         {
+           pd = ecd + 1 - pc*ecd;
+         }
+
+         // Profit Size Length for consumers
+         // Similar to the plenght() function in the single sided market simulation
+         // qc represents the x-value of the profit for consumers
+         qc = (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd)/((ecd * edc - 1) * Vc * Vd);
+
+         // Profit Size Length for developers
+         // Similar to the plenght() function in the single sided market simulation
+         // qc represents the x-value of the profit for developers
+         qd = (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd)/((ecd * edc - 1) * Vc * Vd);
+
+         spd.value = pd * 100;
+         npd.value = pd;
+         spc.value = pc * 100;
+         npc.value = pc;
+       }
+
+       // The y value of the consumer chart (The Maximum Value)
+       let yc = ((Qc + edc * ((pd * Qd * Vc + ( ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd))) * Vc)/Qc;
+       console.log('yc is:');
+       console.log(yc);
+
+       // The x value of the consumer chart (The Maximum Market Size)
+       let xc = Qc + edc * ((pd * Qd * Vc + ( ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd));
+       console.log('xc is:');
+       console.log(xc);
+
+       // The y value of the developer chart (The Maximum Value)
+       let yd = ((Qd + ecd * ((pc * Qc * Vd + ( edc * Qd * (pd - Vd) - Qc * Vd) * Vc) / ((edc * ecd - 1) * Vd * Vc))) * Vd)/Qd;
+       console.log('yd is:');
+       console.log(yd);
+
+       // The x value of the developer chart (The Maximum Market Size)
+       let xd = Qd + ecd * ((pc * Qc * Vd + ( edc * Qd * (pd - Vd) - Qc * Vd) * Vc) / ((edc * ecd - 1) * Vd * Vc));
+       console.log('xd is:');
+       console.log(xd);
+
+       // Consumer Price cannot exceed  Consumer Maximum Market Size
+       if (pc > yc)
+       {
+         pc = yc;
+       }
+
+       // Developer Price cannot exceed Consumer Maximum Market Size
+       if (pd > yd)
+       {
+         pd = yd;
+       }
+
+       // Total Profit is maximized (turns green) when |0.875 - consumer price| < 0.001 AND when |0.125 - developer price| < 0.001
+
+       if ((Math.abs(opc - pc) < 0.001) && (Math.abs(opd - pd) < 0.001))
+       {
+         chart1.data.datasets[1].backgroundColor = 'rgba(132, 255, 99, 0.5)';
+         chart1.data.datasets[1].label = 'Profit (' + (pc * qc).toFixed(5) + ') ~ Optimal';
+
+         chart2.data.datasets[1].backgroundColor = 'rgba(132, 255, 99, 0.5)';
+         chart2.data.datasets[1].label = 'Profit (' + (pd * qd).toFixed(5) + ') ~ Optimal';
+         console.log("OPC is:");
+         console.log(opc);
+         console.log("OPD is:");
+         console.log(opd);
+       } else {
+         chart1.data.datasets[1].backgroundColor = 'rgba(132, 99, 255, 0.5)';
+         chart1.data.datasets[1].label = 'Profit (' + (pc * qc).toFixed(5) + ')';
+
+         chart2.data.datasets[1].backgroundColor = 'rgba(132, 99, 255, 0.5)';
+         chart2.data.datasets[1].label = 'Profit (' + (pd * qd).toFixed(5) + ')';
+         console.log("OPC is:");
+         console.log(opc);
+         console.log("OPD is:");
+         console.log(opd);
+       }
+
+       // Calculates the total profit from both consumers and developers
+       // Total Profit = Price * Quantity
+
+       totalProfit.innerHTML = "Total Profit:" + ((pd * qd) + (pc * qc)).toFixed(5);
+
+
+       chart1.data.datasets[0].data[0].y = yc;
+       chart1.data.datasets[0].data[1].x = qc;
+       chart1.data.datasets[0].data[1].y = pc;
+       chart1.data.datasets[1].data[0].y = pc;
+       chart1.data.datasets[1].data[1].y = pc;
+       chart1.data.datasets[1].data[1].x = qc;
+       chart1.data.datasets[2].data[0].x = qc;
+       chart1.data.datasets[2].data[0].y = pc;
+       chart1.data.datasets[2].data[1].x = xc;
+       chart1.data.datasets[2].data[1].y = 0;
+
+
+       chart2.data.datasets[0].data[0].y = yd;
+       chart2.data.datasets[0].data[1].x = qd;
+       chart2.data.datasets[0].data[1].y = pd;
+       chart2.data.datasets[1].data[0].y = pd;
+       chart2.data.datasets[1].data[1].y = pd;
+       chart2.data.datasets[1].data[1].x = qd;
+       chart2.data.datasets[2].data[0].x = qd;
+       chart2.data.datasets[2].data[0].y = pd;
+       chart2.data.datasets[2].data[1].x = xd;
+       chart2.data.datasets[2].data[1].y = 0;
+
+       const copyOfPrice = pc;
+       const copyOfMarketSize = xc;
+
+       updateChart(chart3, copyOfPrice, copyOfMarketSize);
+
+       chart1.update();
+       chart2.update();
+       chart3.update();
+       }
+
+       function updateChart(chart, consumerPrice, consumerMarketSize){
+
+         const numberOfPoints = chart.data.datasets[0].data.length;
+
+         for(let i = 0; i < numberOfPoints; i++) {
+           // if the new consumer price is bigger than any others, push it onto chart
+           if(consumerPrice >= chart.data.datasets[0].data[i].x)
+           {
+             chart.data.datasets[0].data.push({x:consumerPrice, y:consumerMarketSize});
+           }
+           // if the new consumer price is less than, put it before that data point
+           else if(consumerPrice < chart.data.datasets[0].data[i].x)
+           {
+             chart.data.datasets[0].data.shift({x:consumerPrice, y:consumerMarketSize});
+           }
+         }
+
+         // console.log(chart.data.datasets[0].data);
+         // chart.data.datasets[0].data.push({x:consumerPrice, y:consumerMarketSize});
+         // console.log(chart.data.datasets[0].data);
+         chart.update();
+       }
+
+     spc.oninput = function() {
+       calcUpdate(Qc, Qd, Vc, Vd, this.value/100, npd.value, ecd, edc, true);
+     }
+
+     npc.oninput = function() {
+       calcUpdate(Qc, Qd, Vc, Vd, this.value, npd.value, ecd, edc, true);
+     }
+
+     spd.oninput = function() {
+       calcUpdate(Qc, Qd, Vc, Vd, npc.value, this.value/100, ecd, edc, false);
+     }
+
+     npd.oninput = function() {
+       calcUpdate(Qc, Qd, Vc, Vd, npc.value, this.value, ecd, edc, false);
+     }
+
+   </script>
+ </body>
 </html>
