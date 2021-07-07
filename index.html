@@ -82,10 +82,10 @@
    .radioButtons {
      width: 79.3%;
      padding: 15px;
-     background-color:#ffffff;
-     border: solid #e6e6e6 1px;
+     /* background-color:#ffffff;
+     border: solid #e6e6e6 1px; */
      border-right: none 0px;
-     margin-top:0px;
+     margin-top: 0px;
      margin-left: 10%;
    }
 
@@ -114,6 +114,30 @@
      border: solid #e6e6e6 1px;
      border-left: none 0px;
      margin-top:30px;
+   }
+
+   .button {
+     padding: 8px 16px;
+     text-align: center;
+     text-decoration: none;
+     display: inline-block;
+     font-size: 16px;
+     margin-top: 16px;
+     font-family:serif;
+     transition-duration: 0.4s;
+     cursor: pointer;
+
+   }
+
+   .addPoint {
+     background-color: white;
+     color: gray;
+     border: 2px solid #AED6F1;
+   }
+
+   .addPoint:hover {
+     background-color: #AED6F1;
+     color: white;
    }
 
    .simcontainer {
@@ -176,19 +200,20 @@
            <div>
              <canvas id="historicalChart" style="display: inline-block; height: 86px; width: 45%; margin-left:5%" class="chartjs-render-monitor"></canvas>
            </div>
+           <button id='addPoint' class='button addPoint'>Add Profit</button>
          </div>
      </div>
 
      <div class="radioButtons">
        <div class="pricing" id="pricing">Pricing</div><br><br>
        <span class="static" title="This sets a static price for all customers.">
-       <input type="radio" name="pricingType" value="static" class="required static"> Static </span><br>
+       <input id= 'static' onclick='updatePricing(this.value);' type="radio" name="pricingType" value="static" class="required static"> Static </span><br>
 
        <span class="dynamic" title="This changes prices depending on supply and demand.">
-       <input type="radio" name="pricingType" value="dynamic" class="required dynamic"> Dynamic </span><br>
+       <input id= 'dynamic' onclick='updatePricing(this.value);' type="radio" name="pricingType" value="dynamic" class="required dynamic"> Dynamic </span><br>
 
        <span class="personalize" title="This sets a different price for each customer, depending on what they are willing to pay.">
-       <input type="radio" name="pricingType" value="personalize" class="required personzalize"> Personalize </span><br>
+       <input id= 'personalize' onclick='updatePricing(this.value);' type="radio" name="pricingType" value="personalize" class="required personzalize"> Personalize </span><br>
      </div>
 
      <script>
@@ -215,18 +240,32 @@
        var pc = 1;
        // pd-> Developer Price
        var pd = 0.5;
-       // ecd -> constant value
+       // ecd -> 0.125 constant value (Effect of purchases in the Consumer market on the Developer market)
        var ecd = 0.125;
-       // edc -> constant value
+       // edc -> 0.875 constant value (Effect of purchases in the Developer market on the Consumer market)
        var edc = 0.875;
 
-
        var opc = (Vc * Vd * (Qd * ((ecd * edc - 2) * Qc - edc * Qd) * Vc + ecd * Qc * (ecd * Qc + Qd) * Vd))/(edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
-       console.log("OPC is:");
-       console.log(opc);
        var opd = (Vc * Vd * (edc * Qd * (Qc + edc * Qd) * Vc + Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd))/(edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
-       console.log("OPD is:");
-       console.log(opd);
+
+       function updatePricing(pricingType) {
+         console.log(pricingType);
+         if(pricingType == 'static') {
+           ecd = 0.125;
+           edc = 0.875;
+         }
+         else if(pricingType == 'dynamic') {
+           ecd = 0.5;
+           edc = 0.5;
+         }
+         else if(pricingType == 'personalize') {
+           ecd = 0.875;
+           edc = 0.125;
+         }
+
+         calcUpdate(Qc, Qd, Vc, Vd, 0.2, 0.2, ecd, edc);
+
+       }
 
        // Consumer Price from slider input
        var spc = document.getElementById('myp');
@@ -415,14 +454,22 @@
            datasets: [{
              label: "Consumer",
              //fill: true,
-             borderColor: 'rgba(255, 255, 0, 0.5)',
+             borderColor: 'rgba(52, 73, 94, 0.5)',
              pointHoverRadius: 3,
-             // orange
-             backgroundColor: 'rgba(255, 255, 0, 0.5)',
+             // gray
+             backgroundColor: 'rgba(52, 73, 94, 0.5)',
              lineTension: 0,
              data: [{
-               x:0,
-               y:0
+             }],
+           }, {
+             label: "Developer",
+             //fill: true,
+             borderColor: 'rgba(115, 198, 182, 0.5)',
+             pointHoverRadius: 3,
+             // light green
+             backgroundColor: 'rgba(115, 198, 182, 0.5)',
+             lineTension: 0,
+             data: [{
              }],
            }]
        },
@@ -432,7 +479,7 @@
          plugins: {
            title: {
              display: true,
-             text: 'Consumer Price vs Max Market Size'
+             text: 'Changes in Profit'
            }
          },
          showLine: true,
@@ -442,15 +489,14 @@
              type: 'line',
              ticks: {
                fontSize: 11,
-               suggestedMax: 2.3,
-               min: 0
+               min:0
              }
            }],
            yAxes: [{
              type: 'line',
              ticks: {
                fontSize: 11,
-               suggestedMax: 2.3
+               min:0
              }
            }],
          }
@@ -492,11 +538,11 @@
        console.log('pd is:' );
        console.log(pd);
 
-       // console.log('ecd is:' );
-       // console.log(ecd);
-       //
-       // console.log('edc is:' );
-       // console.log(edc);
+       console.log('ecd is:' );
+       console.log(ecd);
+
+       console.log('edc is:' );
+       console.log(edc);
 
        console.log('left is:' );
        console.log(left);
@@ -635,7 +681,16 @@
          pd = yd;
        }
 
+       var opc = (Vc * Vd * (Qd * ((ecd * edc - 2) * Qc - edc * Qd) * Vc + ecd * Qc * (ecd * Qc + Qd) * Vd))/(edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
+       console.log("OPC is:");
+       console.log(opc);
+       var opd = (Vc * Vd * (edc * Qd * (Qc + edc * Qd) * Vc + Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd))/(edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
+       console.log("OPD is:");
+       console.log(opd);
+
        // Total Profit is maximized (turns green) when |0.875 - consumer price| < 0.001 AND when |0.125 - developer price| < 0.001
+       var totalProfit2 = ((pd * qd) + (pc * qc));
+
 
        if ((Math.abs(opc - pc) < 0.001) && (Math.abs(opd - pd) < 0.001))
        {
@@ -644,20 +699,14 @@
 
          chart2.data.datasets[1].backgroundColor = 'rgba(132, 255, 99, 0.5)';
          chart2.data.datasets[1].label = 'Profit (' + (pd * qd).toFixed(5) + ') ~ Optimal';
-         console.log("OPC is:");
-         console.log(opc);
-         console.log("OPD is:");
-         console.log(opd);
+
        } else {
          chart1.data.datasets[1].backgroundColor = 'rgba(132, 99, 255, 0.5)';
          chart1.data.datasets[1].label = 'Profit (' + (pc * qc).toFixed(5) + ')';
 
          chart2.data.datasets[1].backgroundColor = 'rgba(132, 99, 255, 0.5)';
          chart2.data.datasets[1].label = 'Profit (' + (pd * qd).toFixed(5) + ')';
-         console.log("OPC is:");
-         console.log(opc);
-         console.log("OPD is:");
-         console.log(opd);
+
        }
 
        // Calculates the total profit from both consumers and developers
@@ -689,38 +738,26 @@
        chart2.data.datasets[2].data[1].x = xd;
        chart2.data.datasets[2].data[1].y = 0;
 
-       const copyOfPrice = pc;
-       const copyOfMarketSize = xc;
+       const copyOfCProfit = pc*qc;
+       const copyOfDProfit = pd*qd;
 
-       updateChart(chart3, copyOfPrice, copyOfMarketSize);
+       updateProfitChart(chart3, copyOfCProfit, copyOfDProfit);
 
        chart1.update();
        chart2.update();
        chart3.update();
        }
 
-       function updateChart(chart, consumerPrice, consumerMarketSize){
+       function updateProfitChart(chart, consumerProfit, developerProfit)
+       {
+         const consumerIndex = chart.data.datasets[0].data.length - 1;
+         const developerIndex = chart.data.datasets[1].data.length - 1;
 
-         const numberOfPoints = chart.data.datasets[0].data.length;
+         chart.data.datasets[0].data.push({x:consumerIndex, y:consumerProfit});
+         chart.data.datasets[1].data.push({x:developerIndex, y:developerProfit});
 
-         for(let i = 0; i < numberOfPoints; i++) {
-           // if the new consumer price is bigger than any others, push it onto chart
-           if(consumerPrice >= chart.data.datasets[0].data[i].x)
-           {
-             chart.data.datasets[0].data.push({x:consumerPrice, y:consumerMarketSize});
-           }
-           // if the new consumer price is less than, put it before that data point
-           else if(consumerPrice < chart.data.datasets[0].data[i].x)
-           {
-             chart.data.datasets[0].data.shift({x:consumerPrice, y:consumerMarketSize});
-           }
-         }
-
-         // console.log(chart.data.datasets[0].data);
-         // chart.data.datasets[0].data.push({x:consumerPrice, y:consumerMarketSize});
-         // console.log(chart.data.datasets[0].data);
-         chart.update();
        }
+
 
      spc.oninput = function() {
        calcUpdate(Qc, Qd, Vc, Vd, this.value/100, npd.value, ecd, edc, true);
