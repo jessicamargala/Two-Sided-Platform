@@ -63,9 +63,14 @@
      padding: 2px;
    }
 
+   .text {
+     font-size:17px;
+     padding:10px;
+   }
+
    .pricing {
      font-size: 20px;
-     display: inline;
+     display: inline-block;
      position: relative;
      background-color: white;
      border: solid 2px #e6e6e6;
@@ -73,19 +78,19 @@
      padding: 2px;
    }
 
-   span[title]:hover:after {
-     content:attr(title);
-     background-color: #ADD8E6;
-     border: solid 0.5px #5C99F4;
+   .membership {
+     font-size: 20px;
+     display: inline-block;
+     position: relative;
+     background-color: white;
+     border: solid 2px #e6e6e6;
+     color: #707070;
+     padding: 2px;
    }
 
+
    .radioButtons {
-     width: 79.3%;
      padding: 15px;
-     /* background-color:#ffffff;
-     border: solid #e6e6e6 1px; */
-     border-right: none 0px;
-     margin-top: 0px;
      margin-left: 10%;
    }
 
@@ -153,7 +158,7 @@
          <div class="simulation">
            <!-- Chart canvas container for the Consumer Price Chart -->
            <div>
-             <canvas id="consumerChart" style="display: inline-block; height: 86px; width: 45%; margin-left:5%" class="chartjs-render-monitor"></canvas>
+             <canvas id="consumerChart" style="display: inline-block; height: 100px; width: 40%; margin-left:5%" class="chartjs-render-monitor"></canvas>
            </div>
            <!-- Slider for Consumer Price Input -->
            <div id="slidecontainer">
@@ -176,7 +181,7 @@
          <div class="simulation2">
            <!-- Chart canvas container for the Developer Price Chart-->
            <div>
-             <canvas id="developerChart" style="display: inline-block; height: 86px; width: 45%; margin-left:5%" class="chartjs-render-monitor"></canvas>
+             <canvas id="developerChart" style="display: inline-block; height: 100px; width: 40%; margin-left:5%" class="chartjs-render-monitor"></canvas>
            </div>
            <div>
              <div class="variable">
@@ -198,22 +203,32 @@
          <div class="simulation3">
            <!-- Chart canvas container for the Developer Price Chart -->
            <div>
-             <canvas id="historicalChart" style="display: inline-block; height: 86px; width: 45%; margin-left:5%" class="chartjs-render-monitor"></canvas>
+             <canvas id="historicalChart" style="display: inline-block; height: 100px; width: 50%; margin-left:5%" class="chartjs-render-monitor"></canvas>
            </div>
            <button id='addPoint' class='button addPoint'>Add Profit</button>
          </div>
      </div>
 
      <div class="radioButtons">
-       <div class="pricing" id="pricing">Pricing</div><br><br>
-       <span class="static" title="This sets a static price for all customers.">
-       <input id= 'static' onclick='updatePricing(this.value);' type="radio" name="pricingType" value="static" class="required static"> Static </span><br>
-
-       <span class="dynamic" title="This changes prices depending on supply and demand.">
-       <input id= 'dynamic' onclick='updatePricing(this.value);' type="radio" name="pricingType" value="dynamic" class="required dynamic"> Dynamic </span><br>
-
-       <span class="personalize" title="This sets a different price for each customer, depending on what they are willing to pay.">
-       <input id= 'personalize' onclick='updatePricing(this.value);' type="radio" name="pricingType" value="personalize" class="required personzalize"> Personalize </span><br>
+       <div class="pricing" id="pricing">
+         <span>Pricing</span><br>
+         <div class="text">
+           <input id= 'static' onclick='updatePricing(this.value);' type="radio" name="pricingType" value="static" class="required static"> Static </span><br>
+           <input id= 'dynamic' onclick='updatePricing(this.value);' type="radio" name="pricingType" value="dynamic" class="required dynamic"> Dynamic </span><br>
+           <input id= 'personalize' onclick='updatePricing(this.value);' type="radio" name="pricingType" value="personalize" class="required personzalize"> Personalize </span><br>
+         </div>
+       </div>
+       <div class="membership" id="pricing">
+         <span>Membership Rules</span><br>
+         <div class="text">
+           <span>Rider Rating</span><br>
+           <input type="range" min="0" max="500" value="100" class="slider" id="riderRatingSlider">
+           <input type="number" min="0" max="5" value="1" step="any" id="riderRatingText">
+           <span>Driver Rating</span><br>
+           <input type="range" min="0" max="500" value="100" class="slider" id="driverRatingSlider">
+           <input type="number" min="0" max="5" value="1" step="integer" id="driverRatingText">
+        </div>
+       </div>
      </div>
 
      <script>
