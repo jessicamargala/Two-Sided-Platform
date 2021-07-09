@@ -58,14 +58,14 @@
    }
 
    .text {
-     font-size:12px;
+     font-size:15px;
      padding:10px;
    }
 
    .pricing {
-     font-size: 15px;
-     height: 200px;
-     width: 200px;
+     font-size: 18px;
+     height: 355px;
+     width: 295px;
      display: inline-table;
      background-color: white;
      border: solid 2px #e6e6e6;
@@ -74,8 +74,8 @@
    }
 
    .membership {
-     font-size: 15px;
-     height: 200px;
+     font-size: 18px;
+     height: 355px;
      width: 200px;
      display: inline-table;
      background-color: white;
@@ -85,8 +85,8 @@
    }
 
    .advertising {
-     font-size: 15px;
-     height: 200px;
+     font-size: 18px;
+     height: 355px;
      width: 200px;
      display: inline-table;
      background-color: white;
@@ -95,10 +95,45 @@
      padding: 2px;
    }
 
+   .tooltip {
+     position: relative;
+     display: inline-block;
+    }
+
+    .tooltip .tooltiptext {
+      font-size: 13px;
+      font-family: sans-serif;
+      visibility: hidden;
+      width: 200px;
+      background-color: grey;
+      color: #fff;
+      text-align: center;
+      padding: 5px 0;
+      border-radius: 6px;
+      position: absolute;
+      z-index: 1;
+      top:-5px;
+      left:110%;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+    }
+
+   .tooltip .tooltiptext::after {
+     content: " ";
+     position: absolute;
+     top: 50%;
+     right: 100%; /* To the right of the tooltip */
+     margin-top: -5px;
+     border-width: 5px;
+     border-style: solid;
+     border-color: transparent grey transparent transparent;
+   }
 
    .radioButtons {
      padding: 15px;
-     margin-left: 10%;
+     margin-left: 9%;
    }
 
    .simulation {
@@ -195,128 +230,137 @@
          <div id="slidecontainer">
            <div class="text">
              <div class="variable">
-               <div class="bWrap">
-                 <span>Rider Fees</span>
+               <div class="tooltip">Rider Fees
+                 <span class="tooltiptext"> Amount riders must spend </span>
                  <div class="picker">
                    <div class="bWrap">
                      <!-- Input via slider (0 - 2)-->
                      <input type="range" min="0" max="200" value="100" class="slider" id="myp">
                      <!-- Input via decimal text box (0 - 2)-->
-                     <input type="number" min="0" max="2" value="1" step="any" id="np">
+                     <input type="number" min="0" max="2" value="1" step="any" id="np"><br>
                    </div>
                  </div>
                </div>
              </div>
              <div class="variable">
-               <div class="bWrap">
-                 <span>Driver Fees</span>
+               <div class="tooltip">Driver Fees
+                 <span class="tooltiptext"> Amount drivers must spend </span>
                  <div class="picker">
                    <div class="bWrap">
                      <!-- Input via slider (0 - 2)-->
                      <input type="range" min="0" max="200" value="50" class="slider" id="mypd">
                      <!-- Input via decimal text box (0 - 2)-->
-                     <input type="number" min="0" max="2" value="0.5" step="any" id="npd">
+                     <input type="number" min="0" max="2" value="0.5" step="any" id="npd"><br>
                    </div>
                  </div>
                </div>
              </div>
              <div class="variable">
-               <div class="bWrap">
-                 <span>Surge Pricing</span>
+               <div class="tooltip">Surge Pricing
+                 <span class="tooltiptext"> % Markup when drivers are scarce </span>
                  <div class="picker">
                    <div class="bWrap">
-                     <!-- Input via slider (0 - 2)-->
-                     <input type="range" min="0" max="200" value="50" class="slider" id="surgePricingSlider">
-                     <!-- Input via decimal text box (0 - 2)-->
-                     <input type="number" min="0" max="2" value="0.5" step="any" id="surgePricingText">
+                     <!-- Input via slider (0 - .25)-->
+                     <input type="range" min="0" max="25" value="10" class="slider" id="surgePricingSlider">
+                     <!-- Input via decimal text box (0 - .25)-->
+                     <input type="number" min="0" max=".25" value="0.1" step="0.01" id="surgePricingText"><br>
                    </div>
                  </div>
                </div>
              </div>
              <div class="variable">
-               <div class="bWrap">
-                 <span>Crime Pricing</span>
+               <div class="tooltip">Crime Pricing
+                 <span class="tooltiptext"> % Markup for rides in dangerous area </span>
                  <div class="picker">
                    <div class="bWrap">
-                     <!-- Input via slider (0 - 2)-->
-                     <input type="range" min="0" max="200" value="50" class="slider" id="crimePricingSlider">
-                     <!-- Input via decimal text box (0 - 2)-->
-                     <input type="number" min="0" max="2" value="0.5" step="any" id="crimePricingText">
+                     <!-- Input via slider (0 - .25)-->
+                     <input type="range" min="0" max="25" value="10" class="slider" id="crimePricingSlider">
+                     <!-- Input via decimal text box (0 - .25)-->
+                     <input type="number" min="0" max=".25" value="0.1" step="0.01" id="crimePricingText"><br>
                    </div>
                  </div>
                </div>
              </div>
              <div class="variable">
-               <div class="bWrap">
-                 <span>Rider Stars</span>
+               <div class="tooltip">Rider Stars
+                 <span class="tooltiptext"> % Makrup when rider has a low rating </span>
                  <div class="picker">
                    <div class="bWrap">
                      <!-- Input via slider (0 - 2)-->
-                     <input type="range" min="0" max="200" value="50" class="slider" id="riderStarsSlider">
+                     <input type="range" min="0" max="25" value="10" class="slider" id="riderStarsSlider">
                      <!-- Input via decimal text box (0 - 2)-->
-                     <input type="number" min="0" max="2" value="0.5" step="any" id="riderStarsText">
+                     <input type="number" min="0" max=".25" value="0.1" step="0.01" id="riderStarsText"><br>
                    </div>
                  </div>
                </div>
              </div>
              <div class="variable">
-               <div class="bWrap">
-                 <span>Driver Stars</span>
+               <div class="tooltip">Driver Stars
+                 <span class="tooltiptext"> % Discount when driver has a low rating </span>
                  <div class="picker">
                    <div class="bWrap">
                      <!-- Input via slider (0 - 2)-->
-                     <input type="range" min="0" max="200" value="50" class="slider" id="driverStarsSlider">
+                     <input type="range" min="0" max="25" value="10" class="slider" id="driverStarsSlider">
                      <!-- Input via decimal text box (0 - 2)-->
-                     <input type="number" min="0" max="2" value="0.5" step="any" id="driverStarsText">
+                     <input type="number" min="0" max=".25" value="0.1" step="0.01" id="driverStarsText"><br>
                    </div>
                  </div>
                </div>
              </div>
              <div class="variable">
-               <div class="bWrap">
-                 <span>Low Battery</span>
+               <div class="tooltip">Low Battery
+                 <span class="tooltiptext"> % Markup when rider's cell battery is low </span>
                  <div class="picker">
                    <div class="bWrap">
                      <!-- Input via slider (0 - 2)-->
-                     <input type="range" min="0" max="200" value="50" class="slider" id="lowBatterySlider">
+                     <input type="range" min="0" max="25" value="10" class="slider" id="lowBatterySlider">
                      <!-- Input via decimal text box (0 - 2)-->
-                     <input type="number" min="0" max="2" value="0.5" step="any" id="lowBatteryText">
+                     <input type="number" min="0" max=".25" value="0.1" step="0.01" id="lowBatteryText"><br>
                    </div>
                  </div>
                </div>
              </div>
            </div>
          </div>
-         <!-- <div class="text">
-           <input id= 'static' onclick='updatePricing(this.value);' type="radio" name="pricingType" value="static" class="required static"> Static </span><br>
-           <input id= 'dynamic' onclick='updatePricing(this.value);' type="radio" name="pricingType" value="dynamic" class="required dynamic"> Dynamic </span><br>
-           <input id= 'personalize' onclick='updatePricing(this.value);' type="radio" name="pricingType" value="personalize" class="required personzalize"> Personalize </span><br>
-         </div> -->
        </div>
        <div class="membership" id="membership">
          <span>Membership Rules</span><br>
          <div class="text">
-           <span>Rider Rating</span><br>
-           <input type="range" min="0" max="500" value="100" class="slider" id="riderRatingSlider">
-           <input type="number" min="0" max="5" value="1" step="any" id="riderRatingText">
-           <span>Driver Rating</span><br>
-           <input type="range" min="0" max="500" value="100" class="slider" id="driverRatingSlider">
-           <input type="number" min="0" max="5" value="1" step="integer" id="driverRatingText">
+           <div class="tooltip">Ban Riders
+             <span class="tooltiptext"> Remove riders from network if their rating is below this # of stars </span>
+             <input type="range" min="0" max="500" value="100" class="slider" id="riderRatingSlider">
+             <input type="number" min="0" max="5" value="1" step="1" id="riderRatingText"><br>
+           </div>
+           <div class="tooltip">Ban Drivers
+             <span class="tooltiptext"> Remove drivers from network if their rating is below this # of stars </span>
+             <input type="range" min="0" max="500" value="100" class="slider" id="driverRatingSlider">
+             <input type="number" min="0" max="5" value="1" step="1" id="driverRatingText"><br>
+           </div>
          </div>
-         <input type="checkbox" id="riderRedress" name="riderRedress" value="riderRedress">
-         <label for="riderRedress">Rider Redress</label><br>
-         <input type="checkbox" id="driverRedress" name="driverRedress" value="driverRedress">
-         <label for="driverRedress">Driver Redress</label><br>
+         <div class="tooltip">Rider Redress
+           <input type="checkbox" id="riderRedress" name="riderRedress" value="riderRedress">
+           <label for="riderRedress"></label><br><br>
+           <span class="tooltiptext"> Riders can pay a fee to remove bad reviews </span>
+         </div>
+         <div class="tooltip">Driver Redress
+           <input type="checkbox" id="driverRedress" name="driverRedress" value="driverRedress">
+           <label for="driverRedress"></label><br>
+           <span class="tooltiptext"> Drivers can pay a fee to remove bad reviews </span>
+         </div>
        </div>
        <div class="advertising" id="advertising">
          <span>Advertising</span><br>
          <div class="text">
-           <span>Rider-Directed Ads</span><br>
-           <input type="range" min="0" max="500" value="100" class="slider" id="riderAdsSlider">
-           <input type="number" min="0" max="5" value="1" step="any" id="riderAdsText">
-           <span>Driver-Directed Ads</span><br>
-           <input type="range" min="0" max="500" value="100" class="slider" id="driverAdsSlider">
-           <input type="number" min="0" max="5" value="1" step="integer" id="driverAdsText">
+           <div class="tooltip">Driver-Directed Ads
+             <span class="tooltiptext"> Riders pay a fee to advertise themselves </span>
+             <input type="range" min="0" max="500" value="100" class="slider" id="driverAdsSlider">
+             <input type="number" min="0" max="5" value="1" step="any" id="driverAdsText"><br>
+           </div>
+           <div class="tooltip">Rider-Directed Ads
+             <span class="tooltiptext"> Drivers pay a fee to advertise themselves </span>
+             <input type="range" min="0" max="500" value="100" class="slider" id="riderAdsSlider">
+             <input type="number" min="0" max="5" value="1" step="integer" id="riderAdsText"><br>
+           </div>
         </div>
        </div>
      </div>
