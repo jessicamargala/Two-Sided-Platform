@@ -32,16 +32,10 @@
    .variable {
      display: inline-block;
      left: -100px;
-     border-right: solid 1px #e6e6e6;
-     padding-left: 10px;
-     padding-right: 10px;
    }
    .variable2 {
      float: right;
      display: inline-block;
-     border-left: solid 1px #e6e6e6;
-     padding-right: 10px;
-     padding-left: 10px;
    }
    input[type=number]{
      position: relative;
@@ -54,8 +48,8 @@
    } */
    .profit {
      display: inline;
-     position: absolute;
-     left: 46%;
+     position: relative;
+     left: 23%;
      top: 30px;
      background-color: white;
      border: solid 2px #e6e6e6;
@@ -64,14 +58,15 @@
    }
 
    .text {
-     font-size:17px;
+     font-size:12px;
      padding:10px;
    }
 
    .pricing {
-     font-size: 20px;
-     display: inline-block;
-     position: relative;
+     font-size: 15px;
+     height: 200px;
+     width: 200px;
+     display: inline-table;
      background-color: white;
      border: solid 2px #e6e6e6;
      color: #707070;
@@ -79,9 +74,21 @@
    }
 
    .membership {
-     font-size: 20px;
-     display: inline-block;
-     position: relative;
+     font-size: 15px;
+     height: 200px;
+     width: 200px;
+     display: inline-table;
+     background-color: white;
+     border: solid 2px #e6e6e6;
+     color: #707070;
+     padding: 2px;
+   }
+
+   .advertising {
+     font-size: 15px;
+     height: 200px;
+     width: 200px;
+     display: inline-table;
      background-color: white;
      border: solid 2px #e6e6e6;
      color: #707070;
@@ -95,6 +102,7 @@
    }
 
    .simulation {
+     display:inline-table;
      width: 51%;
      padding: 15px;
      background-color:#ffffff;
@@ -104,6 +112,7 @@
    }
 
    .simulation2 {
+     display:inline-table;
      width: 51%;
      padding: 15px;
      background-color:#ffffff;
@@ -113,11 +122,11 @@
    }
 
    .simulation3 {
+     display:inline-table;
      width: 51%;
-     padding: 15px;
+     padding: 10px;
      background-color:#ffffff;
-     border: solid #e6e6e6 1px;
-     border-left: none 0px;
+     border-left: solid #ADD8E6 40px;
      margin-top:30px;
    }
 
@@ -158,67 +167,133 @@
          <div class="simulation">
            <!-- Chart canvas container for the Consumer Price Chart -->
            <div>
-             <canvas id="consumerChart" style="display: inline-block; height: 100px; width: 40%; margin-left:5%" class="chartjs-render-monitor"></canvas>
-           </div>
-           <!-- Slider for Consumer Price Input -->
-           <div id="slidecontainer">
-             <div class="variable">
-               <div class="bWrap">
-                 <span> Consumer Price </span>
-               </div>
-               <div class="picker">
-                 <div class="bWrap">
-                   <!-- Input via slider (0 - 2)-->
-                   <input type="range" min="0" max="200" value="100" class="slider" id="myp">
-                   <!-- Input via decimal text box (0 - 2)-->
-                   <input type="number" min="0" max="2" value="1" step="any" id="np">
-                 </div>
-               </div>
-             </div>
+             <canvas id="consumerChart" style="display: inline-block; height: 85px; width: 40%; margin-left:5%" class="chartjs-render-monitor"></canvas>
            </div>
          </div>
 
          <div class="simulation2">
            <!-- Chart canvas container for the Developer Price Chart-->
            <div>
-             <canvas id="developerChart" style="display: inline-block; height: 100px; width: 40%; margin-left:5%" class="chartjs-render-monitor"></canvas>
-           </div>
-           <div>
-             <div class="variable">
-               <div class="bWrap">
-                 <span> Developer Price </span>
-               </div>
-               <div class="picker">
-                 <div class="bWrap">
-                   <!-- Input via slider (0 - 2)-->
-                   <input type="range" min="0" max="200" value="50" class="slider" id="mypd">
-                   <!-- Input via decimal text box (0 - 2)-->
-                   <input type="number" min="0" max="2" value="0.5" step="any" id="npd">
-                 </div>
-               </div>
-             </div>
+             <canvas id="developerChart" style="display: inline-block; height: 85px; width: 40%; margin-left:5%" class="chartjs-render-monitor"></canvas>
            </div>
          </div>
 
          <div class="simulation3">
            <!-- Chart canvas container for the Developer Price Chart -->
            <div>
-             <canvas id="historicalChart" style="display: inline-block; height: 100px; width: 50%; margin-left:5%" class="chartjs-render-monitor"></canvas>
+             <canvas id="historicalChart" style="display: inline-block; height: 85px; width: 50%; margin-left:5%" class="chartjs-render-monitor"></canvas>
            </div>
            <button id='addPoint' class='button addPoint'>Add Profit</button>
          </div>
+        </div>
      </div>
 
      <div class="radioButtons">
        <div class="pricing" id="pricing">
-         <span>Pricing</span><br>
-         <div class="text">
+         <span>Pricing Policy</span><br>
+         <!-- Slider for Consumer Price Input -->
+         <div id="slidecontainer">
+           <div class="text">
+             <div class="variable">
+               <div class="bWrap">
+                 <span>Rider Fees</span>
+                 <div class="picker">
+                   <div class="bWrap">
+                     <!-- Input via slider (0 - 2)-->
+                     <input type="range" min="0" max="200" value="100" class="slider" id="myp">
+                     <!-- Input via decimal text box (0 - 2)-->
+                     <input type="number" min="0" max="2" value="1" step="any" id="np">
+                   </div>
+                 </div>
+               </div>
+             </div>
+             <div class="variable">
+               <div class="bWrap">
+                 <span>Driver Fees</span>
+                 <div class="picker">
+                   <div class="bWrap">
+                     <!-- Input via slider (0 - 2)-->
+                     <input type="range" min="0" max="200" value="50" class="slider" id="mypd">
+                     <!-- Input via decimal text box (0 - 2)-->
+                     <input type="number" min="0" max="2" value="0.5" step="any" id="npd">
+                   </div>
+                 </div>
+               </div>
+             </div>
+             <div class="variable">
+               <div class="bWrap">
+                 <span>Surge Pricing</span>
+                 <div class="picker">
+                   <div class="bWrap">
+                     <!-- Input via slider (0 - 2)-->
+                     <input type="range" min="0" max="200" value="50" class="slider" id="surgePricingSlider">
+                     <!-- Input via decimal text box (0 - 2)-->
+                     <input type="number" min="0" max="2" value="0.5" step="any" id="surgePricingText">
+                   </div>
+                 </div>
+               </div>
+             </div>
+             <div class="variable">
+               <div class="bWrap">
+                 <span>Crime Pricing</span>
+                 <div class="picker">
+                   <div class="bWrap">
+                     <!-- Input via slider (0 - 2)-->
+                     <input type="range" min="0" max="200" value="50" class="slider" id="crimePricingSlider">
+                     <!-- Input via decimal text box (0 - 2)-->
+                     <input type="number" min="0" max="2" value="0.5" step="any" id="crimePricingText">
+                   </div>
+                 </div>
+               </div>
+             </div>
+             <div class="variable">
+               <div class="bWrap">
+                 <span>Rider Stars</span>
+                 <div class="picker">
+                   <div class="bWrap">
+                     <!-- Input via slider (0 - 2)-->
+                     <input type="range" min="0" max="200" value="50" class="slider" id="riderStarsSlider">
+                     <!-- Input via decimal text box (0 - 2)-->
+                     <input type="number" min="0" max="2" value="0.5" step="any" id="riderStarsText">
+                   </div>
+                 </div>
+               </div>
+             </div>
+             <div class="variable">
+               <div class="bWrap">
+                 <span>Driver Stars</span>
+                 <div class="picker">
+                   <div class="bWrap">
+                     <!-- Input via slider (0 - 2)-->
+                     <input type="range" min="0" max="200" value="50" class="slider" id="driverStarsSlider">
+                     <!-- Input via decimal text box (0 - 2)-->
+                     <input type="number" min="0" max="2" value="0.5" step="any" id="driverStarsText">
+                   </div>
+                 </div>
+               </div>
+             </div>
+             <div class="variable">
+               <div class="bWrap">
+                 <span>Low Battery</span>
+                 <div class="picker">
+                   <div class="bWrap">
+                     <!-- Input via slider (0 - 2)-->
+                     <input type="range" min="0" max="200" value="50" class="slider" id="lowBatterySlider">
+                     <!-- Input via decimal text box (0 - 2)-->
+                     <input type="number" min="0" max="2" value="0.5" step="any" id="lowBatteryText">
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <!-- <div class="text">
            <input id= 'static' onclick='updatePricing(this.value);' type="radio" name="pricingType" value="static" class="required static"> Static </span><br>
            <input id= 'dynamic' onclick='updatePricing(this.value);' type="radio" name="pricingType" value="dynamic" class="required dynamic"> Dynamic </span><br>
            <input id= 'personalize' onclick='updatePricing(this.value);' type="radio" name="pricingType" value="personalize" class="required personzalize"> Personalize </span><br>
-         </div>
+         </div> -->
        </div>
-       <div class="membership" id="pricing">
+       <div class="membership" id="membership">
          <span>Membership Rules</span><br>
          <div class="text">
            <span>Rider Rating</span><br>
@@ -227,6 +302,21 @@
            <span>Driver Rating</span><br>
            <input type="range" min="0" max="500" value="100" class="slider" id="driverRatingSlider">
            <input type="number" min="0" max="5" value="1" step="integer" id="driverRatingText">
+         </div>
+         <input type="checkbox" id="riderRedress" name="riderRedress" value="riderRedress">
+         <label for="riderRedress">Rider Redress</label><br>
+         <input type="checkbox" id="driverRedress" name="driverRedress" value="driverRedress">
+         <label for="driverRedress">Driver Redress</label><br>
+       </div>
+       <div class="advertising" id="advertising">
+         <span>Advertising</span><br>
+         <div class="text">
+           <span>Rider-Directed Ads</span><br>
+           <input type="range" min="0" max="500" value="100" class="slider" id="riderAdsSlider">
+           <input type="number" min="0" max="5" value="1" step="any" id="riderAdsText">
+           <span>Driver-Directed Ads</span><br>
+           <input type="range" min="0" max="500" value="100" class="slider" id="driverAdsSlider">
+           <input type="number" min="0" max="5" value="1" step="integer" id="driverAdsText">
         </div>
        </div>
      </div>
@@ -325,7 +415,7 @@
              }, {
                // Profit
                // Selected Price * Calculated Quantity from plength(x, y, p)
-               label: 'Profit(' + ')',
+               label: 'Rider Profit = Riders * Fees = (' + ')',
                fill: true,
                // purple
                backgroundColor: 'rgba(132, 99, 255, 0.5)',
@@ -366,6 +456,10 @@
                  fontSize: 11,
                  suggestedMax: 2.3,
                  min: 0
+               },
+               title: {
+                 display:true,
+                 text: '# of Potential Riders'
                }
              }],
              yAxes: [{
@@ -373,6 +467,10 @@
                ticks: {
                  fontSize: 11,
                  suggestedMax: 2.3
+               },
+               title: {
+                 display:true,
+                 text: 'Rider Base Fees'
                }
              }],
            }
@@ -535,32 +633,6 @@
      // left -> boolean value reprsents which price has been adjusted (true -> consumer price was adjusted/false -> dev price was adjusted)
      function calcUpdate(Qc, Qd, Vc, Vd, pc, pd, ecd, edc, left)
      {
-       console.log('Qc is:' );
-       console.log(Qc);
-
-       console.log('Qd is:' );
-       console.log(Qd);
-
-       console.log('Vc is:' );
-       console.log(Vc);
-
-       console.log('Vd is:' );
-       console.log(Vd);
-
-       console.log('pc is:' );
-       console.log(pc);
-
-       console.log('pd is:' );
-       console.log(pd);
-
-       console.log('ecd is:' );
-       console.log(ecd);
-
-       console.log('edc is:' );
-       console.log(edc);
-
-       console.log('left is:' );
-       console.log(left);
 
        // Keep within Range 0-2
        // Consumer Price
@@ -584,15 +656,11 @@
        // Similar to the plenght() function in the single sided market simulation
        // qc represents the x-value of the profit for consumers (the quantity)
        let qc = (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd)/((ecd * edc - 1) * Vc * Vd);
-       console.log('qc is:');
-       console.log(qc);
 
        // Profit Size Length for developers represents Quantity
        // Similar to the plenght() function in the single sided market simulation
        // qd represents the x-value of the profit for developers (the quantity)
        let qd = (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd)/((ecd * edc - 1) * Vc * Vd);
-       console.log('qd is:');
-       console.log(qd);
 
        // If the consumer profit is ever smaller than 0
        if (qc < 0)
@@ -612,13 +680,9 @@
          // When developer price is adjusted, the consumer price changes
          if (left) {
            pc = 1 + edc - pd * edc
-           console.log('pc is:');
-           console.log(pc);
          }
          else {
            pd = (edc + 1 - pc)/edc;
-           console.log('pd is:');
-           console.log(pd);
          }
 
          // Update the profit lengths for both consumers (qc) and developers (qd) with updated values
@@ -666,23 +730,15 @@
 
        // The y value of the consumer chart (The Maximum Value)
        let yc = ((Qc + edc * ((pd * Qd * Vc + ( ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd))) * Vc)/Qc;
-       console.log('yc is:');
-       console.log(yc);
 
        // The x value of the consumer chart (The Maximum Market Size)
        let xc = Qc + edc * ((pd * Qd * Vc + ( ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd));
-       console.log('xc is:');
-       console.log(xc);
 
        // The y value of the developer chart (The Maximum Value)
        let yd = ((Qd + ecd * ((pc * Qc * Vd + ( edc * Qd * (pd - Vd) - Qc * Vd) * Vc) / ((edc * ecd - 1) * Vd * Vc))) * Vd)/Qd;
-       console.log('yd is:');
-       console.log(yd);
 
        // The x value of the developer chart (The Maximum Market Size)
        let xd = Qd + ecd * ((pc * Qc * Vd + ( edc * Qd * (pd - Vd) - Qc * Vd) * Vc) / ((edc * ecd - 1) * Vd * Vc));
-       console.log('xd is:');
-       console.log(xd);
 
        // Consumer Price cannot exceed  Consumer Maximum Market Size
        if (pc > yc)
@@ -697,11 +753,7 @@
        }
 
        var opc = (Vc * Vd * (Qd * ((ecd * edc - 2) * Qc - edc * Qd) * Vc + ecd * Qc * (ecd * Qc + Qd) * Vd))/(edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
-       console.log("OPC is:");
-       console.log(opc);
        var opd = (Vc * Vd * (edc * Qd * (Qc + edc * Qd) * Vc + Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd))/(edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
-       console.log("OPD is:");
-       console.log(opd);
 
        // Total Profit is maximized (turns green) when |0.875 - consumer price| < 0.001 AND when |0.125 - developer price| < 0.001
        var totalProfit2 = ((pd * qd) + (pc * qc));
@@ -710,24 +762,24 @@
        if ((Math.abs(opc - pc) < 0.001) && (Math.abs(opd - pd) < 0.001))
        {
          chart1.data.datasets[1].backgroundColor = 'rgba(132, 255, 99, 0.5)';
-         chart1.data.datasets[1].label = 'Profit (' + (pc * qc).toFixed(5) + ') ~ Optimal';
+         chart1.data.datasets[1].label = 'Rider Profit = Riders * Fees = (' + (pc * qc).toFixed(5) + ') ~ Optimal';
 
          chart2.data.datasets[1].backgroundColor = 'rgba(132, 255, 99, 0.5)';
-         chart2.data.datasets[1].label = 'Profit (' + (pd * qd).toFixed(5) + ') ~ Optimal';
+         chart2.data.datasets[1].label = 'Driver Profit = Drivers * Fees = (' + (pd * qd).toFixed(5) + ') ~ Optimal';
 
        } else {
          chart1.data.datasets[1].backgroundColor = 'rgba(132, 99, 255, 0.5)';
-         chart1.data.datasets[1].label = 'Profit (' + (pc * qc).toFixed(5) + ')';
+         chart1.data.datasets[1].label = 'Rider Profit = Riders * Fees = (' + (pc * qc).toFixed(5) + ')';
 
          chart2.data.datasets[1].backgroundColor = 'rgba(132, 99, 255, 0.5)';
-         chart2.data.datasets[1].label = 'Profit (' + (pd * qd).toFixed(5) + ')';
+         chart2.data.datasets[1].label = 'Driver Profit = Drivers * Fees = (' + (pd * qd).toFixed(5) + ')';
 
        }
 
        // Calculates the total profit from both consumers and developers
        // Total Profit = Price * Quantity
 
-       totalProfit.innerHTML = "Total Profit:" + ((pd * qd) + (pc * qc)).toFixed(5);
+       totalProfit.innerHTML = "Total Profit = Rider Profit + Driver Profit - Expenses = " + ((pd * qd) + (pc * qc)).toFixed(5);
 
 
        chart1.data.datasets[0].data[0].y = yc;
