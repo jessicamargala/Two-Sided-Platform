@@ -49,7 +49,8 @@
    .profit {
      display: inline;
      position: relative;
-     left: 23%;
+     font-weight: bold;
+     left: 26%;
      top: 30px;
      background-color: white;
      border: solid 2px #e6e6e6;
@@ -134,6 +135,18 @@
    .radioButtons {
      padding: 15px;
      margin-left: 9%;
+     display: flex;
+   }
+
+   .pageTitle {
+     writing-mode: tb-rl;
+     transform: rotate(-180deg);
+     padding: 15px;
+     background-color: white;
+     border: solid 2px #e6e6e6;
+     display: inline-table;
+     text-align: center;
+     font-weight: bold;
    }
 
    .simulation {
@@ -141,9 +154,8 @@
      width: 51%;
      padding: 15px;
      background-color:#ffffff;
-     border: solid #e6e6e6 1px;
      border-right: none 0px;
-     margin-top:30px;
+     margin-top:60px;
    }
 
    .simulation2 {
@@ -151,9 +163,7 @@
      width: 51%;
      padding: 15px;
      background-color:#ffffff;
-     border: solid #e6e6e6 1px;
-     border-left: none 0px;
-     margin-top:30px;
+     margin-top:60px;
    }
 
    .simulation3 {
@@ -162,7 +172,6 @@
      padding: 10px;
      background-color:#ffffff;
      border-left: solid #ADD8E6 40px;
-     margin-top:30px;
    }
 
    .button {
@@ -175,7 +184,6 @@
      font-family:serif;
      transition-duration: 0.4s;
      cursor: pointer;
-
    }
 
    .addPoint {
@@ -190,7 +198,8 @@
    }
 
    .simcontainer {
-     display: inline-flex;
+     background-color: white;
+     display: flex;
      margin-left: 10%;
      width: 82%;
    }
@@ -198,32 +207,37 @@
  </style>
  <body>
    <div class="profit" id="profit">Total Profit:0.53895</div>
-     <div class="simcontainer">
-         <div class="simulation">
-           <!-- Chart canvas container for the Consumer Price Chart -->
-           <div>
-             <canvas id="consumerChart" style="display: inline-block; height: 85px; width: 40%; margin-left:5%" class="chartjs-render-monitor"></canvas>
-           </div>
-         </div>
-
-         <div class="simulation2">
-           <!-- Chart canvas container for the Developer Price Chart-->
-           <div>
-             <canvas id="developerChart" style="display: inline-block; height: 85px; width: 40%; margin-left:5%" class="chartjs-render-monitor"></canvas>
-           </div>
-         </div>
-
-         <div class="simulation3">
-           <!-- Chart canvas container for the Developer Price Chart -->
-           <div>
-             <canvas id="historicalChart" style="display: inline-block; height: 85px; width: 50%; margin-left:5%" class="chartjs-render-monitor"></canvas>
-           </div>
-           <button id='addPoint' class='button addPoint'>Add Profit</button>
-         </div>
+    <div class="simcontainer">
+      <div class="pageTitle">
+        <span>Platform Dashboard</span>
+      </div>
+      <div class="simulation">
+        <!-- Chart canvas container for the Consumer Price Chart -->
+        <div>
+          <canvas id="consumerChart" style="display: inline-block; height: 100px; width: 40%; margin-left:5%" class="chartjs-render-monitor"></canvas>
         </div>
-     </div>
+      </div>
+
+      <div class="simulation2">
+        <!-- Chart canvas container for the Developer Price Chart-->
+        <div>
+          <canvas id="developerChart" style="display: inline-block; height: 100px; width: 40%; margin-left:5%" class="chartjs-render-monitor"></canvas>
+        </div>
+      </div>
+
+      <div class="simulation3">
+        <!-- Chart canvas container for the Developer Price Chart -->
+        <div>
+          <canvas id="profitChart" style="display: inline-block; height: 150px; width: 50%; margin-left:5%" class="chartjs-render-monitor"></canvas>
+        </div>
+        <button id='addPoint' class='button addPoint' value="false" onclick="saveChanges()">Save Changes</button>
+      </div>
+    </div>
 
      <div class="radioButtons">
+       <div class="pageTitle">
+         <span>Adminstrator Controls</span>
+       </div>
        <div class="pricing" id="pricing">
          <span>Pricing Policy</span><br>
          <!-- Slider for Consumer Price Input -->
@@ -430,8 +444,8 @@
        var ctx1 = document.getElementById('consumerChart').getContext('2d');
        // Chart from canvas node developerChart
        var ctx2 = document.getElementById('developerChart').getContext('2d');
-       // Chart from canvas node historicalChart
-       var ctx3 = document.getElementById('historicalChart').getContext('2d');
+       // Chart from canvas node profitChart
+       var ctx3 = document.getElementById('profitChart').getContext('2d');
 
        var chart1 = new Chart(ctx1, {
 
@@ -445,8 +459,7 @@
                // From the Max Value to Max Market Size
                  label: "Consumer Surplus",
                  fill: 1,
-                 // orange
-                 backgroundColor: 'rgba(255, 192, 99, 0.5)',
+                 backgroundColor: 'rgba(255, 192, 99, 0.5)',  // orange
                  lineTension: 0,
                  pointHoverRadius: 3,
                  data: [{
@@ -461,8 +474,7 @@
                // Selected Price * Calculated Quantity from plength(x, y, p)
                label: 'Rider Profit = Riders * Fees = (' + ')',
                fill: true,
-               // purple
-               backgroundColor: 'rgba(132, 99, 255, 0.5)',
+               backgroundColor: 'rgba(88, 214, 141, 0.5)',    // light green
                pointHoverRadius: 3,
                data: [{
                    x: 0,
@@ -548,8 +560,7 @@
                // Profit
                // Selected Price * Calculated Quantity from plength(x, y, p)
                label: 'Profit(' + ')',
-               // purple
-               backgroundColor: 'rgba(132, 99, 255, 0.5)',
+               backgroundColor: 'rgba(84, 153, 199, 0.5)',    // light blue
                fill: true,
                data: [{
                    x: 0,
@@ -580,7 +591,7 @@
          // Configuration options go here
          options: {
            responsive:true,
-         scales: {
+           scales: {
            xAxes: [{
              type: 'linear',
              ticks: {
@@ -603,59 +614,42 @@
 
      var chart3 = new Chart(ctx3, {
 
-       // The type of chart we want to create
-       type: 'scatter',
-
+       // The type of chart being cretated
+       type: 'bar',
        // The data for our dataset
        data: {
-           datasets: [{
-             label: "Consumer",
-             //fill: true,
-             borderColor: 'rgba(52, 73, 94, 0.5)',
-             pointHoverRadius: 3,
-             // gray
-             backgroundColor: 'rgba(52, 73, 94, 0.5)',
-             lineTension: 0,
-             data: [{
-             }],
-           }, {
-             label: "Developer",
-             //fill: true,
-             borderColor: 'rgba(115, 198, 182, 0.5)',
-             pointHoverRadius: 3,
-             // light green
-             backgroundColor: 'rgba(115, 198, 182, 0.5)',
-             lineTension: 0,
-             data: [{
-             }],
+           datasets: [
+           {
+             label: "Rider Profit",
+             //barThickness: 40,
+             borderColor: 'rgba(175, 122, 197, 0.5)',
+             backgroundColor: 'rgba(175, 122, 197, 0.5)',    // purple
+             data: [],
+           },
+           {
+             label: "Driver Profit",
+             //barThickness: 40,
+             borderColor: 'rgba(84, 153, 199, 0.5)',
+             backgroundColor: 'rgba(84, 153, 199, 0.5)',    // light blue
+             data: [],
            }]
        },
        // Configuration options go here
        options: {
-         //When lines 309 - 314 are uncommented, all three charts stop displaying
+         responsive: true,
          plugins: {
            title: {
              display: true,
-             text: 'Changes in Profit'
+             text: 'Changes in Total Profit'
            }
          },
-         showLine: true,
-         responsive: true,
          scales: {
-           xAxes: [{
-             type: 'line',
-             ticks: {
-               fontSize: 11,
-               min:0
-             }
-           }],
-           yAxes: [{
-             type: 'line',
-             ticks: {
-               fontSize: 11,
-               min:0
-             }
-           }],
+           x: {
+             stacked:true
+           },
+           y: {
+             stacked: true
+           },
          }
        }
      });
@@ -663,7 +657,8 @@
      // Update the values of the chart
      // Initial consumer price is set to 0.2 (pc = 0.2)
      // Initial developer price is set to 0.2 (pd = 0.2)
-     calcUpdate(Qc, Qd, Vc, Vd, 0.2, 0.2, ecd, edc)
+     calcUpdate(Qc, Qd, Vc, Vd, 0.2, 0.2, ecd, edc);
+     addData(chart3, "", 0.33684, 0.20211);
 
      // Function to update  the values of the chart
      // Qc -> Consumer Maximum Market Size (How many consumers are in the market)
@@ -812,10 +807,10 @@
          chart2.data.datasets[1].label = 'Driver Profit = Drivers * Fees = (' + (pd * qd).toFixed(5) + ') ~ Optimal';
 
        } else {
-         chart1.data.datasets[1].backgroundColor = 'rgba(132, 99, 255, 0.5)';
+         chart1.data.datasets[1].backgroundColor = 'rgba(175, 122, 197, 0.5)';   // purple
          chart1.data.datasets[1].label = 'Rider Profit = Riders * Fees = (' + (pc * qc).toFixed(5) + ')';
 
-         chart2.data.datasets[1].backgroundColor = 'rgba(132, 99, 255, 0.5)';
+         chart2.data.datasets[1].backgroundColor = 'rgba(84, 153, 199, 0.5)';    // light blue
          chart2.data.datasets[1].label = 'Driver Profit = Drivers * Fees = (' + (pd * qd).toFixed(5) + ')';
 
        }
@@ -852,21 +847,43 @@
        const copyOfCProfit = pc*qc;
        const copyOfDProfit = pd*qd;
 
-       updateProfitChart(chart3, copyOfCProfit, copyOfDProfit);
+       var change = document.getElementById("addPoint");
+
+       if(change.value == "true") {
+         addData(chart3, "", copyOfCProfit, copyOfDProfit);
+         change.value = "false"
+       }
 
        chart1.update();
        chart2.update();
        chart3.update();
        }
 
-       function updateProfitChart(chart, consumerProfit, developerProfit)
-       {
-         const consumerIndex = chart.data.datasets[0].data.length - 1;
-         const developerIndex = chart.data.datasets[1].data.length - 1;
+       function addData(chart, label, riderData, driverData) {
+         chart.data.labels.push(label);
+         // Adding new rider Profit
+         chart.data.datasets[0].data.push(riderData);
+         // Adding new driver Profit
+         chart.data.datasets[1].data.push(driverData);
+         chart.update();
+       }
 
-         chart.data.datasets[0].data.push({x:consumerIndex, y:consumerProfit});
-         chart.data.datasets[1].data.push({x:developerIndex, y:developerProfit});
+       function saveChanges() {
+         var change = document.getElementById("addPoint");
+         change.value = "true";
+         console.log(change.value);
+         //changes names later
+         // const Qc = document.getElementById();
+         // const Qd = document.getElementById();
+         // const Vc = document.getElementById();
+         // const Vd = document.getElementById();
+         const pc = document.getElementById('np');
+         const pd = document.getElementById('npd');
+         // const ecd = document.getElementById();
+         // const edc = document.getElementById();
+         // const left = document.getElementById();
 
+         calcUpdate(Qc, Qd, Vc, Vd, parseFloat(pc.value), parseFloat(pd.value), ecd, edc, true);
        }
 
 
@@ -884,6 +901,9 @@
 
      npd.oninput = function() {
        calcUpdate(Qc, Qd, Vc, Vd, npc.value, this.value, ecd, edc, false);
+     }
+     surgePricingSlider.oninput = function() {
+       calcUpdate(Qc, Qd, Vc, Vd, this.value/100, npd.value, ecd, edc, true);
      }
 
    </script>
