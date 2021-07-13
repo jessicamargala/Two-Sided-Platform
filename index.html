@@ -9,9 +9,6 @@
     <title>Interdependent Demand Curve</title>
   </head>
   <style>
-    /* * {
-     box-sizing: border-box;
-   } */
     body {
       background-color: #add8e6;
     }
@@ -34,7 +31,6 @@
       left: -100px;
     }
     .variable2 {
-      float: right;
       display: inline-block;
     }
     input[type="number"] {
@@ -44,8 +40,6 @@
       width: 4em;
       color: #707070;
     }
-    /* #redraw {
-   } */
     .profit {
       display: inline;
       position: relative;
@@ -215,12 +209,7 @@
         <div>
           <canvas
             id="consumerChart"
-            style="
-              display: inline-block;
-              height: 100px;
-              width: 40%;
-              margin-left: 5%;
-            "
+            style="display: inline-block; height: 100px; width: 40%; margin-left: 5%"
             class="chartjs-render-monitor"
           ></canvas>
         </div>
@@ -231,12 +220,7 @@
         <div>
           <canvas
             id="developerChart"
-            style="
-              display: inline-block;
-              height: 100px;
-              width: 40%;
-              margin-left: 5%;
-            "
+            style="display: inline-block; height: 100px; width: 40%; margin-left: 5%"
             class="chartjs-render-monitor"
           ></canvas>
         </div>
@@ -247,23 +231,11 @@
         <div>
           <canvas
             id="profitChart"
-            style="
-              display: inline-block;
-              height: 150px;
-              width: 50%;
-              margin-left: 5%;
-            "
+            style="display: inline-block; height: 150px; width: 50%; margin-left: 5%"
             class="chartjs-render-monitor"
           ></canvas>
         </div>
-        <button
-          id="addPoint"
-          class="button addPoint"
-          value="false"
-          onclick="saveChanges()"
-        >
-          Save Changes
-        </button>
+        <button id="addPoint" class="button addPoint" value="false" onclick="saveChanges()">Save Changes</button>
       </div>
     </div>
 
@@ -283,23 +255,9 @@
                 <div class="picker">
                   <div class="bWrap">
                     <!-- Input via slider (0 - 2)-->
-                    <input
-                      type="range"
-                      min="0"
-                      max="200"
-                      value="100"
-                      class="slider"
-                      id="myp"
-                    />
+                    <input type="range" min="0" max="200" value="100" class="slider" id="consumerPriceSlider" />
                     <!-- Input via decimal text box (0 - 2)-->
-                    <input
-                      type="number"
-                      min="0"
-                      max="2"
-                      value="1"
-                      step="any"
-                      id="np"
-                    /><br />
+                    <input type="number" min="0" max="2" value="1" step="any" id="consumerPrice" /><br />
                   </div>
                 </div>
               </div>
@@ -311,23 +269,9 @@
                 <div class="picker">
                   <div class="bWrap">
                     <!-- Input via slider (0 - 2)-->
-                    <input
-                      type="range"
-                      min="0"
-                      max="200"
-                      value="50"
-                      class="slider"
-                      id="mypd"
-                    />
+                    <input type="range" min="0" max="200" value="50" class="slider" id="developerPriceSlider" />
                     <!-- Input via decimal text box (0 - 2)-->
-                    <input
-                      type="number"
-                      min="0"
-                      max="2"
-                      value="0.5"
-                      step="any"
-                      id="npd"
-                    /><br />
+                    <input type="number" min="0" max="2" value="0.5" step="any" id="developerPrice" /><br />
                   </div>
                 </div>
               </div>
@@ -335,29 +279,13 @@
             <div class="variable">
               <div class="tooltip">
                 Surge Pricing
-                <span class="tooltiptext">
-                  % Markup when drivers are scarce
-                </span>
+                <span class="tooltiptext"> % Markup when drivers are scarce </span>
                 <div class="picker">
                   <div class="bWrap">
                     <!-- Input via slider (0 - .25)-->
-                    <input
-                      type="range"
-                      min="0"
-                      max="25"
-                      value="10"
-                      class="slider"
-                      id="surgePricingSlider"
-                    />
+                    <input type="range" min="0" max="25" value="10" class="slider" id="surgePricingSlider" />
                     <!-- Input via decimal text box (0 - .25)-->
-                    <input
-                      type="number"
-                      min="0"
-                      max=".25"
-                      value="0.1"
-                      step="0.01"
-                      id="surgePricingText"
-                    /><br />
+                    <input type="number" min="0" max=".25" value="0" step="0.01" id="surgePricing" /><br />
                   </div>
                 </div>
               </div>
@@ -365,29 +293,13 @@
             <div class="variable">
               <div class="tooltip">
                 Crime Pricing
-                <span class="tooltiptext">
-                  % Markup for rides in dangerous area
-                </span>
+                <span class="tooltiptext"> % Markup for rides in dangerous area </span>
                 <div class="picker">
                   <div class="bWrap">
                     <!-- Input via slider (0 - .25)-->
-                    <input
-                      type="range"
-                      min="0"
-                      max="25"
-                      value="10"
-                      class="slider"
-                      id="crimePricingSlider"
-                    />
+                    <input type="range" min="0" max="25" value="10" class="slider" id="crimePricingSlider" />
                     <!-- Input via decimal text box (0 - .25)-->
-                    <input
-                      type="number"
-                      min="0"
-                      max=".25"
-                      value="0.1"
-                      step="0.01"
-                      id="crimePricingText"
-                    /><br />
+                    <input type="number" min="0" max=".25" value="0" step="0.01" id="crimePricing" /><br />
                   </div>
                 </div>
               </div>
@@ -395,29 +307,13 @@
             <div class="variable">
               <div class="tooltip">
                 Rider Stars
-                <span class="tooltiptext">
-                  % Makrup when rider has a low rating
-                </span>
+                <span class="tooltiptext"> % Makrup when rider has a low rating </span>
                 <div class="picker">
                   <div class="bWrap">
                     <!-- Input via slider (0 - 2)-->
-                    <input
-                      type="range"
-                      min="0"
-                      max="25"
-                      value="10"
-                      class="slider"
-                      id="riderStarsSlider"
-                    />
+                    <input type="range" min="0" max="25" value="10" class="slider" id="riderStarsSlider" />
                     <!-- Input via decimal text box (0 - 2)-->
-                    <input
-                      type="number"
-                      min="0"
-                      max=".25"
-                      value="0.1"
-                      step="0.01"
-                      id="riderStarsText"
-                    /><br />
+                    <input type="number" min="0" max=".25" value="0" step="0.01" id="riderStars" /><br />
                   </div>
                 </div>
               </div>
@@ -425,29 +321,13 @@
             <div class="variable">
               <div class="tooltip">
                 Driver Stars
-                <span class="tooltiptext">
-                  % Discount when driver has a low rating
-                </span>
+                <span class="tooltiptext"> % Discount when driver has a low rating </span>
                 <div class="picker">
                   <div class="bWrap">
                     <!-- Input via slider (0 - 2)-->
-                    <input
-                      type="range"
-                      min="0"
-                      max="25"
-                      value="10"
-                      class="slider"
-                      id="driverStarsSlider"
-                    />
+                    <input type="range" min="0" max="25" value="10" class="slider" id="driverStarsSlider" />
                     <!-- Input via decimal text box (0 - 2)-->
-                    <input
-                      type="number"
-                      min="0"
-                      max=".25"
-                      value="0.1"
-                      step="0.01"
-                      id="driverStarsText"
-                    /><br />
+                    <input type="number" min="0" max=".25" value="0" step="0.01" id="driverStars" /><br />
                   </div>
                 </div>
               </div>
@@ -455,29 +335,13 @@
             <div class="variable">
               <div class="tooltip">
                 Low Battery
-                <span class="tooltiptext">
-                  % Markup when rider's cell battery is low
-                </span>
+                <span class="tooltiptext"> % Markup when rider's cell battery is low </span>
                 <div class="picker">
                   <div class="bWrap">
                     <!-- Input via slider (0 - 2)-->
-                    <input
-                      type="range"
-                      min="0"
-                      max="25"
-                      value="10"
-                      class="slider"
-                      id="lowBatterySlider"
-                    />
+                    <input type="range" min="0" max="25" value="10" class="slider" id="lowBatterySlider" />
                     <!-- Input via decimal text box (0 - 2)-->
-                    <input
-                      type="number"
-                      min="0"
-                      max=".25"
-                      value="0.1"
-                      step="0.01"
-                      id="lowBatteryText"
-                    /><br />
+                    <input type="number" min="0" max=".25" value="0" step="0.01" id="lowBattery" /><br />
                   </div>
                 </div>
               </div>
@@ -490,76 +354,28 @@
         <div class="text">
           <div class="tooltip">
             Ban Riders
-            <span class="tooltiptext">
-              Remove riders from network if their rating is below this # of
-              stars
-            </span>
-            <input
-              type="range"
-              min="0"
-              max="500"
-              value="100"
-              class="slider"
-              id="riderRatingSlider"
-            />
-            <input
-              type="number"
-              min="0"
-              max="5"
-              value="1"
-              step="1"
-              id="riderRatingText"
-            /><br />
+            <span class="tooltiptext"> Remove riders from network if their rating is below this # of stars </span>
+            <input type="range" min="0" max="500" value="100" class="slider" id="riderRatingSlider" />
+            <input type="number" min="0" max="5" value="1" step="1" id="riderRating" /><br />
           </div>
           <div class="tooltip">
             Ban Drivers
-            <span class="tooltiptext">
-              Remove drivers from network if their rating is below this # of
-              stars
-            </span>
-            <input
-              type="range"
-              min="0"
-              max="500"
-              value="100"
-              class="slider"
-              id="driverRatingSlider"
-            />
-            <input
-              type="number"
-              min="0"
-              max="5"
-              value="1"
-              step="1"
-              id="driverRatingText"
-            /><br />
+            <span class="tooltiptext"> Remove drivers from network if their rating is below this # of stars </span>
+            <input type="range" min="0" max="500" value="100" class="slider" id="driverRatingSlider" />
+            <input type="number" min="0" max="5" value="1" step="1" id="driverRating" /><br />
           </div>
         </div>
         <div class="tooltip">
           Rider Redress
-          <input
-            type="checkbox"
-            id="riderRedress"
-            name="riderRedress"
-            value="riderRedress"
-          />
+          <input type="checkbox" id="riderRedress" name="riderRedress" value="riderRedress" />
           <label for="riderRedress"></label><br /><br />
-          <span class="tooltiptext">
-            Riders can pay a fee to remove bad reviews
-          </span>
+          <span class="tooltiptext"> Riders can pay a fee to remove bad reviews </span>
         </div>
         <div class="tooltip">
           Driver Redress
-          <input
-            type="checkbox"
-            id="driverRedress"
-            name="driverRedress"
-            value="driverRedress"
-          />
+          <input type="checkbox" id="driverRedress" name="driverRedress" value="driverRedress" />
           <label for="driverRedress"></label><br />
-          <span class="tooltiptext">
-            Drivers can pay a fee to remove bad reviews
-          </span>
+          <span class="tooltiptext"> Drivers can pay a fee to remove bad reviews </span>
         </div>
       </div>
       <div class="advertising" id="advertising">
@@ -567,47 +383,15 @@
         <div class="text">
           <div class="tooltip">
             Driver-Directed Ads
-            <span class="tooltiptext">
-              Riders pay a fee to advertise themselves
-            </span>
-            <input
-              type="range"
-              min="0"
-              max="500"
-              value="100"
-              class="slider"
-              id="driverAdsSlider"
-            />
-            <input
-              type="number"
-              min="0"
-              max="5"
-              value="1"
-              step="any"
-              id="driverAdsText"
-            /><br />
+            <span class="tooltiptext"> Riders pay a fee to advertise themselves </span>
+            <input type="range" min="0" max="500" value="100" class="slider" id="driverAdsSlider" />
+            <input type="number" min="0" max="5" value="1" step="any" id="driverAds" /><br />
           </div>
           <div class="tooltip">
             Rider-Directed Ads
-            <span class="tooltiptext">
-              Drivers pay a fee to advertise themselves
-            </span>
-            <input
-              type="range"
-              min="0"
-              max="500"
-              value="100"
-              class="slider"
-              id="riderAdsSlider"
-            />
-            <input
-              type="number"
-              min="0"
-              max="5"
-              value="1"
-              step="integer"
-              id="riderAdsText"
-            /><br />
+            <span class="tooltiptext"> Drivers pay a fee to advertise themselves </span>
+            <input type="range" min="0" max="500" value="100" class="slider" id="riderAdsSlider" />
+            <input type="number" min="0" max="5" value="1" step="integer" id="riderAds" /><br />
           </div>
         </div>
       </div>
@@ -617,7 +401,7 @@
       // Function to determine quantity
       // X -> x-coordinate (Max Market Size - myQ or nQ)
       // Y -> y-coordinate (Max Value - myV or nV)
-      // P -> Selected Price (myp or np)
+      // P -> Selected Price (consumerPriceSlider or consumerPrice)
       function plength(x, y, p) {
         m = -y / x;
         x = (p - y) / m;
@@ -636,52 +420,77 @@
       var pc = 1;
       // pd-> Developer Price
       var pd = 0.5;
+      // surgeMarkup -> Surge Pricing Markup (Affects Vc)
+      var surgeMarkup = 0;
+      // crimeMarkup -> Crime Pricing Markup (Affects Vc)
+      var crimeMarkup = 0;
       // ecd -> 0.125 constant value (Effect of purchases in the Consumer market on the Developer market)
       var ecd = 0.125;
       // edc -> 0.875 constant value (Effect of purchases in the Developer market on the Consumer market)
       var edc = 0.875;
 
       var opc =
-        (Vc *
-          Vd *
-          (Qd * ((ecd * edc - 2) * Qc - edc * Qd) * Vc +
-            ecd * Qc * (ecd * Qc + Qd) * Vd)) /
-        (edc * edc * Qd * Qd * Vc * Vc +
-          2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd +
-          ecd * ecd * Qc * Qc * Vd * Vd);
+        (Vc * Vd * (Qd * ((ecd * edc - 2) * Qc - edc * Qd) * Vc + ecd * Qc * (ecd * Qc + Qd) * Vd)) /
+        (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
       var opd =
-        (Vc *
-          Vd *
-          (edc * Qd * (Qc + edc * Qd) * Vc +
-            Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd)) /
-        (edc * edc * Qd * Qd * Vc * Vc +
-          2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd +
-          ecd * ecd * Qc * Qc * Vd * Vd);
+        (Vc * Vd * (edc * Qd * (Qc + edc * Qd) * Vc + Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd)) /
+        (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
 
-      function updatePricing(pricingType) {
-        console.log(pricingType);
-        if (pricingType == "static") {
-          ecd = 0.125;
-          edc = 0.875;
-        } else if (pricingType == "dynamic") {
-          ecd = 0.5;
-          edc = 0.5;
-        } else if (pricingType == "personalize") {
-          ecd = 0.875;
-          edc = 0.125;
-        }
-
-        calcUpdate(Qc, Qd, Vc, Vd, 0.2, 0.2, ecd, edc);
-      }
-
-      // Consumer Price from slider input
-      var spc = document.getElementById("myp");
-      // Developer Price from slider input
-      var spd = document.getElementById("mypd");
       // Consumer Price from text box input
-      var npc = document.getElementById("np");
+      var consumerPrice = document.getElementById("consumerPrice");
+      // Consumer Price from slider input
+      var consumerPriceSlider = document.getElementById("consumerPriceSlider");
+
+      // Developer Price from slider input
+      var developerPriceSlider = document.getElementById("developerPriceSlider");
       // Developer Price from text box input
-      var npd = document.getElementById("npd");
+      var developerPrice = document.getElementById("developerPrice");
+
+      // Consumer Surge Pricing markup from text box input
+      var surgePricing = document.getElementById("surgePricing");
+      // Consumer Surge Pricing markup from slider input
+      var surgePricingSlider = document.getElementById("surgePricingSlider");
+
+      // Consumer Crime Pricing markup from text box input
+      var crimePricing = document.getElementById("crimePricing");
+      // Consumer Crime Pricing markup from slider input
+      var crimePricingSlider = document.getElementById("crimePricingSlider");
+
+      // Consumer Star Pricing markup from text box input
+      var riderStars = document.getElementById("riderStars");
+      // Consumer Star Pricing markup from slider input
+      var riderStarsSlider = document.getElementById("riderStarsSlider");
+
+      // Developer Star Pricing markup from text box input
+      var driverStars = document.getElementById("driverStars");
+      // Developer Star Pricing markup from slider input
+      var driverStarsSlider = document.getElementById("driverStarsSlider");
+
+      // Consumer Low Battery Pricing markup from text box input
+      var lowBattery = document.getElementById("lowBattery");
+      // Consumer Low Battery Pricing markup from slider input
+      var lowBatterySlider = document.getElementById("lowBatterySlider");
+
+      // Minimum Rider Rating from text box input
+      var riderRating = document.getElementById("riderRating");
+      // Minimum Rider Rating from sldier input
+      var riderRatingSlider = document.getElementById("riderRatingSlider");
+
+      // Minimum Driver Rating from text box input
+      var driverRating = document.getElementById("driverRating");
+      // Minimum Driver Rating from sldier input
+      var drivingRatingSlider = document.getElementById("driverRatingSlider");
+
+      // Expense rider pays for diver directed ads from text box input
+      var driverAds = document.getElementById("driverAds");
+      // Expense rider pays for diver directed ads from slider input
+      var driverAdsSlider = document.getElementById("driverAdsSlider");
+
+      // Expense driver pays for rider directed ads from text box input
+      var riderAds = document.getElementById("riderAds");
+      // Expense driver pays for rider directed ads from slider input
+      var riderAdsSlider = document.getElementById("riderAdsSlider");
+
       // Total profit made from our system
       var totalProfit = document.getElementById("profit");
       // Chart from canvas node consumerChart
@@ -880,7 +689,6 @@
                 ticks: {
                   fontSize: 11,
                   suggestedMax: 2.3,
-                  //stepSize: 0.25
                 },
               },
             ],
@@ -933,7 +741,10 @@
       // Update the values of the chart
       // Initial consumer price is set to 0.2 (pc = 0.2)
       // Initial developer price is set to 0.2 (pd = 0.2)
-      calcUpdate(Qc, Qd, Vc, Vd, 0.2, 0.2, ecd, edc);
+      // Initial surge pricing markup is set to 0%
+      calcUpdate(Qc, Qd, Vc, Vd, 0.2, 0.2, ecd, edc, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+      // Add the first Profits (consumerProfit = 0.33684, developerProfit = 0.20211)
       addData(chart3, "", 0.33684, 0.20211);
 
       // Function to update  the values of the chart
@@ -946,7 +757,26 @@
       // ecd -> 0.125 constant value (Effect of purchases in the Consumer market on the Developer market)
       // edc -> 0.875 constant value (Effect of purchases in the Developer market on the Consumer market)
       // left -> boolean value reprsents which price has been adjusted (true -> consumer price was adjusted/false -> dev price was adjusted)
-      function calcUpdate(Qc, Qd, Vc, Vd, pc, pd, ecd, edc, left) {
+      function calcUpdate(
+        Qc,
+        Qd,
+        Vc,
+        Vd,
+        pc,
+        pd,
+        ecd,
+        edc,
+        surgeMarkup,
+        crimeMarkup,
+        riderStarMarkup,
+        driverStarMarkup,
+        lowBatteryMarkup,
+        banRidersRule,
+        banDriversRule,
+        driverAdExpense,
+        riderAdExpense,
+        left
+      ) {
         // Keep within Range 0-2
         // Consumer Price
         if (pc > 2) pc = 2;
@@ -958,26 +788,58 @@
         if (pd < 0) pd = 0;
 
         // Update values from the consumer price input (either sliders or text box)
-        spc.value = pc * 100;
-        npc.value = pc;
+        consumerPriceSlider.value = pc * 100;
+        consumerPrice.value = pc;
 
         // Update values from the developer price input (either sliders or text box)
-        spd.value = pd * 100;
-        npd.value = pd;
+        developerPriceSlider.value = pd * 100;
+        developerPrice.value = pd;
+
+        // Update values from the Surge Pricing input (either sliders or text box)
+        surgePricingSlider.value = surgeMarkup * 100;
+        surgePricing.value = surgeMarkup;
+
+        // Update values from the Crime Pricing input (either sliders or text box)
+        crimePricingSlider.value = crimeMarkup * 100;
+        crimePricing.value = crimeMarkup;
+
+        // Update values from the Rider Stars input (either sliders or text box)
+        riderStarsSlider.value = riderStarMarkup * 100;
+        riderStars.value = riderStarMarkup;
+
+        // Update values from the Rider Stars input (either sliders or text box)
+        driverStarsSlider.value = driverStarMarkup * 100;
+        driverStars.value = driverStarMarkup;
+
+        // Update values from the Low Battery input (either sliders or text box)
+        lowBatterySlider.value = lowBatteryMarkup * 100;
+        lowBattery.value = lowBatteryMarkup;
+
+        // Update values from the Ban Riders input (either sliders or text box)
+        riderRatingSlider.value = banRidersRule * 100;
+        riderRating.value = banRidersRule;
+
+        // Update values from the Ban Drivers input (either sliders or text box)
+        driverRatingSlider.value = banDriversRule * 100;
+        driverRating.value = banDriversRule;
+
+        // Update values from the Driver-Directed Ads input (either sliders or text box)
+        driverAdsSlider.value = driverAdExpense * 100;
+        driverAds.value = driverAdExpense;
+
+        // Update values from the Rider-Directed Ads input (either sliders or text box)
+        riderAdsSlider.value = riderAdExpense * 100;
+        riderAds.value = riderAdExpense;
 
         // Profit Size Length for consumers represents Quantity
         // Similar to the plenght() function in the single sided market simulation
         // qc represents the x-value of the profit for consumers (the quantity)
-        let qc =
-          (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd) /
-          ((ecd * edc - 1) * Vc * Vd);
+        let qc = (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd);
 
         // Profit Size Length for developers represents Quantity
         // Similar to the plenght() function in the single sided market simulation
         // qd represents the x-value of the profit for developers (the quantity)
-        let qd =
-          (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) /
-          ((ecd * edc - 1) * Vc * Vd);
+        let qd = (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd);
 
         // If the consumer profit is ever smaller than 0
         if (qc < 0) {
@@ -1000,17 +862,13 @@
           }
 
           // Update the profit lengths for both consumers (qc) and developers (qd) with updated values
-          qc =
-            (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd) /
-            ((ecd * edc - 1) * Vc * Vd);
-          qd =
-            (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) /
-            ((ecd * edc - 1) * Vc * Vd);
+          qc = (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd);
+          qd = (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd);
 
-          spd.value = pd * 100;
-          npd.value = pd;
-          spc.value = pc * 100;
-          npc.value = pc;
+          developerPriceSlider.value = pd * 100;
+          developerPrice.value = pd;
+          consumerPriceSlider.value = pc * 100;
+          consumerPrice.value = pc;
         }
 
         // If the developer profit is ever smaller than 0
@@ -1028,54 +886,34 @@
           // Profit Size Length for consumers
           // Similar to the plenght() function in the single sided market simulation
           // qc represents the x-value of the profit for consumers
-          qc =
-            (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd) /
-            ((ecd * edc - 1) * Vc * Vd);
+          qc = (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd);
 
           // Profit Size Length for developers
           // Similar to the plenght() function in the single sided market simulation
           // qc represents the x-value of the profit for developers
-          qd =
-            (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) /
-            ((ecd * edc - 1) * Vc * Vd);
+          qd = (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd);
 
-          spd.value = pd * 100;
-          npd.value = pd;
-          spc.value = pc * 100;
-          npc.value = pc;
+          developerPriceSlider.value = pd * 100;
+          developerPrice.value = pd;
+          consumerPriceSlider.value = pc * 100;
+          consumerPrice.value = pc;
         }
 
         // The y value of the consumer chart (The Maximum Value)
         let yc =
-          ((Qc +
-            edc *
-              ((pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) /
-                ((ecd * edc - 1) * Vc * Vd))) *
-            Vc) /
+          ((Qc + edc * ((pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd))) * Vc) /
           Qc;
 
         // The x value of the consumer chart (The Maximum Market Size)
-        let xc =
-          Qc +
-          edc *
-            ((pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) /
-              ((ecd * edc - 1) * Vc * Vd));
+        let xc = Qc + edc * ((pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd));
 
         // The y value of the developer chart (The Maximum Value)
         let yd =
-          ((Qd +
-            ecd *
-              ((pc * Qc * Vd + (edc * Qd * (pd - Vd) - Qc * Vd) * Vc) /
-                ((edc * ecd - 1) * Vd * Vc))) *
-            Vd) /
+          ((Qd + ecd * ((pc * Qc * Vd + (edc * Qd * (pd - Vd) - Qc * Vd) * Vc) / ((edc * ecd - 1) * Vd * Vc))) * Vd) /
           Qd;
 
         // The x value of the developer chart (The Maximum Market Size)
-        let xd =
-          Qd +
-          ecd *
-            ((pc * Qc * Vd + (edc * Qd * (pd - Vd) - Qc * Vd) * Vc) /
-              ((edc * ecd - 1) * Vd * Vc));
+        let xd = Qd + ecd * ((pc * Qc * Vd + (edc * Qd * (pd - Vd) - Qc * Vd) * Vc) / ((edc * ecd - 1) * Vd * Vc));
 
         // Consumer Price cannot exceed  Consumer Maximum Market Size
         if (pc > yc) {
@@ -1088,53 +926,34 @@
         }
 
         var opc =
-          (Vc *
-            Vd *
-            (Qd * ((ecd * edc - 2) * Qc - edc * Qd) * Vc +
-              ecd * Qc * (ecd * Qc + Qd) * Vd)) /
-          (edc * edc * Qd * Qd * Vc * Vc +
-            2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd +
-            ecd * ecd * Qc * Qc * Vd * Vd);
+          (Vc * Vd * (Qd * ((ecd * edc - 2) * Qc - edc * Qd) * Vc + ecd * Qc * (ecd * Qc + Qd) * Vd)) /
+          (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
         var opd =
-          (Vc *
-            Vd *
-            (edc * Qd * (Qc + edc * Qd) * Vc +
-              Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd)) /
-          (edc * edc * Qd * Qd * Vc * Vc +
-            2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd +
-            ecd * ecd * Qc * Qc * Vd * Vd);
+          (Vc * Vd * (edc * Qd * (Qc + edc * Qd) * Vc + Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd)) /
+          (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
 
         // Total Profit is maximized (turns green) when |0.875 - consumer price| < 0.001 AND when |0.125 - developer price| < 0.001
         var totalProfit2 = pd * qd + pc * qc;
 
         if (Math.abs(opc - pc) < 0.001 && Math.abs(opd - pd) < 0.001) {
           chart1.data.datasets[1].backgroundColor = "rgba(132, 255, 99, 0.5)";
-          chart1.data.datasets[1].label =
-            "Rider Profit = Riders * Fees = (" +
-            (pc * qc).toFixed(5) +
-            ") ~ Optimal";
+          chart1.data.datasets[1].label = "Rider Profit = Riders * Fees = (" + (pc * qc).toFixed(5) + ") ~ Optimal";
 
           chart2.data.datasets[1].backgroundColor = "rgba(132, 255, 99, 0.5)";
-          chart2.data.datasets[1].label =
-            "Driver Profit = Drivers * Fees = (" +
-            (pd * qd).toFixed(5) +
-            ") ~ Optimal";
+          chart2.data.datasets[1].label = "Driver Profit = Drivers * Fees = (" + (pd * qd).toFixed(5) + ") ~ Optimal";
         } else {
           chart1.data.datasets[1].backgroundColor = "rgba(175, 122, 197, 0.5)"; // purple
-          chart1.data.datasets[1].label =
-            "Rider Profit = Riders * Fees = (" + (pc * qc).toFixed(5) + ")";
+          chart1.data.datasets[1].label = "Rider Profit = Riders * Fees = (" + (pc * qc).toFixed(5) + ")";
 
           chart2.data.datasets[1].backgroundColor = "rgba(84, 153, 199, 0.5)"; // light blue
-          chart2.data.datasets[1].label =
-            "Driver Profit = Drivers * Fees = (" + (pd * qd).toFixed(5) + ")";
+          chart2.data.datasets[1].label = "Driver Profit = Drivers * Fees = (" + (pd * qd).toFixed(5) + ")";
         }
 
         // Calculates the total profit from both consumers and developers
         // Total Profit = Price * Quantity
 
         totalProfit.innerHTML =
-          "Total Profit = Rider Profit + Driver Profit - Expenses = " +
-          (pd * qd + pc * qc).toFixed(5);
+          "Total Profit = Rider Profit + Driver Profit - Expenses = " + (pd * qd + pc * qc).toFixed(5);
 
         chart1.data.datasets[0].data[0].y = yc;
         chart1.data.datasets[0].data[1].x = qc;
@@ -1191,8 +1010,8 @@
         // const Qd = document.getElementById();
         // const Vc = document.getElementById();
         // const Vd = document.getElementById();
-        const pc = document.getElementById("np");
-        const pd = document.getElementById("npd");
+        const pc = document.getElementById("consumerPrice");
+        const pd = document.getElementById("developerPrice");
         // const ecd = document.getElementById();
         // const edc = document.getElementById();
         // const left = document.getElementById();
@@ -1206,38 +1025,308 @@
           parseFloat(pd.value),
           ecd,
           edc,
+          parseFloat(surgePricing.value),
+          parseFloat(crimePricing.value),
+          parseFloat(riderStars.value),
+          parseFloat(driverStars.value),
+          parseFloat(lowBattery.value),
+          parseFloat(riderRating.value),
+          parseFloat(driverRating.value),
+          parseFloat(driverAds.value),
+          parseFloat(riderAds.value),
           true
         );
       }
 
-      spc.oninput = function () {
-        calcUpdate(Qc, Qd, Vc, Vd, this.value / 100, npd.value, ecd, edc, true);
-      };
-
-      npc.oninput = function () {
-        calcUpdate(Qc, Qd, Vc, Vd, this.value, npd.value, ecd, edc, true);
-      };
-
-      spd.oninput = function () {
+      consumerPriceSlider.oninput = function () {
         calcUpdate(
           Qc,
           Qd,
           Vc,
           Vd,
-          npc.value,
+          this.value / 100,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value,
+          true
+        );
+      };
+
+      consumerPrice.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          this.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value,
+          true
+        );
+      };
+
+      developerPriceSlider.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
           this.value / 100,
           ecd,
           edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value,
           false
         );
       };
 
-      npd.oninput = function () {
-        calcUpdate(Qc, Qd, Vc, Vd, npc.value, this.value, ecd, edc, false);
+      developerPrice.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          this.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value,
+          false
+        );
       };
-      // surgePricingSlider.oninput = function() {
-      //   calcUpdate(Qc, Qd, Vc, Vd, this.value/100, npd.value, ecd, edc, true);
-      // }
+
+      surgePricingSlider.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          this.value / 100,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value
+        );
+      };
+
+      crimePricingSlider.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          this.value / 100,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value
+        );
+      };
+
+      riderStarsSlider.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          this.value / 100,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value
+        );
+      };
+
+      driverStarsSlider.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          this.value / 100,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value
+        );
+      };
+
+      lowBatterySlider.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          this.value / 100,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value
+        );
+      };
+
+      riderRatingSlider.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          this.value / 100,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value
+        );
+      };
+
+      driverRatingSlider.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          this.value / 100,
+          driverAds.value,
+          riderAds.value
+        );
+      };
+
+      driverAdsSlider.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          this.value / 100,
+          riderAds.value
+        );
+      };
+
+      riderAdsSlider.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          this.value / 100
+        );
+      };
     </script>
   </body>
 </html>
