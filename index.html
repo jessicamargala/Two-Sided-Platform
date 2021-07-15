@@ -141,6 +141,8 @@
       display: inline-table;
       text-align: center;
       font-weight: bold;
+      font-size: 20px;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     }
 
     .simulation {
@@ -197,202 +199,214 @@
       margin-left: 10%;
       width: 82%;
     }
+
+    .animation {
+      margin-top: 30px;
+      padding: 30px;
+      width: auto;
+      height: auto;
+    }
   </style>
   <body>
     <div class="profit" id="profit">Total Profit:0.53895</div>
-    <div class="simcontainer">
-      <div class="pageTitle">
-        <span>Platform Dashboard</span>
-      </div>
-      <div class="simulation">
-        <!-- Chart canvas container for the Consumer Price Chart -->
-        <div>
-          <canvas
-            id="consumerChart"
-            style="display: inline-block; height: 100px; width: 40%; margin-left: 5%"
-            class="chartjs-render-monitor"
-          ></canvas>
+    <div class="page">
+      <div class="simcontainer">
+        <div class="pageTitle">
+          <span>Platform Dashboard</span>
+        </div>
+        <div class="simulation">
+          <!-- Chart canvas container for the Consumer Price Chart -->
+          <div>
+            <canvas
+              id="consumerChart"
+              style="display: inline-block; height: 100px; width: 40%; margin-left: 5%"
+              class="chartjs-render-monitor"
+            ></canvas>
+          </div>
+        </div>
+
+        <div class="simulation2">
+          <!-- Chart canvas container for the Developer Price Chart-->
+          <div>
+            <canvas
+              id="developerChart"
+              style="display: inline-block; height: 100px; width: 40%; margin-left: 5%"
+              class="chartjs-render-monitor"
+            ></canvas>
+          </div>
+        </div>
+
+        <div class="simulation3">
+          <!-- Chart canvas container for the Developer Price Chart -->
+          <div>
+            <canvas
+              id="profitChart"
+              style="display: inline-block; height: 150px; width: 50%; margin-left: 5%"
+              class="chartjs-render-monitor"
+            ></canvas>
+          </div>
+          <button id="addPoint" class="button addPoint" value="false" onclick="saveChanges()">Save Changes</button>
         </div>
       </div>
 
-      <div class="simulation2">
-        <!-- Chart canvas container for the Developer Price Chart-->
-        <div>
-          <canvas
-            id="developerChart"
-            style="display: inline-block; height: 100px; width: 40%; margin-left: 5%"
-            class="chartjs-render-monitor"
-          ></canvas>
+      <div class="radioButtons">
+        <div class="pageTitle">
+          <span>Adminstrator Controls</span>
         </div>
-      </div>
-
-      <div class="simulation3">
-        <!-- Chart canvas container for the Developer Price Chart -->
-        <div>
-          <canvas
-            id="profitChart"
-            style="display: inline-block; height: 150px; width: 50%; margin-left: 5%"
-            class="chartjs-render-monitor"
-          ></canvas>
+        <div class="pricing" id="pricing">
+          <span>Pricing Policy</span><br />
+          <!-- Slider for Consumer Price Input -->
+          <div id="slidecontainer">
+            <div class="text">
+              <div class="variable">
+                <div class="tooltip">
+                  Rider Fees
+                  <span class="tooltiptext"> Amount riders must spend </span>
+                  <div class="picker">
+                    <div class="bWrap">
+                      <!-- Input via slider (0 - 2)-->
+                      <input type="range" min="0" max="200" value="100" class="slider" id="consumerPriceSlider" />
+                      <!-- Input via decimal text box (0 - 2)-->
+                      <input type="number" min="0" max="2" value="1" step="any" id="consumerPrice" /><br />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="variable">
+                <div class="tooltip">
+                  Driver Fees
+                  <span class="tooltiptext"> Amount drivers must spend </span>
+                  <div class="picker">
+                    <div class="bWrap">
+                      <!-- Input via slider (0 - 2)-->
+                      <input type="range" min="0" max="200" value="50" class="slider" id="developerPriceSlider" />
+                      <!-- Input via decimal text box (0 - 2)-->
+                      <input type="number" min="0" max="2" value="0.5" step="any" id="developerPrice" /><br />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="variable">
+                <div class="tooltip">
+                  Surge Pricing
+                  <span class="tooltiptext"> % Markup when drivers are scarce </span>
+                  <div class="picker">
+                    <div class="bWrap">
+                      <!-- Input via slider (0 - .25)-->
+                      <input type="range" min="0" max="25" value="10" class="slider" id="surgePricingSlider" />
+                      <!-- Input via decimal text box (0 - .25)-->
+                      <input type="number" min="0" max=".25" value="0" step="0.01" id="surgePricing" /><br />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="variable">
+                <div class="tooltip">
+                  Crime Pricing
+                  <span class="tooltiptext"> % Markup for rides in dangerous area </span>
+                  <div class="picker">
+                    <div class="bWrap">
+                      <!-- Input via slider (0 - .25)-->
+                      <input type="range" min="0" max="25" value="10" class="slider" id="crimePricingSlider" />
+                      <!-- Input via decimal text box (0 - .25)-->
+                      <input type="number" min="0" max=".25" value="0" step="0.01" id="crimePricing" /><br />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="variable">
+                <div class="tooltip">
+                  Rider Stars
+                  <span class="tooltiptext"> % Makrup when rider has a low rating </span>
+                  <div class="picker">
+                    <div class="bWrap">
+                      <!-- Input via slider (0 - 2)-->
+                      <input type="range" min="0" max="25" value="10" class="slider" id="riderStarsSlider" />
+                      <!-- Input via decimal text box (0 - 2)-->
+                      <input type="number" min="0" max=".25" value="0" step="0.01" id="riderStars" /><br />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="variable">
+                <div class="tooltip">
+                  Driver Stars
+                  <span class="tooltiptext"> % Discount when driver has a low rating </span>
+                  <div class="picker">
+                    <div class="bWrap">
+                      <!-- Input via slider (0 - 2)-->
+                      <input type="range" min="0" max="25" value="10" class="slider" id="driverStarsSlider" />
+                      <!-- Input via decimal text box (0 - 2)-->
+                      <input type="number" min="0" max=".25" value="0" step="0.01" id="driverStars" /><br />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="variable">
+                <div class="tooltip">
+                  Low Battery
+                  <span class="tooltiptext"> % Markup when rider's cell battery is low </span>
+                  <div class="picker">
+                    <div class="bWrap">
+                      <!-- Input via slider (0 - 2)-->
+                      <input type="range" min="0" max="25" value="10" class="slider" id="lowBatterySlider" />
+                      <!-- Input via decimal text box (0 - 2)-->
+                      <input type="number" min="0" max=".25" value="0" step="0.01" id="lowBattery" /><br />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <button id="addPoint" class="button addPoint" value="false" onclick="saveChanges()">Save Changes</button>
-      </div>
-    </div>
-
-    <div class="radioButtons">
-      <div class="pageTitle">
-        <span>Adminstrator Controls</span>
-      </div>
-      <div class="pricing" id="pricing">
-        <span>Pricing Policy</span><br />
-        <!-- Slider for Consumer Price Input -->
-        <div id="slidecontainer">
+        <div class="membership" id="membership">
+          <span>Membership Rules</span><br />
           <div class="text">
-            <div class="variable">
-              <div class="tooltip">
-                Rider Fees
-                <span class="tooltiptext"> Amount riders must spend </span>
-                <div class="picker">
-                  <div class="bWrap">
-                    <!-- Input via slider (0 - 2)-->
-                    <input type="range" min="0" max="200" value="100" class="slider" id="consumerPriceSlider" />
-                    <!-- Input via decimal text box (0 - 2)-->
-                    <input type="number" min="0" max="2" value="1" step="any" id="consumerPrice" /><br />
-                  </div>
-                </div>
-              </div>
+            <div class="tooltip">
+              Ban Riders
+              <span class="tooltiptext"> Remove riders from network if their rating is below this # of stars </span>
+              <input type="range" min="0" max="5" value="1" step="1" class="slider" id="riderRatingSlider" />
+              <input type="number" min="0" max="5" value="1" step="1" id="riderRating" /><br />
             </div>
-            <div class="variable">
-              <div class="tooltip">
-                Driver Fees
-                <span class="tooltiptext"> Amount drivers must spend </span>
-                <div class="picker">
-                  <div class="bWrap">
-                    <!-- Input via slider (0 - 2)-->
-                    <input type="range" min="0" max="200" value="50" class="slider" id="developerPriceSlider" />
-                    <!-- Input via decimal text box (0 - 2)-->
-                    <input type="number" min="0" max="2" value="0.5" step="any" id="developerPrice" /><br />
-                  </div>
-                </div>
-              </div>
+            <div class="tooltip">
+              Ban Drivers
+              <span class="tooltiptext"> Remove drivers from network if their rating is below this # of stars </span>
+              <input type="range" min="0" max="5" value="1" step="1" class="slider" id="driverRatingSlider" />
+              <input type="number" min="0" max="5" value="1" step="1" id="driverRating" /><br />
             </div>
-            <div class="variable">
-              <div class="tooltip">
-                Surge Pricing
-                <span class="tooltiptext"> % Markup when drivers are scarce </span>
-                <div class="picker">
-                  <div class="bWrap">
-                    <!-- Input via slider (0 - .25)-->
-                    <input type="range" min="0" max="25" value="10" class="slider" id="surgePricingSlider" />
-                    <!-- Input via decimal text box (0 - .25)-->
-                    <input type="number" min="0" max=".25" value="0" step="0.01" id="surgePricing" /><br />
-                  </div>
-                </div>
-              </div>
+          </div>
+          <div class="tooltip">
+            Rider Redress
+            <input type="checkbox" id="riderRedress" name="riderRedress" value="riderRedress" />
+            <label for="riderRedress"></label><br /><br />
+            <span class="tooltiptext"> Riders can pay a fee to remove bad reviews </span>
+          </div>
+          <div class="tooltip">
+            Driver Redress
+            <input type="checkbox" id="driverRedress" name="driverRedress" value="driverRedress" />
+            <label for="driverRedress"></label><br />
+            <span class="tooltiptext"> Drivers can pay a fee to remove bad reviews </span>
+          </div>
+        </div>
+        <div class="advertising" id="advertising">
+          <span>Advertising</span><br />
+          <div class="text">
+            <div class="tooltip">
+              Driver-Directed Ads
+              <span class="tooltiptext"> Riders pay a fee to advertise themselves </span>
+              <input type="range" min="0" max="200" value="100" class="slider" id="driverAdsSlider" />
+              <input type="number" min="0" max="2" value="1" step="1" id="driverAds" /><br />
             </div>
-            <div class="variable">
-              <div class="tooltip">
-                Crime Pricing
-                <span class="tooltiptext"> % Markup for rides in dangerous area </span>
-                <div class="picker">
-                  <div class="bWrap">
-                    <!-- Input via slider (0 - .25)-->
-                    <input type="range" min="0" max="25" value="10" class="slider" id="crimePricingSlider" />
-                    <!-- Input via decimal text box (0 - .25)-->
-                    <input type="number" min="0" max=".25" value="0" step="0.01" id="crimePricing" /><br />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="variable">
-              <div class="tooltip">
-                Rider Stars
-                <span class="tooltiptext"> % Makrup when rider has a low rating </span>
-                <div class="picker">
-                  <div class="bWrap">
-                    <!-- Input via slider (0 - 2)-->
-                    <input type="range" min="0" max="25" value="10" class="slider" id="riderStarsSlider" />
-                    <!-- Input via decimal text box (0 - 2)-->
-                    <input type="number" min="0" max=".25" value="0" step="0.01" id="riderStars" /><br />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="variable">
-              <div class="tooltip">
-                Driver Stars
-                <span class="tooltiptext"> % Discount when driver has a low rating </span>
-                <div class="picker">
-                  <div class="bWrap">
-                    <!-- Input via slider (0 - 2)-->
-                    <input type="range" min="0" max="25" value="10" class="slider" id="driverStarsSlider" />
-                    <!-- Input via decimal text box (0 - 2)-->
-                    <input type="number" min="0" max=".25" value="0" step="0.01" id="driverStars" /><br />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="variable">
-              <div class="tooltip">
-                Low Battery
-                <span class="tooltiptext"> % Markup when rider's cell battery is low </span>
-                <div class="picker">
-                  <div class="bWrap">
-                    <!-- Input via slider (0 - 2)-->
-                    <input type="range" min="0" max="25" value="10" class="slider" id="lowBatterySlider" />
-                    <!-- Input via decimal text box (0 - 2)-->
-                    <input type="number" min="0" max=".25" value="0" step="0.01" id="lowBattery" /><br />
-                  </div>
-                </div>
-              </div>
+            <div class="tooltip">
+              Rider-Directed Ads
+              <span class="tooltiptext"> Drivers pay a fee to advertise themselves </span>
+              <input type="range" min="0" max="200" value="100" class="slider" id="riderAdsSlider" />
+              <input type="number" min="0" max="2" value="1" step="1" id="riderAds" /><br />
             </div>
           </div>
         </div>
-      </div>
-      <div class="membership" id="membership">
-        <span>Membership Rules</span><br />
-        <div class="text">
-          <div class="tooltip">
-            Ban Riders
-            <span class="tooltiptext"> Remove riders from network if their rating is below this # of stars </span>
-            <input type="range" min="0" max="500" value="100" class="slider" id="riderRatingSlider" />
-            <input type="number" min="0" max="5" value="1" step="1" id="riderRating" /><br />
-          </div>
-          <div class="tooltip">
-            Ban Drivers
-            <span class="tooltiptext"> Remove drivers from network if their rating is below this # of stars </span>
-            <input type="range" min="0" max="500" value="100" class="slider" id="driverRatingSlider" />
-            <input type="number" min="0" max="5" value="1" step="1" id="driverRating" /><br />
-          </div>
-        </div>
-        <div class="tooltip">
-          Rider Redress
-          <input type="checkbox" id="riderRedress" name="riderRedress" value="riderRedress" />
-          <label for="riderRedress"></label><br /><br />
-          <span class="tooltiptext"> Riders can pay a fee to remove bad reviews </span>
-        </div>
-        <div class="tooltip">
-          Driver Redress
-          <input type="checkbox" id="driverRedress" name="driverRedress" value="driverRedress" />
-          <label for="driverRedress"></label><br />
-          <span class="tooltiptext"> Drivers can pay a fee to remove bad reviews </span>
-        </div>
-      </div>
-      <div class="advertising" id="advertising">
-        <span>Advertising</span><br />
-        <div class="text">
-          <div class="tooltip">
-            Driver-Directed Ads
-            <span class="tooltiptext"> Riders pay a fee to advertise themselves </span>
-            <input type="range" min="0" max="500" value="100" class="slider" id="driverAdsSlider" />
-            <input type="number" min="0" max="5" value="1" step="any" id="driverAds" /><br />
-          </div>
-          <div class="tooltip">
-            Rider-Directed Ads
-            <span class="tooltiptext"> Drivers pay a fee to advertise themselves </span>
-            <input type="range" min="0" max="500" value="100" class="slider" id="riderAdsSlider" />
-            <input type="number" min="0" max="5" value="1" step="integer" id="riderAds" /><br />
-          </div>
+        <div class="animation">
+          <img id="img" src="animationShown" />
         </div>
       </div>
     </div>
@@ -429,12 +443,20 @@
       // edc -> 0.875 constant value (Effect of purchases in the Developer market on the Consumer market)
       var edc = 0.875;
 
+      // Optimal Consumer Price
       var opc =
         (Vc * Vd * (Qd * ((ecd * edc - 2) * Qc - edc * Qd) * Vc + ecd * Qc * (ecd * Qc + Qd) * Vd)) /
         (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
+
+      // Optimal Developer Price
       var opd =
         (Vc * Vd * (edc * Qd * (Qc + edc * Qd) * Vc + Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd)) /
         (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
+
+      var animationShown = "30passengers2vehicles.gif";
+      document.getElementById("img").src = animationShown;
+
+      var expenses = 0;
 
       // Consumer Price from text box input
       var consumerPrice = document.getElementById("consumerPrice");
@@ -569,35 +591,40 @@
 
         // Configuration options go here
         options: {
+          plugins: {
+            legend: {
+              labels: {
+                filter: function (item, chart) {
+                  return !item.text.includes("Consumer Surplus") && !item.text.includes("DWL");
+                },
+              },
+            },
+          },
           responsive: true,
           scales: {
-            xAxes: [
-              {
-                type: "linear",
-                ticks: {
-                  fontSize: 11,
-                  suggestedMax: 2.3,
-                  min: 0,
-                },
-                title: {
-                  display: true,
-                  text: "# of Potential Riders",
-                },
+            x: {
+              max: 2,
+              ticks: {
+                fontSize: 11,
+                suggestedMax: 2.3,
+                min: 0,
               },
-            ],
-            yAxes: [
-              {
-                type: "linear",
-                ticks: {
-                  fontSize: 11,
-                  suggestedMax: 2.3,
-                },
-                title: {
-                  display: true,
-                  text: "Rider Base Fees",
-                },
+              title: {
+                display: true,
+                text: "# of Potential Riders",
               },
-            ],
+            },
+            y: {
+              max: 4,
+              ticks: {
+                fontSize: 11,
+                suggestedMax: 2.3,
+              },
+              title: {
+                display: true,
+                text: "Rider Base Fees",
+              },
+            },
           },
         },
       });
@@ -671,27 +698,42 @@
 
         // Configuration options go here
         options: {
+          plugins: {
+            legend: {
+              labels: {
+                filter: function (item, chart) {
+                  return !item.text.includes("Consumer Surplus") && !item.text.includes("DWL");
+                },
+              },
+            },
+          },
           responsive: true,
           scales: {
-            xAxes: [
-              {
-                type: "linear",
-                ticks: {
-                  fontSize: 11,
-                  suggestedMax: 2.3,
-                  min: 0,
-                },
+            x: {
+              max: 2,
+              type: "linear",
+              ticks: {
+                fontSize: 11,
+                suggestedMax: 2.3,
+                min: 0,
               },
-            ],
-            yAxes: [
-              {
-                type: "linear",
-                ticks: {
-                  fontSize: 11,
-                  suggestedMax: 2.3,
-                },
+              title: {
+                display: true,
+                text: "# of Potential Drivers",
               },
-            ],
+            },
+            y: {
+              max: 4,
+              type: "linear",
+              ticks: {
+                fontSize: 11,
+                suggestedMax: 2.3,
+              },
+              title: {
+                display: true,
+                text: "Driver Base Fees",
+              },
+            },
           },
         },
       });
@@ -733,6 +775,10 @@
             },
             y: {
               stacked: true,
+              title: {
+                display: true,
+                text: "Total Profit",
+              },
             },
           },
         },
@@ -816,11 +862,11 @@
         lowBattery.value = lowBatteryMarkup;
 
         // Update values from the Ban Riders input (either sliders or text box)
-        riderRatingSlider.value = banRidersRule * 100;
+        riderRatingSlider.value = banRidersRule;
         riderRating.value = banRidersRule;
 
         // Update values from the Ban Drivers input (either sliders or text box)
-        driverRatingSlider.value = banDriversRule * 100;
+        driverRatingSlider.value = banDriversRule;
         driverRating.value = banDriversRule;
 
         // Update values from the Driver-Directed Ads input (either sliders or text box)
@@ -831,15 +877,61 @@
         riderAdsSlider.value = riderAdExpense * 100;
         riderAds.value = riderAdExpense;
 
+        Vc =
+          1 * (1 + parseFloat(surgePricing.value)) +
+          parseFloat(crimePricing.value) +
+          parseFloat(driverStars.value) +
+          parseFloat(lowBattery.value);
+        Vd = 1 * (1 + parseFloat(surgePricing.value)) + parseFloat(crimePricing.value) + parseFloat(riderStars.value);
+        console.log("Vc is " + Vc);
+        console.log("Vd is " + Vd);
+
         // Profit Size Length for consumers represents Quantity
-        // Similar to the plenght() function in the single sided market simulation
+        // Similar to the plength() function in the single sided market simulation
         // qc represents the x-value of the profit for consumers (the quantity)
         let qc = (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd);
+        console.log(qc);
 
         // Profit Size Length for developers represents Quantity
         // Similar to the plenght() function in the single sided market simulation
         // qd represents the x-value of the profit for developers (the quantity)
         let qd = (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd);
+        console.log(qd);
+
+        if (qc <= 0.67) {
+          if (qd <= 0.66) {
+            animationShown = "10passengers1vehicles.gif";
+            console.log("display 10 passengers 1 vehciles");
+          } else if (qd <= 1.33) {
+            animationShown = "10passengers2vehicles.gif";
+            console.log("display 10 passengers 2 vehicles");
+          } else {
+            animationShown = "10passengers3vehicles.gif";
+            console.log("display 10 passengers 3 vehicles");
+          }
+        } else if (qc <= 1.33) {
+          if (qd <= 0.66) {
+            animationShown = "20passengers1vehicles.gif";
+            console.log("display 20 passengers 1 vehicle");
+          } else if (qd <= 1.33) {
+            animationShown = "20passengers2vehicles.gif";
+            console.log("display 20 passengers 2 vehicles");
+          } else {
+            animationShown = "20passengers3vehicles.gif";
+            console.log("display 20 passengers 3 vehicles");
+          }
+        } else if (qc > 1.33) {
+          if (qd <= 0.66) {
+            animationShown = "30passengers1vehicles.gif";
+            console.log("display 30 passengers 1 vehicle");
+          } else if (qd <= 1.33) {
+            animationShown = "30passengers2vehicles.gif";
+            console.log("display 30 passengers 2 vehicles");
+          } else {
+            animationShown = "30passengers3vehicles.gif";
+            console.log("display 30 passengers 3 vehicles");
+          }
+        }
 
         // If the consumer profit is ever smaller than 0
         if (qc < 0) {
@@ -928,9 +1020,11 @@
         var opc =
           (Vc * Vd * (Qd * ((ecd * edc - 2) * Qc - edc * Qd) * Vc + ecd * Qc * (ecd * Qc + Qd) * Vd)) /
           (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
+        console.log(opc);
         var opd =
           (Vc * Vd * (edc * Qd * (Qc + edc * Qd) * Vc + Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd)) /
           (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
+        console.log(opd);
 
         // Total Profit is maximized (turns green) when |0.875 - consumer price| < 0.001 AND when |0.125 - developer price| < 0.001
         var totalProfit2 = pd * qd + pc * qc;
@@ -1036,6 +1130,8 @@
           parseFloat(riderAds.value),
           true
         );
+
+        document.getElementById("img").src = animationShown;
       }
 
       consumerPriceSlider.oninput = function () {
@@ -1152,6 +1248,28 @@
         );
       };
 
+      surgePricing.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          this.value,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value
+        );
+      };
+
       crimePricingSlider.oninput = function () {
         calcUpdate(
           Qc,
@@ -1164,6 +1282,28 @@
           edc,
           surgePricing.value,
           this.value / 100,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value
+        );
+      };
+
+      crimePricing.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          this.value,
           riderStars.value,
           driverStars.value,
           lowBattery.value,
@@ -1196,6 +1336,28 @@
         );
       };
 
+      riderStars.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          this.value,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value
+        );
+      };
+
       driverStarsSlider.oninput = function () {
         calcUpdate(
           Qc,
@@ -1210,6 +1372,28 @@
           crimePricing.value,
           riderStars.value,
           this.value / 100,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value
+        );
+      };
+
+      driverStars.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          this.value,
           lowBattery.value,
           riderRating.value,
           driverRating.value,
@@ -1240,6 +1424,28 @@
         );
       };
 
+      lowBattery.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          this.value,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value
+        );
+      };
+
       riderRatingSlider.oninput = function () {
         calcUpdate(
           Qc,
@@ -1255,7 +1461,29 @@
           riderStars.value,
           driverStars.value,
           lowBattery.value,
-          this.value / 100,
+          this.value,
+          driverRating.value,
+          driverAds.value,
+          riderAds.value
+        );
+      };
+
+      riderRating.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          this.value,
           driverRating.value,
           driverAds.value,
           riderAds.value
@@ -1278,7 +1506,29 @@
           driverStars.value,
           lowBattery.value,
           riderRating.value,
-          this.value / 100,
+          this.value,
+          driverAds.value,
+          riderAds.value
+        );
+      };
+
+      driverRating.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          this.value,
           driverAds.value,
           riderAds.value
         );
@@ -1306,6 +1556,28 @@
         );
       };
 
+      driverAds.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          this.value,
+          riderAds.value
+        );
+      };
+
       riderAdsSlider.oninput = function () {
         calcUpdate(
           Qc,
@@ -1325,6 +1597,28 @@
           driverRating.value,
           driverAds.value,
           this.value / 100
+        );
+      };
+
+      riderAds.oninput = function () {
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          consumerPrice.value,
+          developerPrice.value,
+          ecd,
+          edc,
+          surgePricing.value,
+          crimePricing.value,
+          riderStars.value,
+          driverStars.value,
+          lowBattery.value,
+          riderRating.value,
+          driverRating.value,
+          driverAds.value,
+          this.value
         );
       };
     </script>
