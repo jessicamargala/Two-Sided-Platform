@@ -377,13 +377,13 @@
           </div>
           <div class="tooltip">
             Rider Redress
-            <input type="checkbox" id="riderRedress" name="riderRedress" value="riderRedress" />
+            <input type="checkbox" id="riderRedress" name="riderRedress" value="riderRedress" onclick="redress()" />
             <label for="riderRedress"></label><br /><br />
             <span class="tooltiptext"> Riders can pay a fee to remove bad reviews </span>
           </div>
           <div class="tooltip">
             Driver Redress
-            <input type="checkbox" id="driverRedress" name="driverRedress" value="driverRedress" />
+            <input type="checkbox" id="driverRedress" name="driverRedress" value="driverRedress" onclick="redress()" />
             <label for="driverRedress"></label><br />
             <span class="tooltiptext"> Drivers can pay a fee to remove bad reviews </span>
           </div>
@@ -503,6 +503,11 @@
       // Minimum Driver Rating from sldier input
       var drivingRatingSlider = document.getElementById("driverRatingSlider");
 
+      // Rider Redress checkbox input
+      var riderRedress = document.getElementById("riderRedress");
+      // Driver Redress checkbox input
+      var driverRedress = document.getElementById("driverRedress");
+
       // Expense rider pays for diver directed ads from text box input
       var driverAds = document.getElementById("driverAds");
       // Expense rider pays for diver directed ads from slider input
@@ -603,7 +608,7 @@
           responsive: true,
           scales: {
             x: {
-              max: 2,
+              suggestedMax: 3,
               ticks: {
                 fontSize: 11,
                 suggestedMax: 2.3,
@@ -615,7 +620,7 @@
               },
             },
             y: {
-              max: 4,
+              suggestedMax: 3,
               ticks: {
                 fontSize: 11,
                 suggestedMax: 2.3,
@@ -710,7 +715,7 @@
           responsive: true,
           scales: {
             x: {
-              max: 2,
+              suggestedMax: 3,
               type: "linear",
               ticks: {
                 fontSize: 11,
@@ -723,7 +728,7 @@
               },
             },
             y: {
-              max: 4,
+              suggestedMax: 3,
               type: "linear",
               ticks: {
                 fontSize: 11,
@@ -788,7 +793,7 @@
       // Initial consumer price is set to 0.2 (pc = 0.2)
       // Initial developer price is set to 0.2 (pd = 0.2)
       // Initial surge pricing markup is set to 0%
-      calcUpdate(Qc, Qd, Vc, Vd, 0.2, 0.2, ecd, edc, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+      calcUpdate(Qc, Qd, Vc, Vd, expenses, 0.2, 0.2, ecd, edc, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
       // Add the first Profits (consumerProfit = 0.33684, developerProfit = 0.20211)
       addData(chart3, "", 0.33684, 0.20211);
@@ -808,6 +813,7 @@
         Qd,
         Vc,
         Vd,
+        expenses,
         pc,
         pd,
         ecd,
@@ -877,14 +883,28 @@
         riderAdsSlider.value = riderAdExpense * 100;
         riderAds.value = riderAdExpense;
 
+        // Surge Pricing increases both Vc and Vd
+        // Low Battery Markups increase Vc
         Vc =
           1 * (1 + parseFloat(surgePricing.value)) +
           parseFloat(crimePricing.value) +
           parseFloat(driverStars.value) +
           parseFloat(lowBattery.value);
         Vd = 1 * (1 + parseFloat(surgePricing.value)) + parseFloat(crimePricing.value) + parseFloat(riderStars.value);
-        console.log("Vc is " + Vc);
-        console.log("Vd is " + Vd);
+
+        // Rider-Directed Ads increase Qc
+        Qc = 1 + parseFloat(riderAds.value) - 0.1 * parseFloat(riderRating.value);
+        console.log("Qc is " + Qc);
+
+        // Driver-Directed Ads increase Qd
+        Qd = 1 + parseFloat(driverAds.value) - 0.1 * parseFloat(driverRating.value);
+        console.log("Qd is " + Qd);
+
+        ecd = 0.125 + 0.1 * parseFloat(riderRating.value);
+
+        edc = 0.875 + 0.1 * parseFloat(driverRating.value);
+
+        expenses += parseFloat(riderAds.value) + parseFloat(driverAds.value);
 
         // Profit Size Length for consumers represents Quantity
         // Similar to the plength() function in the single sided market simulation
@@ -1020,27 +1040,43 @@
         var opc =
           (Vc * Vd * (Qd * ((ecd * edc - 2) * Qc - edc * Qd) * Vc + ecd * Qc * (ecd * Qc + Qd) * Vd)) /
           (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
-        console.log(opc);
+        console.log("opc is " + opc);
         var opd =
           (Vc * Vd * (edc * Qd * (Qc + edc * Qd) * Vc + Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd)) /
           (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
-        console.log(opd);
+        console.log("opd is " + opd);
 
         // Total Profit is maximized (turns green) when |0.875 - consumer price| < 0.001 AND when |0.125 - developer price| < 0.001
         var totalProfit2 = pd * qd + pc * qc;
+        var consumerProfit = pc * qc;
+        var developerProfit = pd * qd;
+
+        // Increase consumer profit directly by 10% when Rider Redress is selected
+        if (riderRedress.checked) {
+          consumerProfit = consumerProfit * 1.1;
+          console.log("in here!");
+        }
+
+        // Increase developer profit directly by 10% when Driver Redress is selected
+        if (driverRedress.checked) {
+          developerProfit = developerProfit * 1.1;
+          console.log("in here!");
+        }
 
         if (Math.abs(opc - pc) < 0.001 && Math.abs(opd - pd) < 0.001) {
           chart1.data.datasets[1].backgroundColor = "rgba(132, 255, 99, 0.5)";
-          chart1.data.datasets[1].label = "Rider Profit = Riders * Fees = (" + (pc * qc).toFixed(5) + ") ~ Optimal";
+          chart1.data.datasets[1].label =
+            "Rider Profit = Riders * Fees = (" + consumerProfit.toFixed(5) + ") ~ Optimal";
 
           chart2.data.datasets[1].backgroundColor = "rgba(132, 255, 99, 0.5)";
-          chart2.data.datasets[1].label = "Driver Profit = Drivers * Fees = (" + (pd * qd).toFixed(5) + ") ~ Optimal";
+          chart2.data.datasets[1].label =
+            "Driver Profit = Drivers * Fees = (" + developerProfit.toFixed(5) + ") ~ Optimal";
         } else {
           chart1.data.datasets[1].backgroundColor = "rgba(175, 122, 197, 0.5)"; // purple
-          chart1.data.datasets[1].label = "Rider Profit = Riders * Fees = (" + (pc * qc).toFixed(5) + ")";
+          chart1.data.datasets[1].label = "Rider Profit = Riders * Fees = (" + consumerProfit.toFixed(5) + ")";
 
           chart2.data.datasets[1].backgroundColor = "rgba(84, 153, 199, 0.5)"; // light blue
-          chart2.data.datasets[1].label = "Driver Profit = Drivers * Fees = (" + (pd * qd).toFixed(5) + ")";
+          chart2.data.datasets[1].label = "Driver Profit = Drivers * Fees = (" + developerProfit.toFixed(5) + ")";
         }
 
         // Calculates the total profit from both consumers and developers
@@ -1086,6 +1122,32 @@
         chart3.update();
       }
 
+      function redress() {
+        const pc = document.getElementById("consumerPrice");
+        const pd = document.getElementById("developerPrice");
+        calcUpdate(
+          Qc,
+          Qd,
+          Vc,
+          Vd,
+          expenses,
+          parseFloat(pc.value),
+          parseFloat(pd.value),
+          ecd,
+          edc,
+          parseFloat(surgePricing.value),
+          parseFloat(crimePricing.value),
+          parseFloat(riderStars.value),
+          parseFloat(driverStars.value),
+          parseFloat(lowBattery.value),
+          parseFloat(riderRating.value),
+          parseFloat(driverRating.value),
+          parseFloat(driverAds.value),
+          parseFloat(riderAds.value),
+          true
+        );
+      }
+
       function addData(chart, label, riderData, driverData) {
         chart.data.labels.push(label);
         // Adding new rider Profit
@@ -1099,7 +1161,7 @@
         var change = document.getElementById("addPoint");
         change.value = "true";
         console.log(change.value);
-        //changes names later
+        // change names later
         // const Qc = document.getElementById();
         // const Qd = document.getElementById();
         // const Vc = document.getElementById();
@@ -1115,6 +1177,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           parseFloat(pc.value),
           parseFloat(pd.value),
           ecd,
@@ -1140,6 +1203,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           this.value / 100,
           developerPrice.value,
           ecd,
@@ -1163,6 +1227,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           this.value,
           developerPrice.value,
           ecd,
@@ -1186,6 +1251,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           this.value / 100,
           ecd,
@@ -1209,6 +1275,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           this.value,
           ecd,
@@ -1232,6 +1299,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1254,6 +1322,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1276,6 +1345,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1298,6 +1368,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1320,6 +1391,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1342,6 +1414,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1364,6 +1437,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1386,6 +1460,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1408,6 +1483,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1430,6 +1506,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1452,6 +1529,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1474,6 +1552,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1496,6 +1575,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1518,6 +1598,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1540,6 +1621,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1562,6 +1644,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1584,6 +1667,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
@@ -1606,6 +1690,7 @@
           Qd,
           Vc,
           Vd,
+          expenses,
           consumerPrice.value,
           developerPrice.value,
           ecd,
