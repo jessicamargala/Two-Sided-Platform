@@ -5,245 +5,66 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" , initial-scale="1" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- <link rel="stylesheet" href="style(2).css" integrity="undefined" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="style(2).css" integrity="undefined" crossorigin="anonymous" />
     <title>Interdependent Demand Curve</title>
   </head>
-  <style>
-    body {
-      background-color: #add8e6;
-    }
-    .picker {
-      display: block;
-    }
-    span {
-      font-size: 1.1em;
-      position: center;
-      top: 0px;
-      margin-right: 7px;
-      display: inline-block;
-      color: #707070;
-    }
-    .bWrap {
-      display: inline-block;
-    }
-    .variable {
-      display: inline-block;
-      left: -100px;
-    }
-    .variable2 {
-      display: inline-block;
-    }
-    input[type="number"] {
-      position: relative;
-      left: 0px;
-      display: block;
-      width: 4em;
-      color: #707070;
-    }
-    .profit {
-      display: inline;
-      position: relative;
-      font-weight: bold;
-      left: 26%;
-      top: 30px;
-      background-color: white;
-      border: solid 2px #e6e6e6;
-      color: #707070;
-      padding: 2px;
-    }
+  <script>
+    var dashboardTitle = "Platform Dashbaord";
+    var controlsTitle = "Adminstrator Controls";
+    var yAxisChart1 = "Rider Base Fees";
+    var xAxisChart1 = "# of Potential Riders";
+    var yAxisChart2 = "Driver Base Fees";
+    var xAxisChart2 = "# of Potential Drivers";
+    var subControls1 = "Pricing Policy";
+    var subControls2 = "Membership Rules";
+    var subControls3 = "Advertising";
+    var riderFeesTitle = "Rider Fees";
+    var driverFeesTitle = "Driver Fees";
+    var surgePricingTitle = "Surge Pricing";
+    var crimePricingTitle = "Crime Pricing";
+    var riderStarsTitle = "Rider Stars";
+    var driverStarsTitle = "Driver Stars";
+    var lowBatteryTitle = "Low Battery";
+    var banRidersTitle = "Ban Riders";
+    var banDriversTitle = "Ban Drivers";
+    var riderRedressTitle = "Rider Redress";
+    var driverRedressTitle = "Driver Redress";
+    var driverAdsTitle = "Driver-Directed Ads";
+    var riderAdsTitle = "Rider-Directed Ads";
 
-    .text {
-      font-size: 15px;
-      padding: 10px;
+    function docWrite(variable) {
+      document.write(variable);
     }
-
-    .pricing {
-      font-size: 18px;
-      height: 355px;
-      width: 295px;
-      display: inline-table;
-      background-color: white;
-      border: solid 2px #e6e6e6;
-      color: #707070;
-      padding: 2px;
-    }
-
-    .membership {
-      font-size: 18px;
-      height: 355px;
-      width: 200px;
-      display: inline-table;
-      background-color: white;
-      border: solid 2px #e6e6e6;
-      color: #707070;
-      padding: 2px;
-    }
-
-    .advertising {
-      font-size: 18px;
-      height: 355px;
-      width: 200px;
-      display: inline-table;
-      background-color: white;
-      border: solid 2px #e6e6e6;
-      color: #707070;
-      padding: 2px;
-    }
-
-    .tooltip {
-      position: relative;
-      display: inline-block;
-    }
-
-    .tooltip .tooltiptext {
-      font-size: 13px;
-      font-family: sans-serif;
-      visibility: hidden;
-      width: 200px;
-      background-color: grey;
-      color: #fff;
-      text-align: center;
-      padding: 5px 0;
-      border-radius: 6px;
-      position: absolute;
-      z-index: 1;
-      top: -5px;
-      left: 110%;
-    }
-
-    .tooltip:hover .tooltiptext {
-      visibility: visible;
-    }
-
-    .tooltip .tooltiptext::after {
-      content: " ";
-      position: absolute;
-      top: 50%;
-      right: 100%; /* To the right of the tooltip */
-      margin-top: -5px;
-      border-width: 5px;
-      border-style: solid;
-      border-color: transparent grey transparent transparent;
-    }
-
-    .radioButtons {
-      padding: 15px;
-      margin-left: 9%;
-      display: flex;
-    }
-
-    .pageTitle {
-      writing-mode: tb-rl;
-      transform: rotate(-180deg);
-      padding: 15px;
-      background-color: white;
-      border: solid 2px #e6e6e6;
-      display: inline-table;
-      text-align: center;
-      font-weight: bold;
-      font-size: 20px;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .simulation {
-      display: inline-table;
-      width: 51%;
-      padding: 15px;
-      background-color: #ffffff;
-      border-right: none 0px;
-      margin-top: 60px;
-    }
-
-    .simulation2 {
-      display: inline-table;
-      width: 51%;
-      padding: 15px;
-      background-color: #ffffff;
-      margin-top: 60px;
-    }
-
-    .simulation3 {
-      display: inline-table;
-      width: 51%;
-      padding: 10px;
-      background-color: #ffffff;
-      border-left: solid #add8e6 40px;
-    }
-
-    .button {
-      padding: 8px 16px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin-top: 16px;
-      font-family: serif;
-      transition-duration: 0.4s;
-      cursor: pointer;
-    }
-
-    .addPoint {
-      background-color: white;
-      color: gray;
-      border: 2px solid #aed6f1;
-    }
-
-    .addPoint:hover {
-      background-color: #aed6f1;
-      color: white;
-    }
-
-    .simcontainer {
-      background-color: white;
-      display: flex;
-      margin-left: 10%;
-      width: 82%;
-    }
-
-    .animation {
-      margin-top: 30px;
-      padding: 30px;
-      width: auto;
-      height: auto;
-    }
-  </style>
+  </script>
   <body>
     <div class="profit" id="profit">Total Profit:0.53895</div>
     <div class="page">
       <div class="simcontainer">
         <div class="pageTitle">
-          <span>Platform Dashboard</span>
+          <span
+            ><script>
+              docWrite(dashboardTitle);
+            </script>
+          </span>
         </div>
         <div class="simulation">
           <!-- Chart canvas container for the Consumer Price Chart -->
           <div>
-            <canvas
-              id="consumerChart"
-              style="display: inline-block; height: 100px; width: 40%; margin-left: 5%"
-              class="chartjs-render-monitor"
-            ></canvas>
+            <canvas id="consumerChart" style="display: inline-block; height: 100px; width: 40%; margin-left: 5%" class="chartjs-render-monitor"></canvas>
           </div>
         </div>
 
         <div class="simulation2">
           <!-- Chart canvas container for the Developer Price Chart-->
           <div>
-            <canvas
-              id="developerChart"
-              style="display: inline-block; height: 100px; width: 40%; margin-left: 5%"
-              class="chartjs-render-monitor"
-            ></canvas>
+            <canvas id="developerChart" style="display: inline-block; height: 100px; width: 40%; margin-left: 5%" class="chartjs-render-monitor"></canvas>
           </div>
         </div>
 
         <div class="simulation3">
           <!-- Chart canvas container for the Developer Price Chart -->
           <div>
-            <canvas
-              id="profitChart"
-              style="display: inline-block; height: 150px; width: 50%; margin-left: 5%"
-              class="chartjs-render-monitor"
-            ></canvas>
+            <canvas id="profitChart" style="display: inline-block; height: 150px; width: 50%; margin-left: 5%" class="chartjs-render-monitor"></canvas>
           </div>
           <button id="addPoint" class="button addPoint" value="false" onclick="saveChanges()">Save Changes</button>
         </div>
@@ -251,29 +72,31 @@
 
       <div class="radioButtons">
         <div class="pageTitle">
-          <span>Adminstrator Controls</span>
+          <span
+            ><script>
+              docWrite(controlsTitle);
+            </script></span
+          >
         </div>
         <div class="pricing" id="pricing">
-          <span>Pricing Policy</span><br />
+          <span
+            ><script>
+              docWrite(subControls1);
+            </script></span
+          ><br />
           <!-- Slider for Consumer Price Input -->
           <div id="slidecontainer">
             <div class="text">
               <div class="variable">
                 <div class="tooltip">
-                  Rider Fees
+                  <script>
+                    docWrite(riderFeesTitle);
+                  </script>
                   <span class="tooltiptext"> Amount riders must spend </span>
                   <div class="picker">
                     <div class="bWrap">
                       <!-- Input via slider (0 - 2)-->
-                      <input
-                        type="range"
-                        min="0"
-                        max="2"
-                        value="1"
-                        step="any"
-                        class="slider"
-                        id="consumerPriceSlider"
-                      />
+                      <input type="range" min="0" max="2" value="1" step="any" class="slider" id="consumerPriceSlider" />
                       <!-- Input via decimal text box (0 - 2)-->
                       <input type="number" min="0" max="2" value="1" step="any" id="consumerPrice" /><br />
                     </div>
@@ -282,20 +105,14 @@
               </div>
               <div class="variable">
                 <div class="tooltip">
-                  Driver Fees
+                  <script>
+                    docWrite(driverFeesTitle);
+                  </script>
                   <span class="tooltiptext"> Amount drivers must spend </span>
                   <div class="picker">
                     <div class="bWrap">
                       <!-- Input via slider (0 - 2)-->
-                      <input
-                        type="range"
-                        min="0"
-                        max="2"
-                        value="0.5"
-                        step="any"
-                        class="slider"
-                        id="developerPriceSlider"
-                      />
+                      <input type="range" min="0" max="2" value="0.5" step="any" class="slider" id="developerPriceSlider" />
                       <!-- Input via decimal text box (0 - 2)-->
                       <input type="number" min="0" max="2" value="0.5" step="any" id="developerPrice" /><br />
                     </div>
@@ -304,20 +121,14 @@
               </div>
               <div class="variable">
                 <div class="tooltip">
-                  Surge Pricing
+                  <script>
+                    docWrite(surgePricingTitle);
+                  </script>
                   <span class="tooltiptext"> % Markup when drivers are scarce </span>
                   <div class="picker">
                     <div class="bWrap">
                       <!-- Input via slider (0 - .25)-->
-                      <input
-                        type="range"
-                        min="0"
-                        max=".25"
-                        value="0"
-                        step="any"
-                        class="slider"
-                        id="surgePricingSlider"
-                      />
+                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="surgePricingSlider" />
                       <!-- Input via decimal text box (0 - .25)-->
                       <input type="number" min="0" max=".25" value="0" step="0.01" id="surgePricing" /><br />
                     </div>
@@ -326,20 +137,14 @@
               </div>
               <div class="variable">
                 <div class="tooltip">
-                  Crime Pricing
+                  <script>
+                    docWrite(crimePricingTitle);
+                  </script>
                   <span class="tooltiptext"> % Markup for rides in dangerous area </span>
                   <div class="picker">
                     <div class="bWrap">
                       <!-- Input via slider (0 - .25)-->
-                      <input
-                        type="range"
-                        min="0"
-                        max=".25"
-                        value="0"
-                        step="any"
-                        class="slider"
-                        id="crimePricingSlider"
-                      />
+                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="crimePricingSlider" />
                       <!-- Input via decimal text box (0 - .25)-->
                       <input type="number" min="0" max=".25" value="0" step="0.01" id="crimePricing" /><br />
                     </div>
@@ -348,7 +153,9 @@
               </div>
               <div class="variable">
                 <div class="tooltip">
-                  Rider Stars
+                  <script>
+                    docWrite(riderStarsTitle);
+                  </script>
                   <span class="tooltiptext"> % Makrup when rider has a low rating </span>
                   <div class="picker">
                     <div class="bWrap">
@@ -362,20 +169,14 @@
               </div>
               <div class="variable">
                 <div class="tooltip">
-                  Driver Stars
+                  <script>
+                    docWrite(driverStarsTitle);
+                  </script>
                   <span class="tooltiptext"> % Discount when driver has a low rating </span>
                   <div class="picker">
                     <div class="bWrap">
                       <!-- Input via slider (0 - 2)-->
-                      <input
-                        type="range"
-                        min="0"
-                        max=".25"
-                        value="0"
-                        step="any"
-                        class="slider"
-                        id="driverStarsSlider"
-                      />
+                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="driverStarsSlider" />
                       <!-- Input via decimal text box (0 - 2)-->
                       <input type="number" min="0" max=".25" value="0" step="0.01" id="driverStars" /><br />
                     </div>
@@ -384,7 +185,9 @@
               </div>
               <div class="variable">
                 <div class="tooltip">
-                  Low Battery
+                  <script>
+                    docWrite(lowBatteryTitle);
+                  </script>
                   <span class="tooltiptext"> % Markup when rider's cell battery is low </span>
                   <div class="picker">
                     <div class="bWrap">
@@ -400,45 +203,65 @@
           </div>
         </div>
         <div class="membership" id="membership">
-          <span>Membership Rules</span><br />
+          <span
+            ><script>
+              docWrite(subControls2);
+            </script></span
+          ><br />
           <div class="text">
             <div class="tooltip">
-              Ban Riders
+              <script>
+                docWrite(banRidersTitle);
+              </script>
               <span class="tooltiptext"> Remove riders from network if their rating is below this # of stars </span>
               <input type="range" min="0" max="5" value="1" step="1" class="slider" id="riderRatingSlider" />
               <input type="number" min="0" max="5" value="1" step="1" id="riderRating" /><br />
             </div>
             <div class="tooltip">
-              Ban Drivers
+              <script>
+                docWrite(banDriversTitle);
+              </script>
               <span class="tooltiptext"> Remove drivers from network if their rating is below this # of stars </span>
               <input type="range" min="0" max="5" value="1" step="1" class="slider" id="driverRatingSlider" />
               <input type="number" min="0" max="5" value="1" step="1" id="driverRating" /><br />
             </div>
           </div>
           <div class="tooltip">
-            Rider Redress
+            <script>
+              docWrite(riderRedressTitle);
+            </script>
             <input type="checkbox" id="riderRedress" name="riderRedress" value="riderRedress" onclick="redress()" />
             <label for="riderRedress"></label><br /><br />
             <span class="tooltiptext"> Riders can pay a fee to remove bad reviews </span>
           </div>
           <div class="tooltip">
-            Driver Redress
+            <script>
+              docWrite(driverRedressTitle);
+            </script>
             <input type="checkbox" id="driverRedress" name="driverRedress" value="driverRedress" onclick="redress()" />
             <label for="driverRedress"></label><br />
             <span class="tooltiptext"> Drivers can pay a fee to remove bad reviews </span>
           </div>
         </div>
         <div class="advertising" id="advertising">
-          <span>Advertising</span><br />
+          <span
+            ><script>
+              docWrite(subControls3);
+            </script></span
+          ><br />
           <div class="text">
             <div class="tooltip">
-              Driver-Directed Ads
+              <script>
+                docWrite(driverAdsTitle);
+              </script>
               <span class="tooltiptext"> Riders pay a fee to advertise themselves </span>
               <input type="range" min="0" max="2" value="1" step="any" class="slider" id="driverAdsSlider" />
               <input type="number" min="0" max="2" value="1" step="1" id="driverAds" /><br />
             </div>
             <div class="tooltip">
-              Rider-Directed Ads
+              <script>
+                docWrite(riderAdsTitle);
+              </script>
               <span class="tooltiptext"> Drivers pay a fee to advertise themselves </span>
               <input type="range" min="0" max="2" value="1" step="any" class="slider" id="riderAdsSlider" />
               <input type="number" min="0" max="2" value="1" step="1" id="riderAds" /><br />
@@ -646,7 +469,7 @@
               },
               title: {
                 display: true,
-                text: "# of Potential Riders",
+                text: xAxisChart1,
               },
             },
             y: {
@@ -657,7 +480,7 @@
               },
               title: {
                 display: true,
-                text: "Rider Base Fees",
+                text: yAxisChart1,
               },
             },
           },
@@ -754,7 +577,7 @@
               },
               title: {
                 display: true,
-                text: "# of Potential Drivers",
+                text: xAxisChart2,
               },
             },
             y: {
@@ -766,7 +589,7 @@
               },
               title: {
                 display: true,
-                text: "Driver Base Fees",
+                text: yAxisChart2,
               },
             },
           },
@@ -930,11 +753,7 @@
 
         // Surge Pricing increases both Vc and Vd
         // Low Battery Markups increase Vc
-        Vc =
-          1 * (1 + parseFloat(surgePricing.value)) +
-          parseFloat(crimePricing.value) +
-          parseFloat(driverStars.value) +
-          parseFloat(lowBattery.value);
+        Vc = 1 * (1 + parseFloat(surgePricing.value)) + parseFloat(crimePricing.value) + parseFloat(driverStars.value) + parseFloat(lowBattery.value);
         Vd = 1 * (1 + parseFloat(surgePricing.value)) + parseFloat(crimePricing.value) + parseFloat(riderStars.value);
 
         // Rider-Directed Ads increase Qc
@@ -1050,17 +869,13 @@
         }
 
         // The y value of the consumer chart (The Maximum Value)
-        let yc =
-          ((Qc + edc * ((pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd))) * Vc) /
-          Qc;
+        let yc = ((Qc + edc * ((pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd))) * Vc) / Qc;
 
         // The x value of the consumer chart (The Maximum Market Size)
         let xc = Qc + edc * ((pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd));
 
         // The y value of the developer chart (The Maximum Value)
-        let yd =
-          ((Qd + ecd * ((pc * Qc * Vd + (edc * Qd * (pd - Vd) - Qc * Vd) * Vc) / ((edc * ecd - 1) * Vd * Vc))) * Vd) /
-          Qd;
+        let yd = ((Qd + ecd * ((pc * Qc * Vd + (edc * Qd * (pd - Vd) - Qc * Vd) * Vc) / ((edc * ecd - 1) * Vd * Vc))) * Vd) / Qd;
 
         // The x value of the developer chart (The Maximum Market Size)
         let xd = Qd + ecd * ((pc * Qc * Vd + (edc * Qd * (pd - Vd) - Qc * Vd) * Vc) / ((edc * ecd - 1) * Vd * Vc));
@@ -1102,12 +917,10 @@
 
         if (Math.abs(opc - pc) < 0.001 && Math.abs(opd - pd) < 0.001) {
           chart1.data.datasets[1].backgroundColor = "rgba(132, 255, 99, 0.5)";
-          chart1.data.datasets[1].label =
-            "Rider Profit = Riders * Fees = (" + consumerProfit.toFixed(5) + ") ~ Optimal";
+          chart1.data.datasets[1].label = "Rider Profit = Riders * Fees = (" + consumerProfit.toFixed(5) + ") ~ Optimal";
 
           chart2.data.datasets[1].backgroundColor = "rgba(132, 255, 99, 0.5)";
-          chart2.data.datasets[1].label =
-            "Driver Profit = Drivers * Fees = (" + developerProfit.toFixed(5) + ") ~ Optimal";
+          chart2.data.datasets[1].label = "Driver Profit = Drivers * Fees = (" + developerProfit.toFixed(5) + ") ~ Optimal";
         } else {
           chart1.data.datasets[1].backgroundColor = "rgba(175, 122, 197, 0.5)"; // purple
           chart1.data.datasets[1].label = "Rider Profit = Riders * Fees = (" + consumerProfit.toFixed(5) + ")";
@@ -1119,9 +932,7 @@
         // Calculates the total profit from both consumers and developers
         // Total Profit = Price * Quantity
 
-        console.log(
-          "Total Profit = " + consumerProfit + " + " + developerProfit + " - " + expenses + " = " + totalProfit2
-        );
+        console.log("Total Profit = " + consumerProfit + " + " + developerProfit + " - " + expenses + " = " + totalProfit2);
 
         totalProfit.innerHTML = "Total Profit = Rider Profit + Driver Profit - Expenses = " + totalProfit2.toFixed(5);
 
