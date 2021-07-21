@@ -1,4 +1,4 @@
-var dashboardTitle = "Platform Dashbaord";
+var dashboardTitle = "Platform Dashboard";
 var controlsTitle = "Adminstrator Controls";
 var yAxisChart1 = "Rider Base Fees";
 var xAxisChart1 = "# of Potential Riders";
