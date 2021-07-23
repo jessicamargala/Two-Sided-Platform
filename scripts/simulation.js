@@ -114,8 +114,9 @@ var chart1 = new Chart(ctx1, {
         // Consumer Surplus
         // From the Max Value to Max Market Size
         label: "Consumer Surplus",
-        fill: 1,
-        backgroundColor: "rgba(255, 192, 99, 0.5)", // orange
+        fill: false,
+        showLine: true,
+        // backgroundColor: "rgba(255, 192, 99, 0.5)", // orange
         lineTension: 0,
         pointHoverRadius: 3,
         data: [
@@ -152,9 +153,9 @@ var chart1 = new Chart(ctx1, {
         // Starts at the end of the quantity and goes to the Max Market Size (Q)
         label: "DWL",
         pointHoverRadius: 3,
-        fill: true,
-        // red
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        fill: false,
+        showLine: true,
+        // backgroundColor: "rgba(255, 99, 132, 0.5)", // red
         lineTension: 0,
         data: [
           {
@@ -221,10 +222,11 @@ var chart2 = new Chart(ctx2, {
         // Consumer Surplus
         // From the Max Value to Max Market Size
         label: "Consumer Surplus",
-        fill: 1,
+        fill: false,
+        showLine: true,
         pointHoverRadius: 3,
         // orange
-        backgroundColor: "rgba(255, 192, 99, 0.5)",
+        // backgroundColor: "rgba(255, 192, 99, 0.5)",
         lineTension: 0,
         data: [
           {
@@ -259,9 +261,9 @@ var chart2 = new Chart(ctx2, {
         // Starts at the end of the quantity and goes to the Max Market Size (Q)
         label: "DWL",
         pointHoverRadius: 3,
-        fill: true,
-        // red
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        fill: false,
+        showLine: true,
+        // backgroundColor: "rgba(255, 99, 132, 0.5)", // red
         lineTension: 0,
         data: [
           {
@@ -353,7 +355,7 @@ var chart3 = new Chart(ctx3, {
         borderColor: "rgba(230, 126, 34, 0.5)",
         backgroundColor: "rgba(230, 126, 34, 0.5)", // orange
         data: [],
-        stack: "Stack 2",
+        stack: "Stack 1",
       },
     ],
   },
@@ -384,7 +386,7 @@ var chart3 = new Chart(ctx3, {
 // Initial consumer price is set to 0.2 (pc = 0.2)
 // Initial developer price is set to 0.2 (pd = 0.2)
 // Initial admin controls are all set to 0
-calcUpdate(Qc, Qd, Vc, Vd, expenses, 0.2, 0.2, ecd, edc, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+calcUpdate(Qc, Qd, Vc, Vd, expenses, 0.25, 0.25, ecd, edc, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 // Add the first Profits (consumerProfit = 0.33684, developerProfit = 0.20211)
 addData(chart3, "", 0.33684, 0.20211, 1.48439, 2.4739);
@@ -685,12 +687,17 @@ function calcUpdate(
   var driverSatisfaction = 0.5 / developerProfit;
   var riderSatisfaction = 0.5 / consumerProfit;
 
-  // When the "Save Chnages" button is pressed, addData to Chart 3
-  var change = document.getElementById("addPoint");
-  if (change.value == "true") {
-    addData(chart3, "", consumerProfit, developerProfit, riderSatisfaction, driverSatisfaction);
-    change.value = "false";
-  }
+  chart3.data.datasets[0].data = [consumerProfit];
+  chart3.data.datasets[1].data = [developerProfit];
+  chart3.data.datasets[2].data = [riderSatisfaction];
+  chart3.data.datasets[3].data = [driverSatisfaction];
+
+  //   // When the "Save Chnages" button is pressed, addData to Chart 3
+  //   var change = document.getElementById("addPoint");
+  //   if (change.value == "true") {
+  //     addData(chart3, "", consumerProfit, developerProfit, riderSatisfaction, driverSatisfaction);
+  //     change.value = "false";
+  //   }
 
   chart1.update();
   chart2.update();
