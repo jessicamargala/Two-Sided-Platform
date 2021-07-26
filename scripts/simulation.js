@@ -114,7 +114,7 @@ var chart1 = new Chart(ctx1, {
         // Consumer Surplus
         // From the Max Value to Max Market Size
         label: "Consumer Surplus",
-        fill: 1,
+        fill: false,
         backgroundColor: "rgba(255, 192, 99, 0.5)", // orange
         lineTension: 0,
         pointHoverRadius: 3,
@@ -152,7 +152,7 @@ var chart1 = new Chart(ctx1, {
         // Starts at the end of the quantity and goes to the Max Market Size (Q)
         label: "DWL",
         pointHoverRadius: 3,
-        fill: true,
+        fill: false,
         // red
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         lineTension: 0,
@@ -221,7 +221,7 @@ var chart2 = new Chart(ctx2, {
         // Consumer Surplus
         // From the Max Value to Max Market Size
         label: "Consumer Surplus",
-        fill: 1,
+        fill: false,
         pointHoverRadius: 3,
         // orange
         backgroundColor: "rgba(255, 192, 99, 0.5)",
@@ -259,7 +259,7 @@ var chart2 = new Chart(ctx2, {
         // Starts at the end of the quantity and goes to the Max Market Size (Q)
         label: "DWL",
         pointHoverRadius: 3,
-        fill: true,
+        fill: false,
         // red
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         lineTension: 0,
@@ -353,7 +353,7 @@ var chart3 = new Chart(ctx3, {
         borderColor: "rgba(230, 126, 34, 0.5)",
         backgroundColor: "rgba(230, 126, 34, 0.5)", // orange
         data: [],
-        stack: "Stack 2",
+        stack: "Stack 1",
       },
     ],
   },
@@ -685,12 +685,17 @@ function calcUpdate(
   var driverSatisfaction = 0.5 / developerProfit;
   var riderSatisfaction = 0.5 / consumerProfit;
 
+  chart3.data.datasets[0].data[0] = consumerProfit;
+  chart3.data.datasets[1].data[0] = developerProfit;
+  chart3.data.datasets[2].data[0] = riderSatisfaction;
+  chart3.data.datasets[3].data[0] = driverSatisfaction;
+
   // When the "Save Chnages" button is pressed, addData to Chart 3
-  var change = document.getElementById("addPoint");
-  if (change.value == "true") {
-    addData(chart3, "", consumerProfit, developerProfit, riderSatisfaction, driverSatisfaction);
-    change.value = "false";
-  }
+  // var change = document.getElementById("addPoint");
+  // if (change.value == "true") {
+  //   addData(chart3, "", consumerProfit, developerProfit, riderSatisfaction, driverSatisfaction);
+  //   change.value = "false";
+  // }
 
   chart1.update();
   chart2.update();
