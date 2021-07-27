@@ -115,6 +115,7 @@ var chart1 = new Chart(ctx1, {
         // From the Max Value to Max Market Size
         label: "Consumer Surplus",
         fill: false,
+        showLine: true,
         backgroundColor: "rgba(255, 192, 99, 0.5)", // orange
         lineTension: 0,
         pointHoverRadius: 3,
@@ -153,6 +154,7 @@ var chart1 = new Chart(ctx1, {
         label: "DWL",
         pointHoverRadius: 3,
         fill: false,
+        showLine: true,
         // red
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         lineTension: 0,
@@ -222,6 +224,7 @@ var chart2 = new Chart(ctx2, {
         // From the Max Value to Max Market Size
         label: "Consumer Surplus",
         fill: false,
+        showLine: true,
         pointHoverRadius: 3,
         // orange
         backgroundColor: "rgba(255, 192, 99, 0.5)",
@@ -259,6 +262,7 @@ var chart2 = new Chart(ctx2, {
         // Starts at the end of the quantity and goes to the Max Market Size (Q)
         label: "DWL",
         pointHoverRadius: 3,
+        showLine: true,
         fill: false,
         // red
         backgroundColor: "rgba(255, 99, 132, 0.5)",
