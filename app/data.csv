@@ -1,0 +1,20 @@
+id,name,description,link,module_id,type,order
+1,"Introduction to Negotiation","This assignment is an introduction to negotiation ",https://usc.qualtrics.com/jfe/form/SV_50gSaM4qtHnk0hU,1,"video ",1
+2,Pre-Survey,,https://usc.qualtrics.com/jfe/form/SV_eh58Y6Mc7hDUYUS,1,survey,0
+4,"Post-Survey ",,https://usc.qualtrics.com/jfe/form/SV_3WdmiouCJh5NNKS,4,survey,1
+6,"Value Claiming",,https://usc.qualtrics.com/jfe/form/SV_bJzR0EzYoueSKIS,2,video,0
+7,"Value Claiming Feedback ",,/valueclaiming,2,website,1
+8,"Take Away",,https://usc.qualtrics.com/jfe/form/SV_9KqA0nZGTGaDH5Y,4,video,0
+11,"Negotiation Practice",,http://www.ejstudies.com/SalaryCS/,1,simulation,2
+12,"Negotiation Practice 2",,http://www.ejstudies.com/SalaryCS3/,1,simulation,3
+13,"Introduction to Negotiation","This assignment is an introduction to negotiation ",https://usc.qualtrics.com/jfe/form/SV_50gSaM4qtHnk0hU,5,video,0
+14,Pre-Survey,"Study ",https://usc.qualtrics.com/jfe/form/SV_50gSaM4qtHnk0hU,5,survey,1
+15,"Negotiation Practice 1","This assignment is an introduction to negotiation ",http://www.ejstudies.com/SalaryCS/,5,simulation,2
+16,"Value Claiming","This assignment is an introduction to negotiation ",https://usc.qualtrics.com/jfe/form/SV_bJzR0EzYoueSKIS,6,video,0
+17,"Value Creating","This assignment is an introduction to negotiation ",https://usc.qualtrics.com/jfe/form/SV_1G6fUgW5SZ2rm8m,7,video,0
+18,"Value Claiming Feedback ","This assignment is an introduction to negotiation ",/valueclaiming,6,website,1
+19,"Value Creating Feedback ","This assignment is an introduction to negotiation ",/valuecreating,7,website,1
+20,"Negotiation Practice 2","This assignment is an introduction to negotiation ",http://www.ejstudies.com/SalaryCS2/,8,simulation,0
+21,"Take Away","This assignment is an introduction to negotiation ",https://usc.qualtrics.com/jfe/form/SV_9KqA0nZGTGaDH5Y,8,video,1
+22,"Value Creating","This assignment is an introduction to negotiation ",https://usc.qualtrics.com/jfe/form/SV_1G6fUgW5SZ2rm8m,3,video,0
+23,"Value Creating Feedback",,/valuecreating,3,website,1

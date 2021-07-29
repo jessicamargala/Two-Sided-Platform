@@ -1,0 +1,35 @@
+body {
+  background-color: #add8e6;
+}
+span {
+  font-size: 1.1em;
+  position: center;
+  text-align: center;
+  top: 0px;
+  margin-right: 7px;
+  color: #707070;
+}
+.welcome {
+  text-align: center;
+  font-size: 25px;
+}
+.explanation {
+  text-align: center;
+}
+.simulationLink {
+  text-align: center;
+}
+a:link {
+  text-decoration: none;
+}
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: underline;
+}
