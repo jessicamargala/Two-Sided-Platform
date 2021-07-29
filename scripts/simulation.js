@@ -29,7 +29,7 @@ var opd =
   (Vc * Vd * (edc * Qd * (Qc + edc * Qd) * Vc + Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd)) /
   (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
 
-var animationShown = "../images/30passengers2vehicles.gif";
+var animationShown = "../images/60passengers5vehicles.gif";
 document.getElementById("img").src = animationShown;
 
 var expenses = 0;
@@ -513,25 +513,25 @@ function calcUpdate(
     if (qd <= 0.66) {
       animationShown = "../images/10passengers1vehicles.gif";
     } else if (qd <= 1.33) {
-      animationShown = "../images/10passengers2vehicles.gif";
+      animationShown = "../images/10passengers5vehicles.gif";
     } else {
-      animationShown = "../images/10passengers3vehicles.gif";
+      animationShown = "../images/10passengers10vehicles.gif";
     }
   } else if (qc <= 1.33) {
     if (qd <= 0.66) {
-      animationShown = "../images/20passengers1vehicles.gif";
+      animationShown = "../images/40passengers1vehicles.gif";
     } else if (qd <= 1.33) {
-      animationShown = "../images/20passengers2vehicles.gif";
+      animationShown = "../images/40passengers5vehicles.gif";
     } else {
-      animationShown = "../images/20passengers3vehicles.gif";
+      animationShown = "../images/40passengers10vehicles.gif";
     }
   } else if (qc > 1.33) {
     if (qd <= 0.66) {
-      animationShown = "../images/30passengers1vehicles.gif";
+      animationShown = "../images/60passengers1vehicles.gif";
     } else if (qd <= 1.33) {
-      animationShown = "../images/30passengers2vehicles.gif";
+      animationShown = "../images/60passengers5vehicles.gif";
     } else {
-      animationShown = "../images/30passengers3vehicles.gif";
+      animationShown = "../images/60passengers10vehicles.gif";
     }
   }
 
@@ -693,6 +693,9 @@ function calcUpdate(
   chart3.data.datasets[1].data[0] = developerProfit;
   chart3.data.datasets[2].data[0] = riderSatisfaction;
   chart3.data.datasets[3].data[0] = driverSatisfaction;
+
+  // Update animation shown
+  document.getElementById("img").src = animationShown;
 
   // When the "Save Chnages" button is pressed, addData to Chart 3
   // var change = document.getElementById("addPoint");

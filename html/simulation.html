@@ -69,9 +69,9 @@
                   <div class="picker">
                     <div class="bWrap">
                       <!-- Input via slider (0 - 2)-->
-                      <input type="range" min="0" max="2" value="1" step="0.25" class="slider" id="consumerPriceSlider" />
+                      <input type="range" min="0" max="2" value="1" step="0.2" class="slider" id="consumerPriceSlider" />
                       <!-- Input via decimal text box (0 - 2)-->
-                      <input type="number" min="0" max="2" value="1" step="any" id="consumerPrice" /><br />
+                      <input type="number" min="0" max="2" value="1" step="0.2" id="consumerPrice" /><br />
                     </div>
                   </div>
                 </div>
@@ -85,9 +85,9 @@
                   <div class="picker">
                     <div class="bWrap">
                       <!-- Input via slider (0 - 2)-->
-                      <input type="range" min="0" max="2" value="0.5" step="0.25" class="slider" id="developerPriceSlider" />
+                      <input type="range" min="0" max="2" value="0.5" step="0.2" class="slider" id="developerPriceSlider" />
                       <!-- Input via decimal text box (0 - 2)-->
-                      <input type="number" min="0" max="2" value="0.5" step="any" id="developerPrice" /><br />
+                      <input type="number" min="0" max="2" value="0.5" step="0.2" id="developerPrice" /><br />
                     </div>
                   </div>
                 </div>
@@ -101,9 +101,9 @@
                   <div class="picker">
                     <div class="bWrap">
                       <!-- Input via slider (0 - .25)-->
-                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="surgePricingSlider" />
+                      <input type="range" min="0" max=".25" value="0" step="0.025" class="slider" id="surgePricingSlider" />
                       <!-- Input via decimal text box (0 - .25)-->
-                      <input type="number" min="0" max=".25" value="0" step="0.01" id="surgePricing" /><br />
+                      <input type="number" min="0" max=".25" value="0" step="0.025" id="surgePricing" /><br />
                     </div>
                   </div>
                 </div>
@@ -117,9 +117,9 @@
                   <div class="picker">
                     <div class="bWrap">
                       <!-- Input via slider (0 - .25)-->
-                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="crimePricingSlider" />
+                      <input type="range" min="0" max=".25" value="0" step="0.025" class="slider" id="crimePricingSlider" />
                       <!-- Input via decimal text box (0 - .25)-->
-                      <input type="number" min="0" max=".25" value="0" step="0.01" id="crimePricing" /><br />
+                      <input type="number" min="0" max=".25" value="0" step="0.025" id="crimePricing" /><br />
                     </div>
                   </div>
                 </div>
@@ -133,9 +133,9 @@
                   <div class="picker">
                     <div class="bWrap">
                       <!-- Input via slider (0 - 2)-->
-                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="riderStarsSlider" />
+                      <input type="range" min="0" max=".25" value="0" step="0.025" class="slider" id="riderStarsSlider" />
                       <!-- Input via decimal text box (0 - 2)-->
-                      <input type="number" min="0" max=".25" value="0" step="0.01" id="riderStars" /><br />
+                      <input type="number" min="0" max=".25" value="0" step="0.025" id="riderStars" /><br />
                     </div>
                   </div>
                 </div>
@@ -149,9 +149,9 @@
                   <div class="picker">
                     <div class="bWrap">
                       <!-- Input via slider (0 - 2)-->
-                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="driverStarsSlider" />
+                      <input type="range" min="0" max=".25" value="0" step="0.025" class="slider" id="driverStarsSlider" />
                       <!-- Input via decimal text box (0 - 2)-->
-                      <input type="number" min="0" max=".25" value="0" step="0.01" id="driverStars" /><br />
+                      <input type="number" min="0" max=".25" value="0" step="0.025" id="driverStars" /><br />
                     </div>
                   </div>
                 </div>
@@ -165,9 +165,9 @@
                   <div class="picker">
                     <div class="bWrap">
                       <!-- Input via slider (0 - 2)-->
-                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="lowBatterySlider" />
+                      <input type="range" min="0" max=".25" value="0" step="0.025" class="slider" id="lowBatterySlider" />
                       <!-- Input via decimal text box (0 - 2)-->
-                      <input type="number" min="0" max=".25" value="0" step="0.01" id="lowBattery" /><br />
+                      <input type="number" min="0" max=".25" value="0" step="0.025" id="lowBattery" /><br />
                     </div>
                   </div>
                 </div>
@@ -228,16 +228,16 @@
                 docWrite(driverAdsTitle);
               </script>
               <span class="tooltiptext"> Riders pay a fee to advertise themselves </span>
-              <input type="range" min="0" max="2" value="1" step="any" class="slider" id="driverAdsSlider" />
-              <input type="number" min="0" max="2" value="1" step="1" id="driverAds" /><br />
+              <input type="range" min="0" max="2" value="1" step="0.2" class="slider" id="driverAdsSlider" />
+              <input type="number" min="0" max="2" value="1" step="0.2" id="driverAds" /><br />
             </div>
             <div class="tooltip">
               <script>
                 docWrite(riderAdsTitle);
               </script>
               <span class="tooltiptext"> Drivers pay a fee to advertise themselves </span>
-              <input type="range" min="0" max="2" value="1" step="any" class="slider" id="riderAdsSlider" />
-              <input type="number" min="0" max="2" value="1" step="1" id="riderAds" /><br />
+              <input type="range" min="0" max="2" value="1" step="0.2" class="slider" id="riderAdsSlider" />
+              <input type="number" min="0" max="2" value="1" step="0.2" id="riderAds" /><br />
             </div>
           </div>
         </div>
