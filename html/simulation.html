@@ -42,11 +42,10 @@
         </div>
 
         <div class="simulation3">
-          <!-- Chart canvas container for the Developer Price Chart -->
+          <!-- Chart canvas container for the Analytics Chart -->
           <div>
             <canvas id="profitChart" style="display: inline-block; height: 150px; width: 50%; margin-left: 5%" class="chartjs-render-monitor"></canvas>
           </div>
-          <button id="addPoint" class="button addPoint" value="false" onclick="saveChanges()">Save Changes</button>
         </div>
       </div>
 
@@ -252,6 +251,19 @@
         </div>
         <div class="animation">
           <img id="img" src="animationShown" />
+        </div>
+        <div align="right"><button id="submitButton" class="button submitButton" value="false" onclick="submit()">Submit</button></div>
+        <!-- The Modal -->
+        <div id="popUp" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span>By clicking "Submit" you will end the simulation. </span><br />
+            <span>Are you sure you want to submit?</span><br />
+            <form id="submitForm" action="end.html">
+              <button id="yesButton" class="button submitButton" value="false">Yes</button>
+            </form>
+            <button id="noButton" class="button noButton" value="false">No</button>
+          </div>
         </div>
       </div>
     </div>
