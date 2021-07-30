@@ -64,9 +64,9 @@
               docWrite(subControls1);
             </script></span
           ><br />
-          <!-- Slider for Consumer Price Input -->
           <div id="slidecontainer">
             <div class="text">
+              <!-- Slider for Consumer Price Input -->
               <div class="tooltip">
                 <script>
                   docWrite(riderFeesTitle);
@@ -80,6 +80,7 @@
                 </div>
               </div>
 
+              <!-- Slider for Driver Price Input -->
               <div class="tooltip">
                 <script>
                   docWrite(driverFeesTitle);
@@ -93,6 +94,7 @@
                 </div>
               </div>
 
+              <!-- Slider for Surge Pricing Input -->
               <div class="tooltip">
                 <script>
                   docWrite(surgePricingTitle);
@@ -106,6 +108,7 @@
                 </div>
               </div>
 
+              <!-- Slider for Crime Pricing Input -->
               <div class="tooltip">
                 <script>
                   docWrite(crimePricingTitle);
@@ -119,6 +122,7 @@
                 </div>
               </div>
 
+              <!-- Slider for Rider Stars Input -->
               <div class="tooltip">
                 <script>
                   docWrite(riderStarsTitle);
@@ -132,6 +136,7 @@
                 </div>
               </div>
 
+              <!-- Slider for Driver Stars Input -->
               <div class="tooltip">
                 <script>
                   docWrite(driverStarsTitle);
@@ -145,6 +150,7 @@
                 </div>
               </div>
 
+              <!-- Slider for Low Battery Input -->
               <div class="tooltip">
                 <script>
                   docWrite(lowBatteryTitle);
@@ -168,6 +174,7 @@
           ><br />
           <div id="slidecontainer">
             <div class="text">
+              <!-- Slider for Ban Riders Input -->
               <div class="tooltip">
                 <script>
                   docWrite(banRidersTitle);
@@ -178,6 +185,7 @@
                   <input type="number" min="0" max="5" value="1" step="1" id="riderRating" /><br />
                 </div>
               </div>
+              <!-- Slider for Ban Drivers Input -->
               <div class="tooltip">
                 <script>
                   docWrite(banDriversTitle);
@@ -188,19 +196,21 @@
                   <input type="number" min="0" max="5" value="1" step="1" id="driverRating" /><br />
                 </div>
               </div>
+              <!-- Slider for Rider Redress Input -->
               <div class="tooltip">
+                <input type="checkbox" id="riderRedress" name="riderRedress" value="riderRedress" onclick="redress()" />
                 <script>
                   docWrite(riderRedressTitle);
                 </script>
-                <input type="checkbox" id="riderRedress" name="riderRedress" value="riderRedress" onclick="redress()" />
                 <label for="riderRedress"></label><br /><br />
                 <text class="tooltiptext"> Riders can pay a fee to remove bad reviews </text>
               </div>
+              <!-- Slider for Driver Redress Input -->
               <div class="tooltip">
+                <input type="checkbox" id="driverRedress" name="driverRedress" value="driverRedress" onclick="redress()" />
                 <script>
                   docWrite(driverRedressTitle);
                 </script>
-                <input type="checkbox" id="driverRedress" name="driverRedress" value="driverRedress" onclick="redress()" />
                 <label for="driverRedress"></label><br />
                 <text class="tooltiptext"> Drivers can pay a fee to remove bad reviews </text>
               </div>
@@ -215,6 +225,7 @@
           ><br />
           <div id="slidecontainer">
             <div class="text">
+              <!-- Slider for Driver Ads Input -->
               <div class="tooltip">
                 <script>
                   docWrite(driverAdsTitle);
@@ -225,6 +236,7 @@
                   <input type="number" min="0" max="2" value="1" step="0.2" id="driverAds" /><br />
                 </div>
               </div>
+              <!-- Slider for Rider Ads Input -->
               <div class="tooltip">
                 <script>
                   docWrite(riderAdsTitle);
