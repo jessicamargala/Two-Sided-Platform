@@ -1,4 +1,4 @@
-var pageTitle = "Luber";
+var pageTitle = "Admin Planning Interface";
 var dashboardTitle = "Platform Dashboard";
 var controlsTitle = "Adminstrator Controls";
 var yAxisChart1 = "Rider Base Fees";

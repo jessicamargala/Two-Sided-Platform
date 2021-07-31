@@ -1,3 +1,5 @@
+var stats = [0, 0, 0, 0, 0];
+
 // Vc -> Maximum Value of the product for consumers (Customers willingingness to pay)
 var Vc = 1;
 // Vd -> Maximum Value of the product for developers (Developers willingingness to pay)
@@ -30,7 +32,6 @@ var opd =
   (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
 
 var animationShown = "../images/60passengers5vehicles.gif";
-document.getElementById("img").src = animationShown;
 
 var expenses = 0;
 
@@ -485,11 +486,9 @@ function calcUpdate(
 
   // Rider-Directed Ads increase Qc
   Qc = 1 + parseFloat(riderAds.value) - 0.1 * parseFloat(riderRating.value);
-  console.log("Qc is " + Qc);
 
   // Driver-Directed Ads increase Qd
   Qd = 1 + parseFloat(driverAds.value) - 0.1 * parseFloat(driverRating.value);
-  console.log("Qd is " + Qd);
 
   ecd = 0.125 + 0.1 * parseFloat(riderRating.value);
 
@@ -501,13 +500,11 @@ function calcUpdate(
   // Similar to the plength() function in the single sided market simulation
   // qc represents the x-value of the profit for consumers (the quantity)
   let qc = (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd);
-  console.log("qc is " + qc);
 
   // Profit Size Length for developers represents Quantity
   // Similar to the plenght() function in the single sided market simulation
   // qd represents the x-value of the profit for developers (the quantity)
   let qd = (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd);
-  console.log("qd is " + qd);
 
   if (qc <= 0.67) {
     if (qd <= 0.66) {
@@ -620,13 +617,11 @@ function calcUpdate(
   var opc =
     (Vc * Vd * (Qd * ((ecd * edc - 2) * Qc - edc * Qd) * Vc + ecd * Qc * (ecd * Qc + Qd) * Vd)) /
     (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
-  console.log("opc is " + opc);
+
   var opd =
     (Vc * Vd * (edc * Qd * (Qc + edc * Qd) * Vc + Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd)) /
     (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
-  console.log("opd is " + opd);
 
-  console.log("expenses are " + expenses);
   // Total Profit is maximized (turns green) when |0.875 - consumer price| < 0.001 AND when |0.125 - developer price| < 0.001
   var totalProfit2 = pd * qd + pc * qc - expenses;
   var consumerProfit = pc * qc;
@@ -657,10 +652,6 @@ function calcUpdate(
   }
 
   // Calculates the total profit from both consumers and developers
-  // Total Profit = Price * Quantity
-
-  console.log("Total Profit = " + consumerProfit + " + " + developerProfit + " - " + expenses + " = " + totalProfit2);
-
   totalProfit.innerHTML = "Total Profit = Rider Profit + Driver Profit - Expenses = " + totalProfit2.toFixed(5);
 
   chart1.data.datasets[0].data[0].y = yc;
@@ -697,16 +688,13 @@ function calcUpdate(
   // Update animation shown
   document.getElementById("img").src = animationShown;
 
-  // When the "Save Chnages" button is pressed, addData to Chart 3
-  // var change = document.getElementById("addPoint");
-  // if (change.value == "true") {
-  //   addData(chart3, "", consumerProfit, developerProfit, riderSatisfaction, driverSatisfaction);
-  //   change.value = "false";
-  // }
-
   chart1.update();
   chart2.update();
   chart3.update();
+
+  stats = [consumerProfit, developerProfit, riderSatisfaction, totalProfit2];
+
+  return [consumerProfit, developerProfit, riderSatisfaction, driverSatisfaction, totalProfit2];
 }
 
 // Onclick event for Rider/Driver Redress, updates the Dashboard's values
@@ -747,45 +735,6 @@ function addData(chart, label, riderData, driverData, riderSatisfaction, driverS
   // Adding new driver satisfaction
   chart.data.datasets[3].data.push(driverSatisfaction);
   chart.update();
-}
-
-function submit() {
-  var change = document.getElementById("addPoint");
-  change.value = "true";
-  // change names later
-  // const Qc = document.getElementById();
-  // const Qd = document.getElementById();
-  // const Vc = document.getElementById();
-  // const Vd = document.getElementById();
-  const pc = document.getElementById("consumerPrice");
-  const pd = document.getElementById("developerPrice");
-  // const ecd = document.getElementById();
-  // const edc = document.getElementById();
-  // const left = document.getElementById();
-
-  calcUpdate(
-    Qc,
-    Qd,
-    Vc,
-    Vd,
-    expenses,
-    parseFloat(pc.value),
-    parseFloat(pd.value),
-    ecd,
-    edc,
-    parseFloat(surgePricing.value),
-    parseFloat(crimePricing.value),
-    parseFloat(riderStars.value),
-    parseFloat(driverStars.value),
-    parseFloat(lowBattery.value),
-    parseFloat(riderRating.value),
-    parseFloat(driverRating.value),
-    parseFloat(driverAds.value),
-    parseFloat(riderAds.value),
-    true
-  );
-
-  document.getElementById("img").src = animationShown;
 }
 
 consumerPriceSlider.oninput = function () {
@@ -1323,3 +1272,5 @@ window.onclick = function (event) {
     popUp.style.display = "none";
   }
 };
+
+stats;

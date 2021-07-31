@@ -67,6 +67,9 @@
             <div class="text">
               <!-- Slider for Consumer Price Input -->
               <div class="tooltip">
+                <div id="popUp" class="modal">
+                  <div class="modal-content"><span>By clicking "Submit" you will end the simulation. </span><br /></div>
+                </div>
                 <script>
                   docWrite(riderFeesTitle);
                 </script>
@@ -253,9 +256,7 @@
           <img id="img" src="animationShown" />
         </div>
         <div align="right"><button id="submitButton" class="button submitButton" value="false" onclick="submit()">Submit</button></div>
-        <!-- The Modal -->
         <div id="popUp" class="modal">
-          <!-- Modal content -->
           <div class="modal-content">
             <span>By clicking "Submit" you will end the simulation. </span><br />
             <span>Are you sure you want to submit?</span><br />

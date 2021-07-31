@@ -87,8 +87,8 @@ input[type="number"] {
   text-align: center;
   font-weight: bold;
   font-family: serif;
-  font-size: 75px;
-  width: 400px;
+  font-size: 60px;
+  width: auto;
   margin: auto;
 }
 .profit {
