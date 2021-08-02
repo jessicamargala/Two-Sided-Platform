@@ -10,17 +10,10 @@
   </head>
   <script src="../scripts/names.js"></script>
   <body>
-    <div class="title">
-      <span
-        ><script>
-          docWrite(pageTitle);
-        </script>
-      </span>
-    </div>
     <div class="profit" id="profit">Total Profit:0.53895</div>
     <div class="page">
       <div class="simcontainer">
-        <div class="dashboardTitle">
+        <div class="pageTitle">
           <span
             ><script>
               docWrite(dashboardTitle);
@@ -42,15 +35,16 @@
         </div>
 
         <div class="simulation3">
-          <!-- Chart canvas container for the Analytics Chart -->
+          <!-- Chart canvas container for the Developer Price Chart -->
           <div>
             <canvas id="profitChart" style="display: inline-block; height: 150px; width: 50%; margin-left: 5%" class="chartjs-render-monitor"></canvas>
           </div>
+          <button id="addPoint" class="button addPoint" value="false" onclick="saveChanges()">Save Changes</button>
         </div>
       </div>
 
-      <div class="adminControls">
-        <div class="dashboardTitle">
+      <div class="radioButtons">
+        <div class="pageTitle">
           <span
             ><script>
               docWrite(controlsTitle);
@@ -63,106 +57,119 @@
               docWrite(subControls1);
             </script></span
           ><br />
+          <!-- Slider for Consumer Price Input -->
           <div id="slidecontainer">
             <div class="text">
-              <!-- Slider for Consumer Price Input -->
-              <div class="tooltip">
-                <div id="popUp" class="modal">
-                  <div class="modal-content"><span>By clicking "Submit" you will end the simulation. </span><br /></div>
-                </div>
-                <script>
-                  docWrite(riderFeesTitle);
-                </script>
-                <text class="tooltiptext"> Amount riders must spend </text>
-                <div class="picker">
-                  <!-- Input via slider (0 - 2)-->
-                  <input type="range" min="0" max="2" value="1" step="0.2" class="slider" id="consumerPriceSlider" />
-                  <!-- Input via decimal text box (0 - 2)-->
-                  <input type="number" min="0" max="2" value="1" step="0.2" id="consumerPrice" /><br />
-                </div>
-              </div>
-
-              <!-- Slider for Driver Price Input -->
-              <div class="tooltip">
-                <script>
-                  docWrite(driverFeesTitle);
-                </script>
-                <text class="tooltiptext"> Amount drivers must spend </text>
-                <div class="picker">
-                  <!-- Input via slider (0 - 2)-->
-                  <input type="range" min="0" max="2" value="0.5" step="0.2" class="slider" id="developerPriceSlider" />
-                  <!-- Input via decimal text box (0 - 2)-->
-                  <input type="number" min="0" max="2" value="0.5" step="0.2" id="developerPrice" /><br />
+              <div class="variable">
+                <div class="tooltip">
+                  <script>
+                    docWrite(riderFeesTitle);
+                  </script>
+                  <span class="tooltiptext"> Amount riders must spend </span>
+                  <div class="picker">
+                    <div class="bWrap">
+                      <!-- Input via slider (0 - 2)-->
+                      <input type="range" min="0" max="2" value="1" step="0.25" class="slider" id="consumerPriceSlider" />
+                      <!-- Input via decimal text box (0 - 2)-->
+                      <input type="number" min="0" max="2" value="1" step="0.25" id="consumerPrice" /><br />
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <!-- Slider for Surge Pricing Input -->
-              <div class="tooltip">
-                <script>
-                  docWrite(surgePricingTitle);
-                </script>
-                <text class="tooltiptext"> % Markup when drivers are scarce </text>
-                <div class="picker">
-                  <!-- Input via slider (0 - .25)-->
-                  <input type="range" min="0" max=".25" value="0" step="0.025" class="slider" id="surgePricingSlider" />
-                  <!-- Input via decimal text box (0 - .25)-->
-                  <input type="number" min="0" max=".25" value="0" step="0.025" id="surgePricing" /><br />
+              <div class="variable">
+                <div class="tooltip">
+                  <script>
+                    docWrite(driverFeesTitle);
+                  </script>
+                  <span class="tooltiptext"> Amount drivers must spend </span>
+                  <div class="picker">
+                    <div class="bWrap">
+                      <!-- Input via slider (0 - 2)-->
+                      <input type="range" min="0" max="2" value="0.5" step="0.25" class="slider" id="developerPriceSlider" />
+                      <!-- Input via decimal text box (0 - 2)-->
+                      <input type="number" min="0" max="2" value="0.5" step="0.25" id="developerPrice" /><br />
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <!-- Slider for Crime Pricing Input -->
-              <div class="tooltip">
-                <script>
-                  docWrite(crimePricingTitle);
-                </script>
-                <text class="tooltiptext"> % Markup for rides in dangerous area </text>
-                <div class="picker">
-                  <!-- Input via slider (0 - .25)-->
-                  <input type="range" min="0" max=".25" value="0" step="0.025" class="slider" id="crimePricingSlider" />
-                  <!-- Input via decimal text box (0 - .25)-->
-                  <input type="number" min="0" max=".25" value="0" step="0.025" id="crimePricing" /><br />
+              <div class="variable">
+                <div class="tooltip">
+                  <script>
+                    docWrite(surgePricingTitle);
+                  </script>
+                  <span class="tooltiptext"> % Markup when drivers are scarce </span>
+                  <div class="picker">
+                    <div class="bWrap">
+                      <!-- Input via slider (0 - .25)-->
+                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="surgePricingSlider" />
+                      <!-- Input via decimal text box (0 - .25)-->
+                      <input type="number" min="0" max=".25" value="0" step="0.01" id="surgePricing" /><br />
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <!-- Slider for Rider Stars Input -->
-              <div class="tooltip">
-                <script>
-                  docWrite(riderStarsTitle);
-                </script>
-                <text class="tooltiptext"> % Makrup when rider has a low rating </text>
-                <div class="picker">
-                  <!-- Input via slider (0 - 2)-->
-                  <input type="range" min="0" max=".25" value="0" step="0.025" class="slider" id="riderStarsSlider" />
-                  <!-- Input via decimal text box (0 - 2)-->
-                  <input type="number" min="0" max=".25" value="0" step="0.025" id="riderStars" /><br />
+              <div class="variable">
+                <div class="tooltip">
+                  <script>
+                    docWrite(crimePricingTitle);
+                  </script>
+                  <span class="tooltiptext"> % Markup for rides in dangerous area </span>
+                  <div class="picker">
+                    <div class="bWrap">
+                      <!-- Input via slider (0 - .25)-->
+                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="crimePricingSlider" />
+                      <!-- Input via decimal text box (0 - .25)-->
+                      <input type="number" min="0" max=".25" value="0" step="0.01" id="crimePricing" /><br />
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <!-- Slider for Driver Stars Input -->
-              <div class="tooltip">
-                <script>
-                  docWrite(driverStarsTitle);
-                </script>
-                <text class="tooltiptext"> % Discount when driver has a low rating </text>
-                <div class="picker">
-                  <!-- Input via slider (0 - 2)-->
-                  <input type="range" min="0" max=".25" value="0" step="0.025" class="slider" id="driverStarsSlider" />
-                  <!-- Input via decimal text box (0 - 2)-->
-                  <input type="number" min="0" max=".25" value="0" step="0.025" id="driverStars" /><br />
+              <div class="variable">
+                <div class="tooltip">
+                  <script>
+                    docWrite(riderStarsTitle);
+                  </script>
+                  <span class="tooltiptext"> % Makrup when rider has a low rating </span>
+                  <div class="picker">
+                    <div class="bWrap">
+                      <!-- Input via slider (0 - 2)-->
+                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="riderStarsSlider" />
+                      <!-- Input via decimal text box (0 - 2)-->
+                      <input type="number" min="0" max=".25" value="0" step="0.01" id="riderStars" /><br />
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <!-- Slider for Low Battery Input -->
-              <div class="tooltip">
-                <script>
-                  docWrite(lowBatteryTitle);
-                </script>
-                <text class="tooltiptext"> % Markup when rider's cell battery is low </text>
-                <div class="picker">
-                  <!-- Input via slider (0 - 2)-->
-                  <input type="range" min="0" max=".25" value="0" step="0.025" class="slider" id="lowBatterySlider" />
-                  <!-- Input via decimal text box (0 - 2)-->
-                  <input type="number" min="0" max=".25" value="0" step="0.025" id="lowBattery" /><br />
+              <div class="variable">
+                <div class="tooltip">
+                  <script>
+                    docWrite(driverStarsTitle);
+                  </script>
+                  <span class="tooltiptext"> % Discount when driver has a low rating </span>
+                  <div class="picker">
+                    <div class="bWrap">
+                      <!-- Input via slider (0 - 2)-->
+                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="driverStarsSlider" />
+                      <!-- Input via decimal text box (0 - 2)-->
+                      <input type="number" min="0" max=".25" value="0" step="0.01" id="driverStars" /><br />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="variable">
+                <div class="tooltip">
+                  <script>
+                    docWrite(lowBatteryTitle);
+                  </script>
+                  <span class="tooltiptext"> % Markup when rider's cell battery is low </span>
+                  <div class="picker">
+                    <div class="bWrap">
+                      <!-- Input via slider (0 - 2)-->
+                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="lowBatterySlider" />
+                      <!-- Input via decimal text box (0 - 2)-->
+                      <input type="number" min="0" max=".25" value="0" step="0.01" id="lowBattery" /><br />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -174,49 +181,39 @@
               docWrite(subControls2);
             </script></span
           ><br />
-          <div id="slidecontainer">
-            <div class="text">
-              <!-- Slider for Ban Riders Input -->
-              <div class="tooltip">
-                <script>
-                  docWrite(banRidersTitle);
-                </script>
-                <text class="tooltiptext"> Remove riders from network if their rating is below this # of stars </text>
-                <div class="picker">
-                  <input type="range" min="0" max="5" value="1" step="1" class="slider" id="riderRatingSlider" />
-                  <input type="number" min="0" max="5" value="1" step="1" id="riderRating" /><br />
-                </div>
-              </div>
-              <!-- Slider for Ban Drivers Input -->
-              <div class="tooltip">
-                <script>
-                  docWrite(banDriversTitle);
-                </script>
-                <text class="tooltiptext"> Remove drivers from network if their rating is below this # of stars </text>
-                <div class="picker">
-                  <input type="range" min="0" max="5" value="1" step="1" class="slider" id="driverRatingSlider" />
-                  <input type="number" min="0" max="5" value="1" step="1" id="driverRating" /><br />
-                </div>
-              </div>
-              <!-- Slider for Rider Redress Input -->
-              <div class="tooltip">
-                <input type="checkbox" id="riderRedress" name="riderRedress" value="riderRedress" onclick="redress()" />
-                <script>
-                  docWrite(riderRedressTitle);
-                </script>
-                <label for="riderRedress"></label><br /><br />
-                <text class="tooltiptext"> Riders can pay a fee to remove bad reviews </text>
-              </div>
-              <!-- Slider for Driver Redress Input -->
-              <div class="tooltip">
-                <input type="checkbox" id="driverRedress" name="driverRedress" value="driverRedress" onclick="redress()" />
-                <script>
-                  docWrite(driverRedressTitle);
-                </script>
-                <label for="driverRedress"></label><br />
-                <text class="tooltiptext"> Drivers can pay a fee to remove bad reviews </text>
-              </div>
+          <div class="text">
+            <div class="tooltip">
+              <script>
+                docWrite(banRidersTitle);
+              </script>
+              <span class="tooltiptext"> Remove riders from network if their rating is below this # of stars </span>
+              <input type="range" min="0" max="5" value="1" step="1" class="slider" id="riderRatingSlider" />
+              <input type="number" min="0" max="5" value="1" step="1" id="riderRating" /><br />
             </div>
+            <div class="tooltip">
+              <script>
+                docWrite(banDriversTitle);
+              </script>
+              <span class="tooltiptext"> Remove drivers from network if their rating is below this # of stars </span>
+              <input type="range" min="0" max="5" value="1" step="1" class="slider" id="driverRatingSlider" />
+              <input type="number" min="0" max="5" value="1" step="1" id="driverRating" /><br />
+            </div>
+          </div>
+          <div class="tooltip">
+            <script>
+              docWrite(riderRedressTitle);
+            </script>
+            <input type="checkbox" id="riderRedress" name="riderRedress" value="riderRedress" onclick="redress()" />
+            <label for="riderRedress"></label><br /><br />
+            <span class="tooltiptext"> Riders can pay a fee to remove bad reviews </span>
+          </div>
+          <div class="tooltip">
+            <script>
+              docWrite(driverRedressTitle);
+            </script>
+            <input type="checkbox" id="driverRedress" name="driverRedress" value="driverRedress" onclick="redress()" />
+            <label for="driverRedress"></label><br />
+            <span class="tooltiptext"> Drivers can pay a fee to remove bad reviews </span>
           </div>
         </div>
         <div class="advertising" id="advertising">
@@ -225,46 +222,27 @@
               docWrite(subControls3);
             </script></span
           ><br />
-          <div id="slidecontainer">
-            <div class="text">
-              <!-- Slider for Driver Ads Input -->
-              <div class="tooltip">
-                <script>
-                  docWrite(driverAdsTitle);
-                </script>
-                <text class="tooltiptext"> Riders pay a fee to advertise themselves </text>
-                <div class="picker">
-                  <input type="range" min="0" max="2" value="1" step="0.2" class="slider" id="driverAdsSlider" />
-                  <input type="number" min="0" max="2" value="1" step="0.2" id="driverAds" /><br />
-                </div>
-              </div>
-              <!-- Slider for Rider Ads Input -->
-              <div class="tooltip">
-                <script>
-                  docWrite(riderAdsTitle);
-                </script>
-                <text class="tooltiptext"> Drivers pay a fee to advertise themselves </text>
-                <div class="picker">
-                  <input type="range" min="0" max="2" value="1" step="0.2" class="slider" id="riderAdsSlider" />
-                  <input type="number" min="0" max="2" value="1" step="0.2" id="riderAds" /><br />
-                </div>
-              </div>
+          <div class="text">
+            <div class="tooltip">
+              <script>
+                docWrite(driverAdsTitle);
+              </script>
+              <span class="tooltiptext"> Riders pay a fee to advertise themselves </span>
+              <input type="range" min="0" max="2" value="1" step="any" class="slider" id="driverAdsSlider" />
+              <input type="number" min="0" max="2" value="1" step="1" id="driverAds" /><br />
+            </div>
+            <div class="tooltip">
+              <script>
+                docWrite(riderAdsTitle);
+              </script>
+              <span class="tooltiptext"> Drivers pay a fee to advertise themselves </span>
+              <input type="range" min="0" max="2" value="1" step="any" class="slider" id="riderAdsSlider" />
+              <input type="number" min="0" max="2" value="1" step="1" id="riderAds" /><br />
             </div>
           </div>
         </div>
         <div class="animation">
           <img id="img" src="animationShown" />
-        </div>
-        <div align="right"><button id="submitButton" class="button submitButton" value="false" onclick="submit()">Submit</button></div>
-        <div id="popUp" class="modal">
-          <div class="modal-content">
-            <span>By clicking "Submit" you will end the simulation. </span><br />
-            <span>Are you sure you want to submit?</span><br />
-            <form id="submitForm" action="end.html">
-              <button id="yesButton" class="button submitButton" value="false">Yes</button>
-            </form>
-            <button id="noButton" class="button noButton" value="false">No</button>
-          </div>
         </div>
       </div>
     </div>
