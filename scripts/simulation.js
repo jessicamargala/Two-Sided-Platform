@@ -33,6 +33,9 @@ var opd =
 var animationShown = "../images/30passengers2vehicles.gif";
 =======
 var animationShown = "../images/60passengers5vehicles.gif";
+<<<<<<< HEAD
+>>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
+=======
 >>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
 document.getElementById("img").src = animationShown;
 
@@ -710,6 +713,13 @@ function calcUpdate(
   //   change.value = "false";
   // }
 
+  // When the "Save Chnages" button is pressed, addData to Chart 3
+  // var change = document.getElementById("addPoint");
+  // if (change.value == "true") {
+  //   addData(chart3, "", consumerProfit, developerProfit, riderSatisfaction, driverSatisfaction);
+  //   change.value = "false";
+  // }
+
   chart1.update();
   chart2.update();
   chart3.update();
@@ -756,7 +766,11 @@ function addData(chart, label, riderData, driverData, riderSatisfaction, driverS
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 function saveChanges() {
+=======
+function submit() {
+>>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
 =======
 function submit() {
 >>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
@@ -1335,4 +1349,7 @@ window.onclick = function (event) {
     popUp.style.display = "none";
   }
 };
+<<<<<<< HEAD
+>>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
+=======
 >>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)

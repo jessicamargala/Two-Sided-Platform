@@ -1,4 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+var pageTitle = "Luber";
+>>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
 =======
 var pageTitle = "Luber";
 >>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
