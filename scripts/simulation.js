@@ -29,14 +29,7 @@ var opd =
   (Vc * Vd * (edc * Qd * (Qc + edc * Qd) * Vc + Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd)) /
   (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
 
-<<<<<<< HEAD
-var animationShown = "../images/30passengers2vehicles.gif";
-=======
 var animationShown = "../images/60passengers5vehicles.gif";
-<<<<<<< HEAD
->>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
-=======
->>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
 document.getElementById("img").src = animationShown;
 
 var expenses = 0;
@@ -123,7 +116,7 @@ var chart1 = new Chart(ctx1, {
         label: "Consumer Surplus",
         fill: false,
         showLine: true,
-        // backgroundColor: "rgba(255, 192, 99, 0.5)", // orange
+        backgroundColor: "rgba(255, 192, 99, 0.5)", // orange
         lineTension: 0,
         pointHoverRadius: 3,
         data: [
@@ -162,7 +155,8 @@ var chart1 = new Chart(ctx1, {
         pointHoverRadius: 3,
         fill: false,
         showLine: true,
-        // backgroundColor: "rgba(255, 99, 132, 0.5)", // red
+        // red
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
         lineTension: 0,
         data: [
           {
@@ -233,7 +227,7 @@ var chart2 = new Chart(ctx2, {
         showLine: true,
         pointHoverRadius: 3,
         // orange
-        // backgroundColor: "rgba(255, 192, 99, 0.5)",
+        backgroundColor: "rgba(255, 192, 99, 0.5)",
         lineTension: 0,
         data: [
           {
@@ -268,9 +262,10 @@ var chart2 = new Chart(ctx2, {
         // Starts at the end of the quantity and goes to the Max Market Size (Q)
         label: "DWL",
         pointHoverRadius: 3,
-        fill: false,
         showLine: true,
-        // backgroundColor: "rgba(255, 99, 132, 0.5)", // red
+        fill: false,
+        // red
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
         lineTension: 0,
         data: [
           {
@@ -393,7 +388,7 @@ var chart3 = new Chart(ctx3, {
 // Initial consumer price is set to 0.2 (pc = 0.2)
 // Initial developer price is set to 0.2 (pd = 0.2)
 // Initial admin controls are all set to 0
-calcUpdate(Qc, Qd, Vc, Vd, expenses, 0.25, 0.25, ecd, edc, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+calcUpdate(Qc, Qd, Vc, Vd, expenses, 0.2, 0.2, ecd, edc, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 // Add the first Profits (consumerProfit = 0.33684, developerProfit = 0.20211)
 addData(chart3, "", 0.33684, 0.20211, 1.48439, 2.4739);
@@ -518,25 +513,25 @@ function calcUpdate(
     if (qd <= 0.66) {
       animationShown = "../images/10passengers1vehicles.gif";
     } else if (qd <= 1.33) {
-      animationShown = "../images/10passengers2vehicles.gif";
+      animationShown = "../images/10passengers5vehicles.gif";
     } else {
-      animationShown = "../images/10passengers3vehicles.gif";
+      animationShown = "../images/10passengers10vehicles.gif";
     }
   } else if (qc <= 1.33) {
     if (qd <= 0.66) {
-      animationShown = "../images/20passengers1vehicles.gif";
+      animationShown = "../images/40passengers1vehicles.gif";
     } else if (qd <= 1.33) {
-      animationShown = "../images/20passengers2vehicles.gif";
+      animationShown = "../images/40passengers5vehicles.gif";
     } else {
-      animationShown = "../images/20passengers3vehicles.gif";
+      animationShown = "../images/40passengers10vehicles.gif";
     }
   } else if (qc > 1.33) {
     if (qd <= 0.66) {
-      animationShown = "../images/30passengers1vehicles.gif";
+      animationShown = "../images/60passengers1vehicles.gif";
     } else if (qd <= 1.33) {
-      animationShown = "../images/30passengers2vehicles.gif";
+      animationShown = "../images/60passengers5vehicles.gif";
     } else {
-      animationShown = "../images/30passengers3vehicles.gif";
+      animationShown = "../images/60passengers10vehicles.gif";
     }
   }
 
@@ -694,24 +689,13 @@ function calcUpdate(
   var driverSatisfaction = 0.5 / developerProfit;
   var riderSatisfaction = 0.5 / consumerProfit;
 
-  chart3.data.datasets[0].data = [consumerProfit];
-  chart3.data.datasets[1].data = [developerProfit];
-  chart3.data.datasets[2].data = [riderSatisfaction];
-  chart3.data.datasets[3].data = [driverSatisfaction];
+  chart3.data.datasets[0].data[0] = consumerProfit;
+  chart3.data.datasets[1].data[0] = developerProfit;
+  chart3.data.datasets[2].data[0] = riderSatisfaction;
+  chart3.data.datasets[3].data[0] = driverSatisfaction;
 
-  //   // When the "Save Chnages" button is pressed, addData to Chart 3
-  //   var change = document.getElementById("addPoint");
-  //   if (change.value == "true") {
-  //     addData(chart3, "", consumerProfit, developerProfit, riderSatisfaction, driverSatisfaction);
-  //     change.value = "false";
-  //   }
-
-  // When the "Save Chnages" button is pressed, addData to Chart 3
-  // var change = document.getElementById("addPoint");
-  // if (change.value == "true") {
-  //   addData(chart3, "", consumerProfit, developerProfit, riderSatisfaction, driverSatisfaction);
-  //   change.value = "false";
-  // }
+  // Update animation shown
+  document.getElementById("img").src = animationShown;
 
   // When the "Save Chnages" button is pressed, addData to Chart 3
   // var change = document.getElementById("addPoint");
@@ -765,15 +749,7 @@ function addData(chart, label, riderData, driverData, riderSatisfaction, driverS
   chart.update();
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-function saveChanges() {
-=======
 function submit() {
->>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
-=======
-function submit() {
->>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
   var change = document.getElementById("addPoint");
   change.value = "true";
   // change names later
@@ -1321,8 +1297,6 @@ riderAds.oninput = function () {
     this.value
   );
 };
-<<<<<<< HEAD
-=======
 
 // Get the modal
 var popUp = document.getElementById("popUp");
@@ -1349,7 +1323,3 @@ window.onclick = function (event) {
     popUp.style.display = "none";
   }
 };
-<<<<<<< HEAD
->>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
-=======
->>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)

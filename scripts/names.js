@@ -1,11 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-var pageTitle = "Luber";
->>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
-=======
-var pageTitle = "Luber";
->>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
+var pageTitle = "Admin Planning Interface";
 var dashboardTitle = "Platform Dashboard";
 var controlsTitle = "Adminstrator Controls";
 var yAxisChart1 = "Rider Base Fees";
