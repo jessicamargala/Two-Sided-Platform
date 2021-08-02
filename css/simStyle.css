@@ -29,6 +29,31 @@ input[type="number"] {
   width: 4em;
   color: #707070;
 }
+<<<<<<< HEAD
+=======
+.simcontainer {
+  background-color: white;
+  display: flex;
+  margin-left: 10%;
+  width: 82%;
+}
+
+.adminControls {
+  padding-top: 30px;
+  background-color: white;
+  display: flex;
+  margin-left: 10%;
+  width: 82%;
+}
+.title {
+  text-align: center;
+  font-weight: bold;
+  font-family: serif;
+  font-size: 75px;
+  width: 400px;
+  margin: auto;
+}
+>>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
 .profit {
   display: inline;
   position: relative;

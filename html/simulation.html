@@ -60,6 +60,7 @@
           <!-- Slider for Consumer Price Input -->
           <div id="slidecontainer">
             <div class="text">
+<<<<<<< HEAD
               <div class="variable">
                 <div class="tooltip">
                   <script>
@@ -74,6 +75,19 @@
                       <input type="number" min="0" max="2" value="1" step="0.25" id="consumerPrice" /><br />
                     </div>
                   </div>
+=======
+              <!-- Slider for Consumer Price Input -->
+              <div class="tooltip">
+                <script>
+                  docWrite(riderFeesTitle);
+                </script>
+                <text class="tooltiptext"> Amount riders must spend </text>
+                <div class="picker">
+                  <!-- Input via slider (0 - 2)-->
+                  <input type="range" min="0" max="2" value="1" step="0.2" class="slider" id="consumerPriceSlider" />
+                  <!-- Input via decimal text box (0 - 2)-->
+                  <input type="number" min="0" max="2" value="1" step="0.2" id="consumerPrice" /><br />
+>>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
                 </div>
               </div>
               <div class="variable">
@@ -244,6 +258,22 @@
         <div class="animation">
           <img id="img" src="animationShown" />
         </div>
+<<<<<<< HEAD
+=======
+        <div align="right"><button id="submitButton" class="button submitButton" value="false" onclick="submit()">Submit</button></div>
+        <!-- The Modal -->
+        <div id="popUp" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span>By clicking "Submit" you will end the simulation. </span><br />
+            <span>Are you sure you want to submit?</span><br />
+            <form id="submitForm" action="end.html">
+              <button id="yesButton" class="button submitButton" value="false">Yes</button>
+            </form>
+            <button id="noButton" class="button noButton" value="false">No</button>
+          </div>
+        </div>
+>>>>>>> parent of 5d3bdc0 (adds pop up modal to go to new page at end of simulation)
       </div>
     </div>
     <script src="../scripts/simulation.js"></script>
