@@ -245,13 +245,13 @@ input[type="number"] {
   cursor: pointer;
 }
 
-.submitButton {
+.button {
   background-color: white;
   color: gray;
   border: 4px solid #aed6f1;
 }
 
-.submitButton:hover {
+.button:hover {
   background-color: #aed6f1;
   color: white;
 }
@@ -284,6 +284,13 @@ input[type="number"] {
 
 /* Modal Content */
 .modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 20%;
+}
+.modal-content-submit {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;

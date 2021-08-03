@@ -1,10 +1,10 @@
 var pageTitle = "Admin Planning Interface";
 var dashboardTitle = "Platform Dashboard";
 var controlsTitle = "Adminstrator Controls";
-var yAxisChart1 = "Rider Base Fees";
-var xAxisChart1 = "# of Potential Riders";
-var yAxisChart2 = "Driver Base Fees";
-var xAxisChart2 = "# of Potential Drivers";
+var yAxisChart1 = "Rider Base Fees (millions)";
+var xAxisChart1 = "# of Potential Riders (millions)";
+var yAxisChart2 = "Driver Base Fees (millions)";
+var xAxisChart2 = "# of Potential Drivers (millions)";
 var subControls1 = "Pricing Policy";
 var subControls2 = "Membership Rules";
 var subControls3 = "Advertising";

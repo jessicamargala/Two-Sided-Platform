@@ -752,17 +752,8 @@ function addData(chart, label, riderData, driverData, riderSatisfaction, driverS
 function submit() {
   var change = document.getElementById("addPoint");
   change.value = "true";
-  // change names later
-  // const Qc = document.getElementById();
-  // const Qd = document.getElementById();
-  // const Vc = document.getElementById();
-  // const Vd = document.getElementById();
   const pc = document.getElementById("consumerPrice");
   const pd = document.getElementById("developerPrice");
-  // const ecd = document.getElementById();
-  // const edc = document.getElementById();
-  // const left = document.getElementById();
-
   calcUpdate(
     Qc,
     Qd,
@@ -1298,11 +1289,18 @@ riderAds.oninput = function () {
   );
 };
 
+function openModal(modalName) {
+  modalName.style.display = "block";
+}
+function closeModal(modalName) {
+  modalName.style.display = "none";
+}
+
 // Get the modal
 var popUp = document.getElementById("popUp");
 
 // Get the button that opens the modal
-var btn = document.getElementById("submitButton");
+var btn = document.getElementById("button");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("noButton")[0];
