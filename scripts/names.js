@@ -1,4 +1,5 @@
 var pageTitle = "Admin Planning Interface";
+var logoShown = "../images/RideCorpLogo.PNG";
 var dashboardTitle = "Platform Dashboard";
 var controlsTitle = "Adminstrator Controls";
 var yAxisChart1 = "Rider Base Fees";

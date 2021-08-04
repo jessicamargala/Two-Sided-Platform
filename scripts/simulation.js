@@ -484,12 +484,10 @@ function calcUpdate(
   Vd = 1 * (1 + parseFloat(surgePricing.value)) + parseFloat(crimePricing.value) + parseFloat(riderStars.value);
 
   // Rider-Directed Ads increase Qc
-  Qc = 1 + parseFloat(riderAds.value) - 0.1 * parseFloat(riderRating.value);
-  console.log("Qc is " + Qc);
+  Qc = 1 + parseFloat(riderAds.value) / 8 - 0.1 * parseFloat(riderRating.value);
 
   // Driver-Directed Ads increase Qd
-  Qd = 1 + parseFloat(driverAds.value) - 0.1 * parseFloat(driverRating.value);
-  console.log("Qd is " + Qd);
+  Qd = 1 + parseFloat(driverAds.value) / 8 - 0.1 * parseFloat(driverRating.value);
 
   ecd = 0.125 + 0.1 * parseFloat(riderRating.value);
 
@@ -501,13 +499,11 @@ function calcUpdate(
   // Similar to the plength() function in the single sided market simulation
   // qc represents the x-value of the profit for consumers (the quantity)
   let qc = (edc * Qd * Vc * (pd - Vd) + Qc * (pc - Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd);
-  console.log("qc is " + qc);
 
   // Profit Size Length for developers represents Quantity
   // Similar to the plenght() function in the single sided market simulation
   // qd represents the x-value of the profit for developers (the quantity)
   let qd = (pd * Qd * Vc + (ecd * Qc * (pc - Vc) - Qd * Vc) * Vd) / ((ecd * edc - 1) * Vc * Vd);
-  console.log("qd is " + qd);
 
   if (qc <= 0.67) {
     if (qd <= 0.66) {
@@ -620,13 +616,11 @@ function calcUpdate(
   var opc =
     (Vc * Vd * (Qd * ((ecd * edc - 2) * Qc - edc * Qd) * Vc + ecd * Qc * (ecd * Qc + Qd) * Vd)) /
     (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
-  console.log("opc is " + opc);
+
   var opd =
     (Vc * Vd * (edc * Qd * (Qc + edc * Qd) * Vc + Qc * ((ecd * edc - 2) * Qd - ecd * Qc) * Vd)) /
     (edc * edc * Qd * Qd * Vc * Vc + 2 * (ecd * edc - 2) * Qc * Qd * Vc * Vd + ecd * ecd * Qc * Qc * Vd * Vd);
-  console.log("opd is " + opd);
 
-  console.log("expenses are " + expenses);
   // Total Profit is maximized (turns green) when |0.875 - consumer price| < 0.001 AND when |0.125 - developer price| < 0.001
   var totalProfit2 = pd * qd + pc * qc - expenses;
   var consumerProfit = pc * qc;
@@ -644,24 +638,19 @@ function calcUpdate(
 
   if (Math.abs(opc - pc) < 0.001 && Math.abs(opd - pd) < 0.001) {
     chart1.data.datasets[1].backgroundColor = "rgba(132, 255, 99, 0.5)";
-    chart1.data.datasets[1].label = "Rider Profit = Riders * Fees = (" + consumerProfit.toFixed(5) + ") ~ Optimal";
+    chart1.data.datasets[1].label = "Rider Profit = Riders * Fees = (" + consumerProfit.toFixed(2) + ") ~ Optimal";
 
     chart2.data.datasets[1].backgroundColor = "rgba(132, 255, 99, 0.5)";
-    chart2.data.datasets[1].label = "Driver Profit = Drivers * Fees = (" + developerProfit.toFixed(5) + ") ~ Optimal";
+    chart2.data.datasets[1].label = "Driver Profit = Drivers * Fees = (" + developerProfit.toFixed(2) + ") ~ Optimal";
   } else {
     chart1.data.datasets[1].backgroundColor = "rgba(175, 122, 197, 0.5)"; // purple
-    chart1.data.datasets[1].label = "Rider Profit = Riders * Fees = (" + consumerProfit.toFixed(5) + ")";
+    chart1.data.datasets[1].label = "Rider Profit = Riders * Fees = (" + consumerProfit.toFixed(2) + ")";
 
     chart2.data.datasets[1].backgroundColor = "rgba(84, 153, 199, 0.5)"; // light blue
-    chart2.data.datasets[1].label = "Driver Profit = Drivers * Fees = (" + developerProfit.toFixed(5) + ")";
+    chart2.data.datasets[1].label = "Driver Profit = Drivers * Fees = (" + developerProfit.toFixed(2) + ")";
   }
 
-  // Calculates the total profit from both consumers and developers
-  // Total Profit = Price * Quantity
-
-  console.log("Total Profit = " + consumerProfit + " + " + developerProfit + " - " + expenses + " = " + totalProfit2);
-
-  totalProfit.innerHTML = "Total Profit = Rider Profit + Driver Profit - Expenses = " + totalProfit2.toFixed(5);
+  totalProfit.innerHTML = "Total Profit = Rider Profit + Driver Profit - Expenses = " + totalProfit2.toFixed(2);
 
   chart1.data.datasets[0].data[0].y = yc;
   chart1.data.datasets[0].data[1].x = qc;
@@ -696,13 +685,6 @@ function calcUpdate(
 
   // Update animation shown
   document.getElementById("img").src = animationShown;
-
-  // When the "Save Chnages" button is pressed, addData to Chart 3
-  // var change = document.getElementById("addPoint");
-  // if (change.value == "true") {
-  //   addData(chart3, "", consumerProfit, developerProfit, riderSatisfaction, driverSatisfaction);
-  //   change.value = "false";
-  // }
 
   chart1.update();
   chart2.update();
@@ -752,17 +734,8 @@ function addData(chart, label, riderData, driverData, riderSatisfaction, driverS
 function submit() {
   var change = document.getElementById("addPoint");
   change.value = "true";
-  // change names later
-  // const Qc = document.getElementById();
-  // const Qd = document.getElementById();
-  // const Vc = document.getElementById();
-  // const Vd = document.getElementById();
   const pc = document.getElementById("consumerPrice");
   const pd = document.getElementById("developerPrice");
-  // const ecd = document.getElementById();
-  // const edc = document.getElementById();
-  // const left = document.getElementById();
-
   calcUpdate(
     Qc,
     Qd,
@@ -1298,11 +1271,18 @@ riderAds.oninput = function () {
   );
 };
 
+function openModal(modalName) {
+  modalName.style.display = "block";
+}
+function closeModal(modalName) {
+  modalName.style.display = "none";
+}
+
 // Get the modal
 var popUp = document.getElementById("popUp");
 
 // Get the button that opens the modal
-var btn = document.getElementById("submitButton");
+var btn = document.getElementById("button");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("noButton")[0];
