@@ -68,5 +68,5 @@ To do:
 - This project was based on [this simulation](http://questromworld.bu.edu/platformstrategy/simulation/).
 
 ## Contact
-Created by [Jessica Margala](https:/https://www.linkedin.com/in/jessicamargala/) - feel free to contact me!
+Created by [Jessica Margala](www.linkedin.com/in/jessicamargala) - feel free to contact me!
 
