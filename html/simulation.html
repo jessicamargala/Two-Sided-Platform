@@ -5,13 +5,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" , initial-scale="1" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="../css/simStyle.css" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/simStyle.css')}}" type="text/css" />
     <title>Interdependent Demand Curve</title>
   </head>
-  <script src="../scripts/names.js"></script>
+  <script src="{{ url_for('static',filename='js/names.js')}}"></script>
   <body>
     <div class="title">
-      <img class = "logo" src="..\images\RideCorpLogo.PNG" />
+      <img class = "logo" src="{{ url_for('static',filename='images/RideCorpLogo.PNG')}}" />
       <span
         ><script>
           docWrite(pageTitle);
@@ -482,6 +482,6 @@
         </div>
       </div>
     </div>
-    <script src="../scripts/simulation.js"></script>
+    <script src="{{ url_for('static',filename='js/simulation.js')}}"></script>
   </body>
 </html>

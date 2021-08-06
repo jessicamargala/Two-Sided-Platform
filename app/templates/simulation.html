@@ -5,16 +5,23 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" , initial-scale="1" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-       <link href="{{ url_for('static',filename='css/simStyle.css')}}" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/simStyle.css')}}" type="text/css" />
     <title>Interdependent Demand Curve</title>
   </head>
   <script src="{{ url_for('static',filename='js/names.js')}}"></script>
   <body>
-    <div class="profit" id="profit">Total Profit:0.53895</div>
+    <div class="title">
+      <img class = "logo" src="{{ url_for('static',filename='images/RideCorpLogo.PNG')}}" />
+      <span
+        ><script>
+          docWrite(pageTitle);
+        </script>
+      </span>
+    </div>
+    <div class="profit" id="profit">Total Profit:0.54</div>
     <div class="page">
       <div class="simcontainer">
-        <div class="pageTitle">
+        <div class="dashboardTitle">
           <span
             ><script>
               docWrite(dashboardTitle);
@@ -36,16 +43,15 @@
         </div>
 
         <div class="simulation3">
-          <!-- Chart canvas container for the Developer Price Chart -->
+          <!-- Chart canvas container for the Analytics Chart -->
           <div>
             <canvas id="profitChart" style="display: inline-block; height: 150px; width: 50%; margin-left: 5%" class="chartjs-render-monitor"></canvas>
           </div>
-          <button id="addPoint" class="button addPoint" value="false" onclick="saveChanges()">Save Changes</button>
         </div>
       </div>
 
-      <div class="radioButtons">
-        <div class="pageTitle">
+      <div class="adminControls">
+        <div class="dashboardTitle">
           <span
             ><script>
               docWrite(controlsTitle);
@@ -58,196 +64,424 @@
               docWrite(subControls1);
             </script></span
           ><br />
-          <!-- Slider for Consumer Price Input -->
+
           <div id="slidecontainer">
             <div class="text">
-              <div class="variable">
-                <div class="tooltip">
+              <!-- Slider for Consumer Price Input -->
+              <div class="control">
+                <text onclick="openModal(riderFeesModal)">
                   <script>
                     docWrite(riderFeesTitle);
                   </script>
-                  <span class="tooltiptext"> Amount riders must spend </span>
-                  <div class="picker">
-                    <div class="bWrap">
-                      <!-- Input via slider (0 - 2)-->
-                      <input type="range" min="0" max="2" value="1" step="0.25" class="slider" id="consumerPriceSlider" />
-                      <!-- Input via decimal text box (0 - 2)-->
-                      <input type="number" min="0" max="2" value="1" step="any" id="consumerPrice" /><br />
-                    </div>
+                </text>
+                <!-- The Modal -->
+                <div id="riderFeesModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span onclick="closeModal(riderFeesModal)" class="close">&times;</span>
+                    <br/>
+                    <p>
+                      <center>Usage fee charge to riders</center>
+                      <ul>
+                        <li>Higher fees yields more profit per ride</li>
+                        <li>Higher fees lowers number of riders and can reduce number of drivers due to lack of rides</li>
+                      </ul>
+                    </p>
                   </div>
                 </div>
+                <div class="picker">
+                  <!-- Input via slider (0 - 2)-->
+                  <input type="range" min="0" max="2" value="1" step="0.2" class="slider" id="consumerPriceSlider" />
+                  <!-- Input via decimal text box (0 - 2)-->
+                  <input type="number" min="0" max="2" value="1" step="0.2" id="consumerPrice" /><br />
+                </div>
               </div>
-              <div class="variable">
-                <div class="tooltip">
+
+              <!-- Slider for Driver Price Input -->
+              <div class="control">
+                <text onclick="openModal(driverFeesModal)">
                   <script>
                     docWrite(driverFeesTitle);
                   </script>
-                  <span class="tooltiptext"> Amount drivers must spend </span>
-                  <div class="picker">
-                    <div class="bWrap">
-                      <!-- Input via slider (0 - 2)-->
-                      <input type="range" min="0" max="2" value="0.5" step="0.25" class="slider" id="developerPriceSlider" />
-                      <!-- Input via decimal text box (0 - 2)-->
-                      <input type="number" min="0" max="2" value="0.5" step="any" id="developerPrice" /><br />
-                    </div>
+                </text>
+                <!-- The Modal -->
+                <div id="driverFeesModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span onclick="closeModal(driverFeesModal)" class="close">&times;</span>
+                    <br/>
+                    <p>
+                      <center>Usage fee charge to drivers</center>
+                      <ul>
+                        <li>Higher fees yields more profit per ride</li>
+                        <li>Higher fees lowers number of drivers and can reduce number of riders due to greater wait times</li>
+                      </ul>
+                    </p>
                   </div>
                 </div>
+                <div class="picker">
+                  <!-- Input via slider (0 - 2)-->
+                  <input type="range" min="0" max="2" value="0.5" step="0.2" class="slider" id="developerPriceSlider" />
+                  <!-- Input via decimal text box (0 - 2)-->
+                  <input type="number" min="0" max="2" value="0.5" step="0.2" id="developerPrice" /><br />
+                </div>
               </div>
-              <div class="variable">
-                <div class="tooltip">
+
+              <!-- Slider for Surge Pricing Input -->
+              <div class="control">
+                <text onclick="openModal(surgePricingModal)">
                   <script>
                     docWrite(surgePricingTitle);
                   </script>
-                  <span class="tooltiptext"> % Markup when drivers are scarce </span>
-                  <div class="picker">
-                    <div class="bWrap">
-                      <!-- Input via slider (0 - .25)-->
-                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="surgePricingSlider" />
-                      <!-- Input via decimal text box (0 - .25)-->
-                      <input type="number" min="0" max=".25" value="0" step="0.01" id="surgePricing" /><br />
-                    </div>
+                </text>
+                <!-- The Modal -->
+                <div id="surgePricingModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span onclick="closeModal(surgePricingModal)" class="close">&times;</span>
+                    <br/>
+                    <p>
+                      <center>% Price markup when drivers scarce</center>
+                      <ul>
+                        <li>Higher markup attracts drivers when customer demand is high and increases profit</li>
+                        <li>Dynamic prices lower customer satisfaction and can reduce riders</li>
+                      </ul>
+                    </p>
                   </div>
                 </div>
+                <div class="picker">
+                  <!-- Input via slider (0 - .25)-->
+                  <input type="range" min="0" max=".25" value="0" step="0.025" class="slider" id="surgePricingSlider" />
+                  <!-- Input via decimal text box (0 - .25)-->
+                  <input type="number" min="0" max=".25" value="0" step="0.025" id="surgePricing" /><br />
+                </div>
               </div>
-              <div class="variable">
-                <div class="tooltip">
+
+              <!-- Slider for Crime Pricing Input -->
+              <div class="control">
+                <text onclick="openModal(crimePricingModal)">
                   <script>
                     docWrite(crimePricingTitle);
                   </script>
-                  <span class="tooltiptext"> % Markup for rides in dangerous area </span>
-                  <div class="picker">
-                    <div class="bWrap">
-                      <!-- Input via slider (0 - .25)-->
-                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="crimePricingSlider" />
-                      <!-- Input via decimal text box (0 - .25)-->
-                      <input type="number" min="0" max=".25" value="0" step="0.01" id="crimePricing" /><br />
-                    </div>
+                </text>
+                <!-- The Modal -->
+                <div id="crimePricingModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span onclick="closeModal(crimePricingModal)" class="close">&times;</span>
+                    <br/>
+                    <p>
+                      <center>% Price markup for dangerous routes</center>
+                      <ul>
+                        <li>Higher markup attracts drivers when customer ride starts or ends in high-crime area</li>
+                        <li>Riders might perceive the practice as unfair to certain populations</li>
+                      </ul>
+                    </p>
                   </div>
                 </div>
+                <div class="picker">
+                  <!-- Input via slider (0 - .25)-->
+                  <input type="range" min="0" max=".25" value="0" step="0.025" class="slider" id="crimePricingSlider" />
+                  <!-- Input via decimal text box (0 - .25)-->
+                  <input type="number" min="0" max=".25" value="0" step="0.025" id="crimePricing" /><br />
+                </div>
               </div>
-              <div class="variable">
-                <div class="tooltip">
+
+              <!-- Slider for Rider Stars Input -->
+              <div class="control">
+                <text onclick="openModal(riderStarsModal)">
                   <script>
                     docWrite(riderStarsTitle);
                   </script>
-                  <span class="tooltiptext"> % Makrup when rider has a low rating </span>
-                  <div class="picker">
-                    <div class="bWrap">
-                      <!-- Input via slider (0 - 2)-->
-                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="riderStarsSlider" />
-                      <!-- Input via decimal text box (0 - 2)-->
-                      <input type="number" min="0" max=".25" value="0" step="0.01" id="riderStars" /><br />
-                    </div>
+                </text>
+                <!-- The Modal -->
+                <div id="riderStarsModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span onclick="closeModal(riderStarsModal)" class="close">&times;</span>
+                    <br/>
+                    <p>
+                      <center>% Rider Price markup when riders have a low rating</center>
+                      <ul>
+                        <li>Higher markup increases value for drivers</li>
+                        <li>Discourage riders with low rating from participating in the market</li>
+                      </ul>
+                    </p>
                   </div>
                 </div>
+                <div class="picker">
+                  <!-- Input via slider (0 - 2)-->
+                  <input type="range" min="0" max=".25" value="0" step="0.025" class="slider" id="riderStarsSlider" />
+                  <!-- Input via decimal text box (0 - 2)-->
+                  <input type="number" min="0" max=".25" value="0" step="0.025" id="riderStars" /><br />
+                </div>
               </div>
-              <div class="variable">
-                <div class="tooltip">
+
+              <!-- Slider for Driver Stars Input -->
+              <div class="control">
+                <text onclick="openModal(driverStarsModal)">
                   <script>
                     docWrite(driverStarsTitle);
                   </script>
-                  <span class="tooltiptext"> % Discount when driver has a low rating </span>
-                  <div class="picker">
-                    <div class="bWrap">
-                      <!-- Input via slider (0 - 2)-->
-                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="driverStarsSlider" />
-                      <!-- Input via decimal text box (0 - 2)-->
-                      <input type="number" min="0" max=".25" value="0" step="0.01" id="driverStars" /><br />
-                    </div>
+                </text>
+                <!-- The Modal -->
+                <div id="driverStarsModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span onclick="closeModal(driverStarsModal)" class="close">&times;</span>
+                    <p>
+                      <center>% Rider Price discount when driver have a low rating</center>
+                      <ul>
+                        <li>Larger discount attracts more riders</li>
+                        <li>Discourage drivers with low rating from participating in the market</li>
+                      </ul>
+                    </p>
                   </div>
                 </div>
+                <div class="picker">
+                  <!-- Input via slider (0 - 2)-->
+                  <input type="range" min="0" max=".25" value="0" step="0.025" class="slider" id="driverStarsSlider" />
+                  <!-- Input via decimal text box (0 - 2)-->
+                  <input type="number" min="0" max=".25" value="0" step="0.025" id="driverStars" /><br />
+                </div>
               </div>
-              <div class="variable">
-                <div class="tooltip">
+
+              <!-- Slider for Low Battery Input -->
+              <div class="control">
+                <text onclick="openModal(lowBatteryModal)">
                   <script>
                     docWrite(lowBatteryTitle);
                   </script>
-                  <span class="tooltiptext"> % Markup when rider's cell battery is low </span>
-                  <div class="picker">
-                    <div class="bWrap">
-                      <!-- Input via slider (0 - 2)-->
-                      <input type="range" min="0" max=".25" value="0" step="any" class="slider" id="lowBatterySlider" />
-                      <!-- Input via decimal text box (0 - 2)-->
-                      <input type="number" min="0" max=".25" value="0" step="0.01" id="lowBattery" /><br />
-                    </div>
+                </text>
+                <!-- The Modal -->
+                <div id="lowBatteryModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span onclick="closeModal(lowBatteryModal)" class="close">&times;</span>
+                    <br/>
+                    <p>
+                      <center>% Price markup when rider's cell battery is low</center>
+                      <ul>
+                        <li>Higher markup attracts drivers when customer's battery is low</li>
+                        <li>Riders might perceive the practice as unfair violation of data privacy</li>
+                      </ul>
+                    </p>
                   </div>
+                </div>
+                <div class="picker">
+                  <!-- Input via slider (0 - 2)-->
+                  <input type="range" min="0" max=".25" value="0" step="0.025" class="slider" id="lowBatterySlider" />
+                  <!-- Input via decimal text box (0 - 2)-->
+                  <input type="number" min="0" max=".25" value="0" step="0.025" id="lowBattery" /><br />
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         <div class="membership" id="membership">
-          <span
-            ><script>
+          <span>
+            <script>
               docWrite(subControls2);
-            </script></span
-          ><br />
-          <div class="text">
-            <div class="tooltip">
-              <script>
-                docWrite(banRidersTitle);
-              </script>
-              <span class="tooltiptext"> Remove riders from network if their rating is below this # of stars </span>
-              <input type="range" min="0" max="5" value="1" step="1" class="slider" id="riderRatingSlider" />
-              <input type="number" min="0" max="5" value="1" step="1" id="riderRating" /><br />
-            </div>
-            <div class="tooltip">
-              <script>
-                docWrite(banDriversTitle);
-              </script>
-              <span class="tooltiptext"> Remove drivers from network if their rating is below this # of stars </span>
-              <input type="range" min="0" max="5" value="1" step="1" class="slider" id="driverRatingSlider" />
-              <input type="number" min="0" max="5" value="1" step="1" id="driverRating" /><br />
-            </div>
-          </div>
-          <div class="tooltip">
-            <script>
-              docWrite(riderRedressTitle);
             </script>
-            <input type="checkbox" id="riderRedress" name="riderRedress" value="riderRedress" onclick="redress()" />
-            <label for="riderRedress"></label><br /><br />
-            <span class="tooltiptext"> Riders can pay a fee to remove bad reviews </span>
-          </div>
-          <div class="tooltip">
-            <script>
-              docWrite(driverRedressTitle);
-            </script>
-            <input type="checkbox" id="driverRedress" name="driverRedress" value="driverRedress" onclick="redress()" />
-            <label for="driverRedress"></label><br />
-            <span class="tooltiptext"> Drivers can pay a fee to remove bad reviews </span>
+          </span>
+          <br />
+          <div id="slidecontainer">
+            <div class="text">
+              <!-- Slider for Ban Riders Input -->
+              <div class="control">
+                <text onclick="openModal(banRidersModal)">
+                  <script>
+                    docWrite(banRidersTitle);
+                  </script>
+                </text>
+                <!-- The Modal -->
+                <div id="banRidersModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span onclick="closeModal(banRidersModal)" class="close">&times;</span>
+                    <br/>
+                    <p>
+                      <center>Remove riders from network if their rating is below this # of stars</center>
+                      <ul>
+                        <li>More banning attracts more drivers because the remaining riders more desirable</li>
+                        <li>More banning reduces number of riders</li>
+                      </ul>
+                    </p>
+                  </div>
+                </div>
+                <div class="picker">
+                  <input type="range" min="0" max="5" value="1" step="1" class="slider" id="riderRatingSlider" />
+                  <input type="number" min="0" max="5" value="1" step="1" id="riderRating" /><br />
+                </div>
+              </div>
+
+              <!-- Slider for Ban Drivers Input -->
+              <div class="control">
+                <text onclick="openModal(banDriversModal)">
+                  <script>
+                    docWrite(banDriversTitle);
+                  </script>
+                </text>
+                <!-- The Modal -->
+                <div id="banDriversModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span onclick="closeModal(banDriversModal)" class="close">&times;</span>
+                    <br/>
+                    <p>
+                      <center>Remove drivers from network if their rating is below this # of stars</center>
+                      <ul>
+                        <li>More banning attracts more riders because the remaining drivers more desirable</li>
+                        <li>More banning reduces number of drivers</li>
+                      </ul>
+                    </p>
+                  </div>
+                </div>
+                <div class="picker">
+                  <input type="range" min="0" max="5" value="1" step="1" class="slider" id="driverRatingSlider" />
+                  <input type="number" min="0" max="5" value="1" step="1" id="driverRating" /><br />
+                </div>
+              </div>
+
+              <!-- Slider for Rider Redress Input -->
+              <div class="control">
+                <input type="checkbox" id="riderRedress" name="riderRedress" value="riderRedress" onclick="redress()" />
+                <text onclick="openModal(riderRedressModal)">
+                  <script>
+                    docWrite(riderRedressTitle);
+                  </script>
+                </text>
+                <!-- The Modal -->
+                <div id="riderRedressModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span onclick="closeModal(riderRedressModal)" class="close">&times;</span>
+                    <br/>
+                    <p>
+                      <center>Enable riders to pay a fee to remove bad reviews about themselves</center>
+                      <ul>
+                        <li>With less bad rider reviews, drivers will be more likely to join market</li>
+                        <li>Drivers might percieve this as an unfair practice</li>
+                      </ul>
+                    </p>
+                  </div>
+                </div>
+                <label for="riderRedress"></label><br /><br />
+              </div>
+
+              <!-- Slider for Driver Redress Input -->
+              <div class="control">
+                <input type="checkbox" id="driverRedress" name="driverRedress" value="driverRedress" onclick="redress()" />
+                <text onclick="openModal(driverRedressModal)">
+                  <script>
+                    docWrite(driverRedressTitle);
+                  </script>
+                </text>
+                <!-- The Modal -->
+                <div id="driverRedressModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span onclick="closeModal(driverRedressModal)" class="close">&times;</span>
+                    <br/>
+                    <p>
+                      <center>Enable drivers to pay a fee to remove bad reviews about themselves</center>
+                      <ul>
+                        <li>With less bad drivers reviews, riders will be more likely to join market</li>
+                        <li>Riders might percieve this as an unfair practice</li>
+                      </ul>
+                    </p>
+                  </div>
+                </div>
+                <label for="driverRedress"></label><br />
+              </div>
+            </div>
           </div>
         </div>
+
         <div class="advertising" id="advertising">
-          <span
-            ><script>
+          <span>
+            <script>
               docWrite(subControls3);
-            </script></span
-          ><br />
-          <div class="text">
-            <div class="tooltip">
-              <script>
-                docWrite(driverAdsTitle);
-              </script>
-              <span class="tooltiptext"> Riders pay a fee to advertise themselves </span>
-              <input type="range" min="0" max="2" value="1" step="any" class="slider" id="driverAdsSlider" />
-              <input type="number" min="0" max="2" value="1" step="1" id="driverAds" /><br />
-            </div>
-            <div class="tooltip">
-              <script>
-                docWrite(riderAdsTitle);
-              </script>
-              <span class="tooltiptext"> Drivers pay a fee to advertise themselves </span>
-              <input type="range" min="0" max="2" value="1" step="any" class="slider" id="riderAdsSlider" />
-              <input type="number" min="0" max="2" value="1" step="1" id="riderAds" /><br />
+            </script>
+          </span>
+          <br />
+          <div id="slidecontainer">
+            <div class="text">
+              <!-- Slider for Driver Ads Input -->
+              <div class="control">
+                <text onclick="openModal(driverAdsModal)">
+                  <script>
+                    docWrite(driverAdsTitle);
+                  </script>
+                </text>
+                <!-- The Modal -->
+                <div id="driverAdsModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span onclick="closeModal(driverAdsModal)" class="close">&times;</span>
+                    <br/>
+                    <p>
+                      <center>Riders pay a fee to advertise their needs</center>
+                      <ul>
+                        <li>The more spent on advertising, the more drivers will join the market</li>
+                        <li>Riders will have larger expenses</li>
+                      </ul>
+                    </p>
+                  </div>
+                </div>
+                <div class="picker">
+                  <input type="range" min="0" max="2" value="1" step="0.2" class="slider" id="driverAdsSlider" />
+                  <input type="number" min="0" max="2" value="1" step="0.2" id="driverAds" /><br />
+                </div>
+              </div>
+
+              <!-- Slider for Rider Ads Input -->
+              <div class="control">
+                <text onclick="openModal(riderAdsModal)">
+                  <script>
+                    docWrite(riderAdsTitle);
+                  </script>
+                </text>
+                <!-- The Modal -->
+                <div id="riderAdsModal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <span onclick="closeModal(riderAdsModal)" class="close">&times;</span>
+                    <br/>
+                    <p>
+                      <center>Drivers pay a fee to advertise their services</center>
+                      <ul>
+                        <li>The more spent on advertising, the more riders will join the market</li>
+                        <li>Drivers will have larger expenses</li>
+                      </ul>
+                    </p>
+                  </div>
+                </div>
+                <div class="picker">
+                  <input type="range" min="0" max="2" value="1" step="0.2" class="slider" id="riderAdsSlider" />
+                  <input type="number" min="0" max="2" value="1" step="0.2" id="riderAds" /><br />
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div class="animation">
-          <img id="img" src="animationShown" />
+          <img id="img" src="{{url_for('static',filename='images/60passengers5vehicles.gif')}}" />
+        </div>
+        <div align="right"><button id="button" class="button submitButton" value="false" onclick="submit()">Submit</button></div>
+        <div id="popUp" class="modal">
+          <div class="modal-content-submit">
+            <span>By clicking "Submit" you will end the simulation. </span><br />
+            <span>Are you sure you want to submit?</span><br />
+            <form id="submitForm" action="end.html">
+              <button id="yesButton" class="button submitButton" value="false">Yes</button>
+            </form>
+            <button id="noButton" class="button noButton" value="false">No</button>
+          </div>
         </div>
       </div>
     </div>
- <script src ="{{ url_for('static', filename='js/simulation.js')}}"></script>
-
+    <script src="{{ url_for('static',filename='js/simulation.js')}}"></script>
   </body>
 </html>
