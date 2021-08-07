@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" , initial-scale="1" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="../css/welcomeStyle.css" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static',filename='css/welcomeStyle.css')}}" rel="stylesheet" type="text/css" />
     <title>Welcome</title>
   </head>
   <body>
@@ -17,11 +17,22 @@
     </div>
     <div class="simulationLink">
       <br /><br /><span>Please check that the ID below is not null and press "Start!" to begin. <br /><br /><br /></span>
-      <form action="simulation.html">
-        <label for="id"><span>ID:</span></label>
-        <input type="text" id="id" name="id" value="null" />
-        <input type="submit" value="Start!" />
-      </form>
+         </form>-->
+    <form  align = "center"action="" method="post" novalidate>
+
+       {{ form.hidden_tag() }}
+         <p>
+            ID<br>
+            {{ form.username(size=32) }}<br>
+            {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
     </div>
   </body>
 </html>

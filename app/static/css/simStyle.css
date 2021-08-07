@@ -1,25 +1,71 @@
 body {
-  background-color: #add8e6;
+  background-color: #ffffff;
 }
-.picker {
-  display: block;
+
+form {
+  display: inline;
 }
+
+ul {
+  text-align: left;
+}
+
 span {
   font-size: 1.1em;
-  position: center;
+  font-weight: bold;
+  text-align: center;
   top: 0px;
   margin-right: 7px;
   display: inline-block;
   color: #707070;
 }
-.bWrap {
-  display: inline-block;
+
+.picker {
+  display: block;
 }
+
 .variable {
   display: inline-block;
   left: -100px;
 }
 .variable2 {
+  display: inline-block;
+}
+.slidecontainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+.slider {
+  -webkit-appearance: none;
+  width: 90%;
+  height: 15px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #0095f8;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background: #0095f8;
+  cursor: pointer;
+}
+.column2 {
   display: inline-block;
 }
 input[type="number"] {
@@ -29,14 +75,42 @@ input[type="number"] {
   width: 4em;
   color: #707070;
 }
+.simcontainer {
+  background-color: white;
+  display: flex;
+  margin-left: 10%;
+  width: 82%;
+}
+
+.adminControls {
+  padding-top: 30px;
+  background-color: white;
+  display: flex;
+  margin-left: 10%;
+  width: 82%;
+}
+
+.logo {
+  display: flex;
+  height: 70px;
+  width: auto;
+  margin-left: 10%;
+}
+.title {
+  text-align: center;
+  font-weight: bold;
+  font-family: serif;
+  font-size: 50px;
+  width: auto;
+  margin: auto;
+}
 .profit {
   display: inline;
   position: relative;
   font-weight: bold;
-  left: 26%;
+  left: 30%;
   top: 30px;
   background-color: white;
-  border: solid 2px #e6e6e6;
   color: #707070;
   padding: 2px;
 }
@@ -46,87 +120,17 @@ input[type="number"] {
   padding: 10px;
 }
 
-.pricing {
-  font-size: 18px;
-  height: 355px;
-  width: 295px;
-  display: inline-table;
-  background-color: white;
-  border: solid 2px #e6e6e6;
-  color: #707070;
-  padding: 2px;
-}
-
-.membership {
-  font-size: 18px;
-  height: 355px;
-  width: 200px;
-  display: inline-table;
-  background-color: white;
-  border: solid 2px #e6e6e6;
-  color: #707070;
-  padding: 2px;
-}
-
-.advertising {
-  font-size: 18px;
-  height: 355px;
-  width: 200px;
-  display: inline-table;
-  background-color: white;
-  border: solid 2px #e6e6e6;
-  color: #707070;
-  padding: 2px;
-}
-
-.tooltip {
+.control {
   position: relative;
   display: inline-block;
 }
 
-.tooltip .tooltiptext {
-  font-size: 13px;
-  font-family: sans-serif;
-  visibility: hidden;
-  width: 200px;
-  background-color: grey;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-  position: absolute;
-  z-index: 1;
-  top: -5px;
-  left: 110%;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-
-.tooltip .tooltiptext::after {
-  content: " ";
-  position: absolute;
-  top: 50%;
-  right: 100%; /* To the right of the tooltip */
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent grey transparent transparent;
-}
-
-.radioButtons {
-  padding: 15px;
-  margin-left: 9%;
-  display: flex;
-}
-
-.pageTitle {
+.dashboardTitle {
   writing-mode: tb-rl;
   transform: rotate(-180deg);
   padding: 15px;
   background-color: white;
-  border: solid 2px #e6e6e6;
+  border: solid 4px #f3a9d4;
   display: inline-table;
   text-align: center;
   font-weight: bold;
@@ -138,17 +142,20 @@ input[type="number"] {
   display: inline-table;
   width: 51%;
   padding: 15px;
+  padding-top: 80px;
   background-color: #ffffff;
-  border-right: none 0px;
-  margin-top: 60px;
+  border-bottom: solid 4px #f3a9d4;
+  border-top: solid 4px #f3a9d4;
 }
 
 .simulation2 {
   display: inline-table;
   width: 51%;
   padding: 15px;
+  padding-top: 80px;
   background-color: #ffffff;
-  margin-top: 60px;
+  border-bottom: solid 4px #f3a9d4;
+  border-top: solid 4px #f3a9d4;
 }
 
 .simulation3 {
@@ -156,7 +163,56 @@ input[type="number"] {
   width: 51%;
   padding: 10px;
   background-color: #ffffff;
-  border-left: solid #add8e6 40px;
+  border-right: solid 4px #f3a9d4;
+  border-top: solid 4px #f3a9d4;
+  border-bottom: solid 4px #f3a9d4;
+  border-left: solid #f3a9d4 4px;
+}
+
+.pricing {
+  font-size: 18px;
+  height: 355px;
+  width: 295px;
+  display: inline-table;
+  background-color: white;
+  border-right: solid 4px #f3a9d4;
+  border-top: solid 4px #f3a9d4;
+  border-bottom: solid 4px #f3a9d4;
+  color: #707070;
+  padding: 2px;
+}
+
+.membership {
+  font-size: 18px;
+  height: 355px;
+  width: 200px;
+  display: inline-table;
+  background-color: white;
+  border-right: solid 4px #f3a9d4;
+  border-top: solid 4px #f3a9d4;
+  border-bottom: solid 4px #f3a9d4;
+  color: #707070;
+  padding: 2px;
+}
+
+.advertising {
+  font-size: 18px;
+  height: 355px;
+  width: 200px;
+  display: inline-table;
+  background-color: white;
+  border-right: solid 4px #f3a9d4;
+  border-top: solid 4px #f3a9d4;
+  border-bottom: solid 4px #f3a9d4;
+  color: #707070;
+  padding: 2px;
+}
+
+.animation {
+  margin-top: 30px;
+  padding: 30px;
+  width: auto;
+  height: auto;
 }
 
 .button {
@@ -171,27 +227,70 @@ input[type="number"] {
   cursor: pointer;
 }
 
-.addPoint {
+.button {
   background-color: white;
   color: gray;
-  border: 2px solid #aed6f1;
+  border: 4px solid #f3a9d4;
 }
 
-.addPoint:hover {
-  background-color: #aed6f1;
+.button:hover {
+  background-color: #f3a9d4;
+  color: white;
+}
+.noButton {
+  background-color: white;
+  color: gray;
+  border: 4px solid #f3a9d4;
+}
+
+.noButton:hover {
+  background-color: #f3a9d4;
   color: white;
 }
 
-.simcontainer {
-  background-color: white;
-  display: flex;
-  margin-left: 10%;
-  width: 82%;
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 300px; /* Location of the box */
+  left: 0;
+  top: 0;
+  text-align: center;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
-.animation {
-  margin-top: 30px;
-  padding: 30px;
-  width: auto;
-  height: auto;
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+}
+.modal-content-submit {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: left;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }
