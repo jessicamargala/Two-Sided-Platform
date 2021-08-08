@@ -5,10 +5,9 @@ import datetime
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    mturk_id = db.Column(db.String(70))
+    
     username = db.Column(db.String(64), index=True, unique=True)
-    passed_prescreen = db.Column(db.Boolean, default=False)
-    condition = db.Column(db.String(64), default="none")
+
     is_admin = db.Column(db.Boolean, default=False)
 
 
@@ -16,55 +15,38 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return '<User {}>'.format(self.username) 
 
-class Module(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120))
-    description = db.Column(db.String(50))
-    order = db.Column(db.Integer)
-    prerequisite_id = db.Column(db.Integer)
-    condition = db.Column(db.String(64), default="none")
-
-    def __repr__(self):
-        return '<Module {}>'.format(self.id)
-class Task(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
-    description = db.Column(db.String(50))
-    link = db.Column(db.String(120))
-    module_id = db.Column(db.Integer)
-    order = db.Column(db.Integer)
-    type = db.Column(db.String(50))
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    event_type = db.Column(db.String(30))
-    user_id = db.Column(db.String(30))
-    description = db.Column(db.String(30))
-    trigger_id = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
+    user_id = db.Column(db.String(20))
+    qc = db.Column(db.Float)
+    qd = db.Column(db.Float)
+    vc = db.Column(db.Float)
+    vd = db.Column(db.Float)
+    expenses = db.Column(db.Float)
+    pc = db.Column(db.Float)
+    pd = db.Column(db.Float)
+    ecd = db.Column(db.Float)
+    edc = db.Column(db.Float)
+    surge_markup = db.Column(db.Float)
+    crime_markup = db.Column(db.Float)
+    rider_star_markup = db.Column(db.Float)
+    driver_star_markup = db.Column(db.Float)
+    low_battery_markup = db.Column(db.Float)
+    ban_riders_rule = db.Column(db.Float)
+    ban_drivers_rule = db.Column(db.Float)
+    driver_ad_expense = db.Column(db.Float)
+    rider_ad_expense = db.Column(db.Float)
+    total_profit = db.Column(db.Float)
+    rider_profit = db.Column(db.Float)
+    driver_profit= db.Column(db.Float)
+    rider_satisfaction = db.Column(db.Float)
+    driver_satisfaction = db.Column(db.Float)
 
-class SimulationResults(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    task_id = db.Column(db.Integer)
-    user_id = db.Column(db.String(30))
-    initial_points = db.Column(db.Integer)
-    user_points = db.Column(db.Integer)
-    agent_points = db.Column(db.Integer)
-    negotiation_num = db.Column(db.Integer)
-    questions_asked = db.Column(db.Integer)
-    pref_stmnt = db.Column(db.Integer)
-    num_of_offer = db.Column(db.Integer)
-    #User = db.relationship('User', backref=db.backref('children', lazy='dynamic'))
 
-class Preferences(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    participant_id = db.Column(db.String(30))
-    pref_item1 = db.Column(db.String(30))
-    pref_item2 = db.Column(db.String(30))
-    pref_item3 = db.Column(db.String(30))
-    pref_item4 = db.Column(db.String(30))
-    negotiation_num = db.Column(db.Integer)
-    participant = db.Column(db.String(30))
+    
+
 
 
 

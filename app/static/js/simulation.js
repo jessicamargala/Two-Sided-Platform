@@ -425,7 +425,7 @@ function calcUpdate(
   left
 ) {
 
-  console.log("qc: "+Qc+ " Qd: "+ Qd+ " Vc: "+ Vc+ " Vd: "+ Vd + " expenses: "+ expenses + " pc: "+ pc + " pd: "+ pd + " ecd: "+ecd+ " edc: "+ edc+"surgeMarkup: "+ surgeMarkup+ " crimeMarkup: "+ crimeMarkup+ " riderStarMarkup: "+ riderStarMarkup + " driverStarMarkup: "+ driverStarMarkup + " lowBatterMarkup: "+ lowBatteryMarkup + " banRidersRule: "+ banRidersRule + " banDriversRule: "+ banDriversRule+ " driverAdExpense: "+ driverAdExpense+ "riderAdExpense: "+ riderAdExpense)
+  
   // Keep within Range 0-2
   // Consumer Price
   if (pc > 2) pc = 2;
@@ -691,6 +691,19 @@ function calcUpdate(
   chart1.update();
   chart2.update();
   chart3.update();
+
+
+
+  console.log("qc: "+Qc+ " Qd: "+ Qd+ " Vc: "+ Vc+ " Vd: "+ Vd + " expenses: "+ expenses + " pc: "+ pc + " pd: "+ pd + " ecd: "+ecd+ " edc: "+ edc+"surgeMarkup: "+ surgeMarkup+ " crimeMarkup: "+ crimeMarkup+ " riderStarMarkup: "+ riderStarMarkup + " driverStarMarkup: "+ driverStarMarkup + " lowBatterMarkup: "+ lowBatteryMarkup + " banRidersRule: "+ banRidersRule + " banDriversRule: "+ banDriversRule+ " driverAdExpense: "+ driverAdExpense+ " riderAdExpense: "+ riderAdExpense+ "total profit: "+ totalProfit2 + " riderProfit: "+consumerProfit+ " driverProfit: "+ developerProfit+ " riderSatisfaction: "+riderSatisfaction+ "driverSatisfaction: "+ driverSatisfaction )
+
+
+  console.log("button clicked")
+        $.ajax({
+          type : 'POST',
+          dataType: 'json',
+          url : "/events",
+          data : {"qc":Qc, "qd":Qd, "vc":Vc, "Vd":Vd, "expenses": expenses, "pc": pc, "pd": pd, "ecd":ecd,"edc":edc,"surgeMarkup": surgeMarkup, "crimeMarkup": crimeMarkup, "riderStarMarkup":riderStarMarkup , "driverStarMarkup": driverStarMarkup ,"lowBatterMarkup": lowBatteryMarkup ,"banRidersRule": banRidersRule, "banDriversRule":banDriversRule, "driverAdExpense": driverAdExpense, "riderAdExpense": riderAdExpense, "totalprofit":totalProfit2, "riderProfit":consumerProfit, "driverProfit": developerProfit, "riderSatisfaction":riderSatisfaction, "driverSatisfaction": driverSatisfaction}
+         });
 }
 
 // Onclick event for Rider/Driver Redress, updates the Dashboard's values
