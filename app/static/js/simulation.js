@@ -424,8 +424,6 @@ function calcUpdate(
   riderAdExpense,
   left
 ) {
-
-  
   // Keep within Range 0-2
   // Consumer Price
   if (pc > 2) pc = 2;
@@ -677,8 +675,16 @@ function calcUpdate(
   chart2.data.datasets[2].data[1].y = 0;
 
   // Rider/Driver Satisfactions are inversly Proportional to Profits
-  var driverSatisfaction = 0.5 / developerProfit;
-  var riderSatisfaction = 0.5 / consumerProfit;
+  var driverSatisfaction = 0;
+  var riderSatisfaction = 0;
+
+  if (developerProfit != 0) {
+    driverSatisfaction = 0.5 / developerProfit;
+  }
+
+  if (consumerProfit != 0) {
+    riderSatisfaction = 0.5 / consumerProfit;
+  }
 
   chart3.data.datasets[0].data[0] = consumerProfit;
   chart3.data.datasets[1].data[0] = developerProfit;
@@ -692,18 +698,86 @@ function calcUpdate(
   chart2.update();
   chart3.update();
 
+  console.log(
+    "qc: " +
+      Qc +
+      " Qd: " +
+      Qd +
+      " Vc: " +
+      Vc +
+      " Vd: " +
+      Vd +
+      " expenses: " +
+      expenses +
+      " pc: " +
+      pc +
+      " pd: " +
+      pd +
+      " ecd: " +
+      ecd +
+      " edc: " +
+      edc +
+      "surgeMarkup: " +
+      surgeMarkup +
+      " crimeMarkup: " +
+      crimeMarkup +
+      " riderStarMarkup: " +
+      riderStarMarkup +
+      " driverStarMarkup: " +
+      driverStarMarkup +
+      " lowBatterMarkup: " +
+      lowBatteryMarkup +
+      " banRidersRule: " +
+      banRidersRule +
+      " banDriversRule: " +
+      banDriversRule +
+      " driverAdExpense: " +
+      driverAdExpense +
+      " riderAdExpense: " +
+      riderAdExpense +
+      "total profit: " +
+      totalProfit2 +
+      " riderProfit: " +
+      consumerProfit +
+      " driverProfit: " +
+      developerProfit +
+      " riderSatisfaction: " +
+      riderSatisfaction +
+      "driverSatisfaction: " +
+      driverSatisfaction
+  );
 
-
-  console.log("qc: "+Qc+ " Qd: "+ Qd+ " Vc: "+ Vc+ " Vd: "+ Vd + " expenses: "+ expenses + " pc: "+ pc + " pd: "+ pd + " ecd: "+ecd+ " edc: "+ edc+"surgeMarkup: "+ surgeMarkup+ " crimeMarkup: "+ crimeMarkup+ " riderStarMarkup: "+ riderStarMarkup + " driverStarMarkup: "+ driverStarMarkup + " lowBatterMarkup: "+ lowBatteryMarkup + " banRidersRule: "+ banRidersRule + " banDriversRule: "+ banDriversRule+ " driverAdExpense: "+ driverAdExpense+ " riderAdExpense: "+ riderAdExpense+ "total profit: "+ totalProfit2 + " riderProfit: "+consumerProfit+ " driverProfit: "+ developerProfit+ " riderSatisfaction: "+riderSatisfaction+ "driverSatisfaction: "+ driverSatisfaction )
-
-
-  console.log("button clicked")
-        $.ajax({
-          type : 'POST',
-          dataType: 'json',
-          url : "/events",
-          data : {"qc":Qc, "qd":Qd, "vc":Vc, "Vd":Vd, "expenses": expenses, "pc": pc, "pd": pd, "ecd":ecd,"edc":edc,"surgeMarkup": surgeMarkup, "crimeMarkup": crimeMarkup, "riderStarMarkup":riderStarMarkup , "driverStarMarkup": driverStarMarkup ,"lowBatterMarkup": lowBatteryMarkup ,"banRidersRule": banRidersRule, "banDriversRule":banDriversRule, "driverAdExpense": driverAdExpense, "riderAdExpense": riderAdExpense, "totalprofit":totalProfit2, "riderProfit":consumerProfit, "driverProfit": developerProfit, "riderSatisfaction":riderSatisfaction, "driverSatisfaction": driverSatisfaction}
-         });
+  console.log("button clicked");
+  $.ajax({
+    type: "POST",
+    dataType: "json",
+    url: "/events",
+    data: {
+      qc: Qc,
+      qd: Qd,
+      vc: Vc,
+      Vd: Vd,
+      expenses: expenses,
+      pc: pc,
+      pd: pd,
+      ecd: ecd,
+      edc: edc,
+      surgeMarkup: surgeMarkup,
+      crimeMarkup: crimeMarkup,
+      riderStarMarkup: riderStarMarkup,
+      driverStarMarkup: driverStarMarkup,
+      lowBatterMarkup: lowBatteryMarkup,
+      banRidersRule: banRidersRule,
+      banDriversRule: banDriversRule,
+      driverAdExpense: driverAdExpense,
+      riderAdExpense: riderAdExpense,
+      totalprofit: totalProfit2,
+      riderProfit: consumerProfit,
+      driverProfit: developerProfit,
+      riderSatisfaction: riderSatisfaction,
+      driverSatisfaction: driverSatisfaction,
+    },
+  });
 }
 
 // Onclick event for Rider/Driver Redress, updates the Dashboard's values
