@@ -69,7 +69,7 @@ def events():
     #trigger_type = request.form['trigger_type']
     try: 
       print('got to try')
-      completed_event = Event(user_id = current_user.username,qc =qc, qd = qd, vc =vc, expenses = expenses, pc = pc, pd = pd, ecd = ecd, edc = edc,surge_markup=surge_markup,crime_markup=crime_markup, rider_star_markup=rider_star_markup, driver_star_markup = driver_star_markup,low_battery_markup =low_battery_markup, ban_riders_rule = ban_riders_rule, ban_drivers_rule = ban_drivers_rule, driver_ad_expense = driver_ad_expense,rider_ad_expense = rider_ad_expense, total_profit = total_profit, rider_profit = rider_profit, driver_profit = driver_profit, rider_satisfaction = rider_satisfaction, driver_satisfaction = driver_satisfaction)
+      completed_event = Event(user_id = current_user.username,qc =qc, qd = qd, vc =vc,vd=vd, expenses = expenses, pc = pc, pd = pd, ecd = ecd, edc = edc,surge_markup=surge_markup,crime_markup=crime_markup, rider_star_markup=rider_star_markup, driver_star_markup = driver_star_markup,low_battery_markup =low_battery_markup, ban_riders_rule = ban_riders_rule, ban_drivers_rule = ban_drivers_rule, driver_ad_expense = driver_ad_expense,rider_ad_expense = rider_ad_expense, total_profit = total_profit, rider_profit = rider_profit, driver_profit = driver_profit, rider_satisfaction = rider_satisfaction, driver_satisfaction = driver_satisfaction)
       print("did work")
     except sqlite3.Error as er:
       print(er)
