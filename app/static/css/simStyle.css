@@ -280,6 +280,57 @@ input[type="number"] {
   width: 50%;
 }
 
+.control {
+  position: relative;
+  display: inline-block;
+}
+
+.control .tooltiptext {
+  font-weight: bold;
+  font-size: 13px;
+  font-family: sans-serif;
+  visibility: hidden;
+  width: 275px;
+  background-color: rgb(160, 156, 156, 0.9);
+  color: #fff;
+  text-align: center;
+  padding: 1px 0;
+  border-radius: 10px;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 110%;
+}
+
+.advertising .control .tooltiptext {
+  left: 110%;
+}
+
+.control:hover .tooltiptext {
+  visibility: visible;
+}
+
+.control .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 30%;
+  left: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent rgb(160, 156, 156, 0.8);
+}
+
+.control .checkbox .tooltiptext::after {
+  top: 15%;
+}
+
+.advertising .control .tooltiptext::after {
+  right: 100%;
+  margin-left: -110%;
+  border-color: transparent rgb(160, 156, 156, 0.8) transparent transparent;
+}
+
 /* The Close Button */
 .close {
   color: #aaaaaa;
